@@ -1,6 +1,7 @@
 variable "access_key" {}
 variable "secret_key" {}
 variable "key_name" {}
+variable "key_full_path" {}
 
 
 variable "aws_region" {
@@ -16,3 +17,9 @@ variable "aws_amis" {
   }
 }
 
+# rehl (x64)
+variable "aws_amirehl" {
+  default = {
+    "us-east-1" = "ami-18bac672"
+  }
+}

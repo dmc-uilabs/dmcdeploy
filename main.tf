@@ -39,7 +39,7 @@ resource "aws_security_group" "default" {
 
 
 resource "aws_instance" "front" {
-  instance_type = "t2.micro"
+  instance_type = "m4.large"
   depends_on = ["aws_instance.rest"]
 
   # Lookup the correct AMI based on the region
@@ -66,7 +66,7 @@ provisioner "remote-exec" {
 
         connection {
         user = "ubuntu"
-         key_file  = "~/Desktop/aws/tf/test/DMCFrontEnd/${var.key_name}.pem"
+         key_file  = "${var.key_full_path}"
     }
 }
 
@@ -80,12 +80,12 @@ provisioner "remote-exec" {
 }
 
 resource "aws_instance" "rest" {
-  instance_type = "m1.small"
+  instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
 
   # Lookup the correct AMI based on the region
   # we specified
-  ami = "ami-e7215d8d"
+  ami = "${lookup(var.aws_amirehl, var.aws_region)}"
 
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.
@@ -106,7 +106,7 @@ resource "aws_instance" "rest" {
 
        connection {
         user = "ec2-user"
-        key_file  = "~/Desktop/aws/tf/test/DMCFrontEnd/${var.key_name}.pem"
+        key_file  = "${var.key_full_path}"
     }
     }
 
@@ -122,7 +122,7 @@ resource "aws_instance" "rest" {
 
       connection {
         user = "ec2-user"
-        key_file  = "~/Desktop/aws/tf/test/DMCFrontEnd/${var.key_name}.pem"
+        key_file  = "${var.key_full_path}"
     }
 }
 
