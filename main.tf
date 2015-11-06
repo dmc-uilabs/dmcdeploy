@@ -64,6 +64,36 @@ resource "aws_elb" "loadbalancer" {
 }
 
 
+
+resource "aws_security_group" "sg_front" {
+  name = "DMC_sg_front"
+  description = "Security Group for the Public Apache Server"
+
+  # SSH access from anywhere
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"  
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "front" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.rest"]
@@ -79,7 +109,7 @@ resource "aws_instance" "front" {
  key_name = "${var.key_name}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.default.name}"]
+  security_groups = ["${aws_security_group.sg_front.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   # in this case will be a shell but can be chef
@@ -105,6 +135,38 @@ provisioner "remote-exec" {
   }
 }
 
+
+resource "aws_security_group" "sg_rest" {
+  name = "DMC_sg_rest"
+  description = "Security Group for the Public Apache Server"
+
+  # SSH access from anywhere
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"  
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+
 resource "aws_instance" "rest" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
@@ -120,7 +182,7 @@ resource "aws_instance" "rest" {
  key_name = "${var.key_name}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.default.name}"]
+  security_groups = ["${aws_security_group.sg_rest.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables
@@ -160,6 +222,37 @@ resource "aws_instance" "rest" {
   }
 }
 
+
+
+resource "aws_security_group" "sg_db" {
+  name = "DMC_sg_db"
+  description = "Security Group for the Public Apache Server"
+
+  # SSH access from anywhere
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"  
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "db" {
   instance_type = "t2.micro"
 
@@ -172,7 +265,7 @@ resource "aws_instance" "db" {
 
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.default.name}"]
+  security_groups = ["${aws_security_group.sg_db.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   user_data = "${file("deployMe_db.sh")}"
