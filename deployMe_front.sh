@@ -6,6 +6,7 @@ apt-get install php5 php5-pgsql -y
 sudo service apache2 start
 apt-get install -y git
 cd /var/www/html
+sudo rm -rf *
 sudo git clone https://AlexMaties@bitbucket.org/DigitalMfgCommons/dmcfrontend.git
 cd dmcfrontend
 sudo mv * ../
