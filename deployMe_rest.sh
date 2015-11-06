@@ -9,7 +9,7 @@ mkdir DMC
 cd DMC
 rm -rf *
 git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
-cd dmcrestservices
+cd dmcrestservices/target
 mv *.war rest.war
-cp target/rest.war /var/lib/tomcat7/webapps
+cp rest.war /var/lib/tomcat7/webapps
 /etc/init.d/tomcat7 restart
