@@ -38,6 +38,32 @@ resource "aws_security_group" "default" {
 }
 
 
+resource "aws_elb" "loadbalancer" {
+
+    name = "DMCLoadBalancer"
+    availability_zones = ["us-east-1a"]
+
+    listener {
+        instance_port = 80
+        instance_protocol = "http"
+        lb_port = 80
+        lb_protocol = "http"
+    }
+
+
+    instances = ["${aws_instance.front.id}"]
+
+  cross_zone_load_balancing = true
+  idle_timeout = 400
+  connection_draining = true
+  connection_draining_timeout = 400
+
+  tags {
+    Name = "DMC-Load-Balancer"
+  }
+}
+
+
 resource "aws_instance" "front" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.rest"]

@@ -1,4 +1,8 @@
 
+output "load balancer public ip" {
+  value = "${aws_elb.loadbalancer.public_ip}"
+}
+
 output "front public ip" {
   value = "${aws_instance.front.public_ip}"
 }
