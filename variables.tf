@@ -21,6 +21,13 @@ variable "aws_amis" {
 # rehl (x64)
 variable "aws_amirehl" {
   default = {
-    "us-east-1" = "ami-18bac672"
+    "us-east-1" = "ami-12663b7a"
+  }
+}
+
+# rehl with tomcat container(x64)
+variable "aws_amirehl_tom" {
+  default = {
+    "us-east-1" = "ami-271c654d"
   }
 }
