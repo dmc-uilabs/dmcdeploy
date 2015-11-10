@@ -2,6 +2,7 @@ variable "access_key" {}
 variable "secret_key" {}
 variable "key_name" {}
 variable "key_full_path" {}
+variable "stackPrefix" {}
 
 
 variable "aws_region" {

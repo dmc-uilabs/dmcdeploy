@@ -9,7 +9,7 @@ provider "aws" {
 # Our default security group to access
 # the instances over SSH and HTTP
 resource "aws_security_group" "default" {
-  name = "DMC_sec_group"
+  name = "${var.stackPrefix}_DMC_sec_group"
   description = "Used in the terraform"
 
   # SSH access from anywhere
@@ -40,7 +40,7 @@ resource "aws_security_group" "default" {
 
 resource "aws_elb" "loadbalancer" {
 
-    name = "DMCLoadBalancer"
+    name = "${var.stackPrefix}DMCLoadBalancer"
     availability_zones = ["us-east-1a"]
 
     listener {
@@ -66,7 +66,7 @@ resource "aws_elb" "loadbalancer" {
 
 
 resource "aws_security_group" "sg_front" {
-  name = "DMC_sg_front"
+  name = "${var.stackPrefix}_DMC_sg_front"
   description = "Security Group for the Public Apache Server"
 
   # SSH access from anywhere
@@ -131,13 +131,13 @@ provisioner "remote-exec" {
   user_data = "${file("deployMe_front.sh")}"
   #Instance tags -- name the vm in amazon to find easier
   tags {
-    Name = "DMC-front"
+    Name = "${var.stackPrefix}_DMC-front"
   }
 }
 
 
 resource "aws_security_group" "sg_rest" {
-  name = "DMC_sg_rest"
+  name = "${var.stackPrefix}_DMC_sg_rest"
   description = "Security Group for the Public Apache Server"
 
   # SSH access from anywhere
@@ -218,14 +218,14 @@ resource "aws_instance" "rest" {
 
   #Instance tags
   tags {
-    Name = "DMC-rest"
+    Name = "${var.stackPrefix}_DMC-rest"
   }
 }
 
 
 
 resource "aws_security_group" "sg_db" {
-  name = "DMC_sg_db"
+  name = "${var.stackPrefix}_DMC_sg_db"
   description = "Security Group for the Public Apache Server"
 
   # SSH access from anywhere
@@ -271,7 +271,7 @@ resource "aws_instance" "db" {
   user_data = "${file("deployMe_db.sh")}"
   #Instance tags
   tags {
-    Name = "DMC-db"
+    Name = "${var.stackPrefix}_DMC-db"
   }
 }
 
