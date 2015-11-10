@@ -1,12 +1,12 @@
 #!/bin/bash -v
-sudo su
-apt-get update -y
-apt-get install apache2 -y
-apt-get install php5 php5-pgsql -y
-sudo service apache2 start
-apt-get install -y git
+#yum update -y
+yum install httpd -y
+yum install php php-pgsql -y
+/etc/init.d/httpd start
+yum install git -y
 cd /var/www/html
 sudo rm -rf *
-sudo git clone https://AlexMaties@bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+sudo git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
 cd dmcfrontend
 sudo mv * ../
+service httpd restart
