@@ -100,7 +100,7 @@ resource "aws_instance" "front" {
 
   # Lookup the correct AMI based on the region
   # define what aim to launch
-  ami = "ami-12663b7a"
+   ami = "${lookup(var.aws_amirehl, var.aws_region)}"
 
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.
@@ -189,7 +189,7 @@ resource "aws_instance" "rest" {
 
   # Lookup the correct AMI based on the region
   # we specified
-  ami = "${lookup(var.aws_amirehl, var.aws_region)}"
+   ami = "${lookup(var.aws_amirehl_tom, var.aws_region)}"
 
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.
