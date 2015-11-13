@@ -1,7 +1,7 @@
 
-resource "aws_instance" "front" {
+resource "aws_instance" "git" {
   instance_type = "m4.large"
-  depends_on = ["aws_instance.rest","aws_instance.dome", "aws_instance.git"]
+  #depends_on = ["aws_instance.rest"]
 
   # Lookup the correct AMI based on the region
   # define what aim to launch 
@@ -13,7 +13,7 @@ resource "aws_instance" "front" {
  key_name = "${var.key_name}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_front.name}"]
+  security_groups = ["${aws_security_group.git.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   # in this case will be a shell but can be chef
@@ -21,7 +21,7 @@ resource "aws_instance" "front" {
 
 
 provisioner "file" {
-        source = "deployMe_front.sh"
+        source = "deployMe_git.sh"
         destination = "/tmp/script.sh"
 
        connection {
@@ -34,7 +34,6 @@ provisioner "file" {
 
 provisioner "remote-exec" {
         inline = [
-        "echo 'export Restip=${aws_instance.rest.private_ip}' >> ~/.bashrc",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
         "sudo ./script.sh"
@@ -51,7 +50,7 @@ provisioner "remote-exec" {
 
   #Instance tags -- name the vm in amazon to find easier
   tags {
-    Name = "${var.stackPrefix}DMC-front"
+    Name = "${var.stackPrefix}DMC-git"
   }
 }
 

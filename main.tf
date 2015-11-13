@@ -185,3 +185,32 @@ resource "aws_security_group" "sg_activemq" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "git" {
+  name = "${var.stackPrefix}_DMC_sg_git"
+  description = "Security Group for the Public Apache Server"
+
+  # SSH access from anywhere
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"  
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port = 0
+    to_port = 63000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
