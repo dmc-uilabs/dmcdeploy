@@ -6,7 +6,10 @@ yum install php php-pgsql -y
 yum install git -y
 cd /var/www/html
 sudo rm -rf *
-sudo git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+sudo git clone https://AlexMaties@bitbucket.org/DigitalMfgCommons/dmcfrontend.git
 cd dmcfrontend
 sudo mv * ../
+
+
+
 service httpd restart
