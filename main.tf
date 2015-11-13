@@ -6,42 +6,13 @@ provider "aws" {
 }
 
 
-# Our default security group to access
-# the instances over SSH and HTTP
-resource "aws_security_group" "default" {
-  name = "${var.stackPrefix}_DMC_sec_group"
-  description = "Used in the terraform"
 
-  # SSH access from anywhere
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp" 
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # HTTP access from anywhere
-  ingress {
-    from_port = 80
-    to_port = 8090
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # outbound internet access
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
 
 
 resource "aws_elb" "loadbalancer" {
 
     name = "${var.stackPrefix}DMCLoadBalancer"
-    availability_zones = ["us-east-1a"]
+    availability_zones = ["us-east-1a","us-east-1b"]
 
     listener {
         instance_port = 80
@@ -59,7 +30,7 @@ resource "aws_elb" "loadbalancer" {
   connection_draining_timeout = 400
 
   tags {
-    Name = "DMC-Load-Balancer"
+    Name = "${var.stackPrefix}DMC-Load-Balancer"
   }
 }
 
@@ -94,64 +65,6 @@ resource "aws_security_group" "sg_front" {
   }
 }
 
-resource "aws_instance" "front" {
-  instance_type = "m4.large"
-  depends_on = ["aws_instance.rest"]
-
-  # Lookup the correct AMI based on the region
-  # define what aim to launch
-   ami = "${lookup(var.aws_amirehl, var.aws_region)}"
-
-  # The name of our SSH keypair you've created and downloaded
-  # from the AWS console.
-  #
- 
- key_name = "${var.key_name}"
-
-  # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.default.name}"]
-
-  # We run a remote provisioner on the instance after creating it.
-  # in this case will be a shell but can be chef
-
-
-
-provisioner "file" {
-        source = "deployMe_front.sh"
-        destination = "/tmp/script.sh"
-
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path}"
-    }
-    }
-
-
-
-provisioner "remote-exec" {
-        inline = [
-        "echo 'export Restip=${aws_instance.rest.private_ip}' >> ~/.bashrc",
-        "chmod +x /tmp/script.sh",
-        "cd /tmp",
-        "sudo ./script.sh"
-        
-        ]
-
-        connection {
-        user = "ec2-user"
-         key_file  = "${var.key_full_path}"
-    }
-}
-
-
-
-  #Instance tags -- name the vm in amazon to find easier
-  tags {
-    Name = "${var.stackPrefix}DMC-front"
-  }
-}
-
-
 resource "aws_security_group" "sg_rest" {
   name = "${var.stackPrefix}_DMC_sg_rest"
   description = "Security Group for the Public Apache Server"
@@ -183,62 +96,6 @@ resource "aws_security_group" "sg_rest" {
 
 
 
-resource "aws_instance" "rest" {
-  instance_type = "m4.large"
-  depends_on = ["aws_instance.db"]
-
-  # Lookup the correct AMI based on the region
-  # we specified
-   ami = "${lookup(var.aws_amirehl_tom, var.aws_region)}"
-
-  # The name of our SSH keypair you've created and downloaded
-  # from the AWS console.
-  #
-
- key_name = "${var.key_name}"
-
-  # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_rest.name}"]
-
-  # We run a remote provisioner on the instance after creating it.
-  #this is where we set the env variables
-
-
-  provisioner "file" {
-        source = "deployMe_rest.sh"
-        destination = "/tmp/script.sh"
-
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path}"
-    }
-    }
-
-  
-   provisioner "remote-exec" {
-        inline = [
-        "echo 'export DBip=${aws_instance.db.private_ip}' >> ~/.bashrc",
-        "echo 'export DBport=5432' >> ~/.bashrc",
-        "chmod +x /tmp/script.sh",
-        "cd /tmp",
-        "sudo ./script.sh"
-        ]
-
-      connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path}"
-    }
-}
-
-
-
-  #Instance tags
-  tags {
-    Name = "${var.stackPrefix}_DMC-rest"
-  }
-}
-
-
 
 resource "aws_security_group" "sg_db" {
   name = "${var.stackPrefix}_DMC_sg_db"
@@ -254,8 +111,8 @@ resource "aws_security_group" "sg_db" {
 
   # HTTP access from anywhere
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 0
+    to_port = 63000
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -269,27 +126,62 @@ resource "aws_security_group" "sg_db" {
   }
 }
 
-resource "aws_instance" "db" {
-  instance_type = "t2.micro"
 
-  # Lookup the correct AMI based on the region
-  # we specified
-  ami = "${lookup(var.aws_amis, var.aws_region)}"
+resource "aws_security_group" "sg_dome" {
+  name = "${var.stackPrefix}_DMC_sg_dome"
+  description = "Security Group for the Public Apache Server"
 
-  # The name of our SSH keypair you've created and downloaded
-  # from the AWS console.
+  # SSH access from anywhere
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"  
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
+  # HTTP access from anywhere
+  ingress {
+    from_port = 0
+    to_port = 63000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-  # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_db.name}"]
-
-  # We run a remote provisioner on the instance after creating it.
-  user_data = "${file("deployMe_db.sh")}"
-  #Instance tags
-  tags {
-    Name = "${var.stackPrefix}_DMC-db"
+  # outbound internet access
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 
+resource "aws_security_group" "sg_activemq" {
+  name = "${var.stackPrefix}_DMC_sg_activemq"
+  description = "Security Group for the Public Apache Server"
 
+  # SSH access from anywhere
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"  
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port = 0
+    to_port = 63000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
