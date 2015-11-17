@@ -1,11 +1,21 @@
 #!/bin/bash -v
-# yum update -y
-# yum install -y java-1.8.0-openjdk.x86_64
-# yum erase -y java-1.7.0-openjdk
-# yum install -y git
-# yum install -y tomcat7
-# yum install git -y
+#
+# deployMe.sh for Apache Solr
+#
 
+# Ensure environment variables are read
+source ~/.bashrc
+
+#
+sudo yum update -y
+
+# install java
+echo installing java 8
+sudo yum install -y java-1.8.0-openjdk.x86_64
+
+# install git
+echo installing git
+sudo yum install -y git
 
 # Download DMC Solr files
 cd /tmp
