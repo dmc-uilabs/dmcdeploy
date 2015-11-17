@@ -1,7 +1,7 @@
 
 resource "aws_instance" "front" {
   instance_type = "m4.large"
-  depends_on = ["aws_instance.rest","aws_instance.dome", "aws_instance.git"]
+  depends_on = ["aws_instance.rest","aws_instance.dome", "aws_instance.git","aws_instance.solr"]
 
   # Lookup the correct AMI based on the region
   # define what aim to launch 
