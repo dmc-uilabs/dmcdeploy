@@ -36,7 +36,7 @@ resource "aws_instance" "solr" {
   # to test out on working db "sudo echo 'export $solrDbDns=172.31.22.92' >> ~/.bashrc",
    provisioner "remote-exec" {
         inline = [
-        "sudo echo 'export $solrDbDns=172.31.22.92' >> ~/.bashrc",
+        "sudo echo 'export solrDbDns=172.31.22.92' >> ~/.bashrc",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
         "./script.sh"
