@@ -5,7 +5,10 @@ variable "key_full_path" {}
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}
 variable "activeMqUserPass" {}
-
+variable "PSQLUSER" {}
+variable "PSQLPASS" {}
+variable "PSQLDBNAME" {}
+variable "release" {}
 
 variable "aws_region" {
   description = "The AWS region to create things in."
@@ -23,7 +26,7 @@ variable "aws_amis" {
 # rehl (x64)
 variable "aws_amirehl" {
   default = {
-    "us-east-1" = "ami-12663b7a"
+    "us-east-1" = "ami-60b6c60a"
   }
 }
 

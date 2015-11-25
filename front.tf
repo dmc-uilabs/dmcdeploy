@@ -1,7 +1,8 @@
 
 resource "aws_instance" "front" {
   instance_type = "m4.large"
-  depends_on = ["aws_instance.rest","aws_instance.dome", "aws_instance.git","aws_instance.solr"]
+  depends_on = ["aws_instance.rest","aws_instance.dome","aws_instance.solr"]
+
 
   # Lookup the correct AMI based on the region
   # define what aim to launch 
@@ -34,7 +35,7 @@ provisioner "file" {
 
 provisioner "remote-exec" {
         inline = [
-        "echo 'export Restip=${aws_instance.rest.private_ip}' >> ~/.bashrc",
+        "echo 'export Restip=123' >> ~/.bashrc",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
         "sudo ./script.sh"
