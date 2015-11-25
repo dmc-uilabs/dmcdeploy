@@ -1,4 +1,3 @@
-
 resource "aws_instance" "solr" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
@@ -14,7 +13,7 @@ resource "aws_instance" "solr" {
  key_name = "${var.key_name}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.solr.name}"]
+  security_groups = ["${aws_security_group.sg_solr.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables
@@ -33,10 +32,10 @@ resource "aws_instance" "solr" {
     }
     }
 
-  # to test out on working db "sudo echo 'export $solrDbDns=172.31.22.92' >> ~/.bashrc",
+  
    provisioner "remote-exec" {
         inline = [
-        "sudo echo 'export solrDbDns=172.31.22.92' >> ~/.bashrc",
+        "sudo echo 'export solrDbDns=${aws_instance.db.private_ip}' >> ~/.bashrc",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
         "./script.sh"

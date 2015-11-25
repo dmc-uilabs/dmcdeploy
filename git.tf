@@ -1,4 +1,5 @@
 
+/*
 resource "aws_instance" "git" {
   instance_type = "m4.large"
   #depends_on = ["aws_instance.rest"]
@@ -13,7 +14,7 @@ resource "aws_instance" "git" {
  key_name = "${var.key_name}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.git.name}"]
+  security_groups = ["${aws_security_group.sg_git.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   # in this case will be a shell but can be chef
@@ -54,3 +55,4 @@ provisioner "remote-exec" {
   }
 }
 
+*/

@@ -12,7 +12,7 @@ provider "aws" {
 resource "aws_elb" "loadbalancer" {
 
     name = "${var.stackPrefix}DMCLoadBalancer"
-    availability_zones = ["us-east-1a","us-east-1b"]
+    availability_zones = ["us-east-1a","us-east-1b","us-east-1c","us-east-1e"]
 
     listener {
         instance_port = 80
@@ -186,7 +186,7 @@ resource "aws_security_group" "sg_activemq" {
   }
 }
 
-resource "aws_security_group" "git" {
+resource "aws_security_group" "sg_git" {
   name = "${var.stackPrefix}_DMC_sg_git"
   description = "Security Group for the Public Apache Server"
 
@@ -215,7 +215,7 @@ resource "aws_security_group" "git" {
   }
 }
 
-resource "aws_security_group" "solr" {
+resource "aws_security_group" "sg_solr" {
   name = "${var.stackPrefix}_DMC_sg_solr"
   description = "Security Group for the Public Apache Server"
 

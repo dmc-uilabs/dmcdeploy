@@ -35,7 +35,7 @@ resource "aws_instance" "dome" {
         "echo 'export ActiveMQdns=${aws_instance.activeMq.private_ip}' >> ~/.bashrc",  
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-	      "source ~/.bashrc",
+        "source ~/.bashrc",
         " ./script.sh"
         ]
 

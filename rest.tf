@@ -1,5 +1,3 @@
-
-
 resource "aws_instance" "rest" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
@@ -31,14 +29,14 @@ resource "aws_instance" "rest" {
     }
     }
 
-  
+
    provisioner "remote-exec" {
         inline = [
-        "echo 'export DBip=${aws_instance.db.private_ip}' >> ~/.bashrc",
+        "echo 'export release=${var.release}' >> ~/.bashrc",
         "echo 'export DBport=5432' >> ~/.bashrc",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "sudo ./script.sh",
+        "./script.sh",
 
         ]
 
@@ -55,4 +53,3 @@ resource "aws_instance" "rest" {
     Name = "${var.stackPrefix}DMC-rest"
   }
 }
-

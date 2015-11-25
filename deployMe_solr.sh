@@ -5,6 +5,16 @@
 
 
 # Download DMC Solr files
+
+
+source ~/.bashrc 
+
+echo "showing the var $solrDbDns"
+env | grep "$solrDbDns"
+echo " ---- "
+
+
+
 cd /tmp
 rm -fr /tmp/dmcsolr
 git clone https://bitbucket.org/DigitalMfgCommons/dmcsolr.git

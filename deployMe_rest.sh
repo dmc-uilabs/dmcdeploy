@@ -4,12 +4,29 @@
 # yum erase -y java-1.7.0-openjdk
 # yum install -y git
 # yum install -y tomcat7
-/ect/init.d/tomcat7 start
-mkdir DMC
-cd DMC
-rm -rf *
-git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
+
+source ~/.bashrc
+sudo service tomcat7 start
+mkdir ~/DMC
+cd ~/DMC
+
+env | grep "rel"
+if [[ $release == 'hot' ]]
+	then
+    			echo "pull from master"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
+	else
+    			echo "pull from >> $release << release"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
+    			
+				echo "git checkout tags/$release"  | bash -
+
+fi
+
+
+
+
 cd dmcrestservices/target
 mv *.war rest.war
-cp rest.war /var/lib/tomcat7/webapps
-/etc/init.d/tomcat7 restart
+sudo cp rest.war /var/lib/tomcat7/webapps
+sudo service tomcat7 restart
