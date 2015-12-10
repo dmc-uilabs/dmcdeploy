@@ -1,3 +1,5 @@
+
+/*
 resource "aws_instance" "activeMq" {
   instance_type = "m4.large"
  
@@ -56,3 +58,5 @@ resource "aws_instance" "activeMq" {
     Name = "${var.stackPrefix}DMC-activeMq"
   }
 }
+
+*/

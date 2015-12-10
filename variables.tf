@@ -10,6 +10,7 @@ variable "PSQLPASS" {}
 variable "PSQLDBNAME" {}
 variable "release" {}
 
+
 variable "aws_region" {
   description = "The AWS region to create things in."
   default = "us-east-1"
@@ -19,7 +20,12 @@ variable "aws_region" {
 variable "aws_amis" {
   default = {
     "us-east-1" = "ami-5f709f34"
-    "us-west-2" = "ami-7f675e4f"
+    "us-west-2" = "ami-f0091d91"
+  }
+}
+variable "frontSHIB"{
+  default = {
+  "us-west-2" ="ami-d24b57b3"
   }
 }
 
@@ -27,6 +33,7 @@ variable "aws_amis" {
 variable "aws_amirehl" {
   default = {
     "us-east-1" = "ami-60b6c60a"
+    "us-west-2" = "ami-f0091d91"
   }
 }
 
@@ -34,5 +41,6 @@ variable "aws_amirehl" {
 variable "aws_amirehl_tom" {
   default = {
     "us-east-1" = "ami-271c654d"
+    "us-west-2" = "ami-86a6b4e7"
   }
 }

@@ -4,12 +4,26 @@
 sudo yum install git -y
 
 
+# variables (should come from terraform)
+#user='gforge'
+#pass='gforge'
+#db='gforge'
 
+# export variables
+#sudo -i # switch to root
 cd ~
+# sudo echo "export PSQLUSER=\"gforge\"" >> ~/.bashrc
+# sudo echo "export PSQLPASS=\"gforge\"" >> ~/.bashrc
+# sudo echo "export DB=\"gforge\"" >> ~/.bashrc
+# source ~/.bashrc
 
-source ~/.bashrc
+#echo "USER SET: $PSQLUSER"
+#echo "PASSWORD SET: $PASS"
+#echo "DB SET: $DB"
 
-
+#sudo echo user_allow_other >> fuse.conf
+#sudo mv fuse.conf /etc/fuse.conf
+#sudo chmod 644 /etc/fuse.conf
 sudo yum -y install postgresql94.x86_64 postgresql94-server.x86_64 postgresql94-contrib.x86_64 git
 sudo service postgresql94 initdb
 sudo chkconfig postgresql94 on
@@ -25,8 +39,22 @@ sudo service postgresql94 start
 # create users, prefereably via the same config file above
 #sudo su postgres
 #cd ~postgres
-git clone https://bitbucket.org/DigitalMfgCommons/dmcdb.git
-cd dmcdb
+
+
+if [[ $release == 'hot' ]]
+	then
+    			echo "pull from master"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcdb.git
+
+	else
+    			echo "pull from >> $release << release"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcdb.git
+				echo "git checkout tags/$release"  | bash -
+
+fi
+
+
+cd ~/dmcdb
 # git pull from master DB to get latest version of gforge.psql
 #mv gforge.psql /var/lib/pgsql/.
 

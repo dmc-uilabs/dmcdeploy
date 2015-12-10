@@ -9,7 +9,7 @@ source ~/.bashrc
 sudo service tomcat7 start
 mkdir ~/DMC
 cd ~/DMC
-
+rm -rf *
 env | grep "rel"
 if [[ $release == 'hot' ]]
 	then
@@ -26,7 +26,19 @@ fi
 
 
 
-cd dmcrestservices/target
-mv *.war rest.war
+cd ~/DMC/dmcrestservices/target
+cp dmc*.war rest.war
+
+sudo chown ec2-user /etc/tomcat7/tomcat7.conf 
+
+echo "DBip=$DBip" >> /etc/tomcat7/tomcat7.conf
+echo "DBport=$DBport" >> /etc/tomcat7/tomcat7.conf
+echo "DBpass=$DBpass" >> /etc/tomcat7/tomcat7.conf
+echo "DBuser=$DBuser" >> /etc/tomcat7/tomcat7.conf
+
+sudo chown tomcat /etc/tomcat7/tomcat7.conf
+
 sudo cp rest.war /var/lib/tomcat7/webapps
 sudo service tomcat7 restart
+
+

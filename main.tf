@@ -99,7 +99,7 @@ resource "aws_security_group" "sg_rest" {
 
 resource "aws_security_group" "sg_db" {
   name = "${var.stackPrefix}_DMC_sg_db"
-  description = "Security Group for the Public Apache Server"
+  description = "Security Group for the DB Server"
 
   # SSH access from anywhere
   ingress {
@@ -126,7 +126,7 @@ resource "aws_security_group" "sg_db" {
   }
 }
 
-
+/*
 resource "aws_security_group" "sg_dome" {
   name = "${var.stackPrefix}_DMC_sg_dome"
   description = "Security Group for the Public Apache Server"
@@ -214,10 +214,11 @@ resource "aws_security_group" "sg_git" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+*/
 
 resource "aws_security_group" "sg_solr" {
   name = "${var.stackPrefix}_DMC_sg_solr"
-  description = "Security Group for the Public Apache Server"
+  description = "Security Group for Solr Server"
 
   # SSH access from anywhere
   ingress {
