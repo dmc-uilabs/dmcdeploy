@@ -17,8 +17,22 @@ echo " ---- "
 
 cd /tmp
 rm -fr /tmp/dmcsolr
-git clone https://bitbucket.org/DigitalMfgCommons/dmcsolr.git
-cd dmcsolr
+
+if [[ $release == 'hot' ]]
+	then
+    			echo "pull from master"
+    		   	git clone https://bitbucket.org/DigitalMfgCommons/dmcsolr.git
+    else		
+    			echo "pull from >> $release << release"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcsolr.git
+    			cd dmcsolr
+				echo "git checkout tags/$release"  | bash -
+
+fi
+
+
+
+cd /tmp/dmcsolr
 
 
 # download solr 

@@ -1,3 +1,5 @@
+
+
 resource "aws_instance" "rest" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
@@ -10,9 +12,9 @@ resource "aws_instance" "rest" {
   # from the AWS console.
   #
 
- key_name = "${var.key_name}"
-
-  # Our Security group to allow HTTP and SSH access
+ key_name = "staging"
+ 
+  # Our Security group to allow HTTP and SSH accessing
   security_groups = ["${aws_security_group.sg_rest.name}"]
 
   # We run a remote provisioner on the instance after creating it.
@@ -25,15 +27,20 @@ resource "aws_instance" "rest" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "~/Desktop/aws/staging.pem"
     }
     }
 
 
    provisioner "remote-exec" {
         inline = [
-        "echo 'export release=${var.release}' >> ~/.bashrc",
-        "echo 'export DBport=5432' >> ~/.bashrc",
+        "echo 'export DBuser=${var.PSQLUSER}' >> /tmp/profile",
+        "echo 'export DBpass=${var.PSQLPASS}' >> /tmp/profile",
+        "echo 'export DBip=${aws_instance.db.private_ip}' >> /tmp/profile",
+        "echo 'export release=${var.release}' >> /tmp/profile",
+        "echo 'export DBport=5432' >> /tmp/profile",
+        "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
+        "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
         "./script.sh",
@@ -42,7 +49,7 @@ resource "aws_instance" "rest" {
 
       connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "~/Desktop/aws/staging.pem"
     }
 }
 
@@ -53,3 +60,4 @@ resource "aws_instance" "rest" {
     Name = "${var.stackPrefix}DMC-rest"
   }
 }
+

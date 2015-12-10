@@ -9,8 +9,19 @@
 
 cd /tmp
 source ~/.bashrc 
-git clone https://bitbucket.org/DigitalMfgCommons/dmcactivemq.git
-cd dmcactivemq
+if [[ $release == 'hot' ]]
+	then
+    			echo "pull from master"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcactivemq.git
+	else
+    			echo "pull from >> $release << release"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcactivemq.git
+    			cd dmcactivemq
+				echo "git checkout tags/$release"  | bash -
+
+fi
+
+cd /tmp/dmcactivemq
 mv * ..
 # /etc/init.d/sendmail stop
 

@@ -8,8 +8,21 @@ sudo /etc/init.d/tomcat7 start
 mkdir -p DOME
 cd DOME
 rm -rf *
-git clone https://bitbucket.org/DigitalMfgCommons/dmcdomeserver.git
-cd dmcdomeserver
+
+if [[ $release == 'hot' ]]
+	then
+    			echo "pull from master"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcdomeserver.git
+	else
+    			echo "pull from >> $release << release"
+    			git clone https://bitbucket.org/DigitalMfgCommons/dmcdomeserver.git
+                cd dmcdomeserver 
+				echo "git checkout tags/$release"  | bash -
+
+fi
+
+
+cd ~/DOME/dmcdomeserver
 #mvn package
 
 sudo cp DOMEApiServicesV7.war /var/lib/tomcat7/webapps

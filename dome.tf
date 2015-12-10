@@ -1,3 +1,4 @@
+/*
 resource "aws_instance" "dome" {
   instance_type = "m4.large"
   #depends_on = ["aws_instance.activeMq"]
@@ -13,7 +14,7 @@ resource "aws_instance" "dome" {
  key_name = "${var.key_name}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_dome.name}"]
+  security_groups = ["${aws_security_group.default.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables
@@ -52,3 +53,4 @@ resource "aws_instance" "dome" {
     Name = "${var.stackPrefix}DMC-dome"
   }
 }
+*/
