@@ -1,0 +1,190 @@
+
+        Release Notes - Digital Manufacturing Commons - Version Alpha
+                
+<h2>        Bug
+</h2>
+<ul>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-33'>DMC-33</a>] -         Update Jars used by DOME
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-34'>DMC-34</a>] -         Message queue not configured correctly
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-40'>DMC-40</a>] -         Broken automatic deployment of DOMEApiServices
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-48'>DMC-48</a>] -         DOME Service Registration
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-55'>DMC-55</a>] -         Bug in DOME Tuturial - Step 3 Interface
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-139'>DMC-139</a>] -         Remove 1 from 1dimensions window in units
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-145'>DMC-145</a>] -         Fix DMC selenium test cases
+</li>
+</ul>
+    
+<h2>        Story/Task/New Feature/Improvement
+</h2>
+<ul>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-7'>DMC-7</a>] -         Reconfigure deployment code to use existing load balancer
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-8'>DMC-8</a>] -         Add Jira Issue collector to DMC pages
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-23'>DMC-23</a>] -         Document requried security groups and ingress and egress rules
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-47'>DMC-47</a>] -         DOME War Release for Deployment
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-64'>DMC-64</a>] -         Add shibboleth SP to frontend machine image.
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-65'>DMC-65</a>] -         Tighten security groups
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-71'>DMC-71</a>] -         Come up with pre-workshop questionnaire
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-72'>DMC-72</a>] -         Loading Dome on personal machines 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-75'>DMC-75</a>] -         Prepare survey questionnaires
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-76'>DMC-76</a>] -         Prepare content for DMC overview
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-77'>DMC-77</a>] -         Prepare content for DMC use demo
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-85'>DMC-85</a>] -         Test dome build and execution using multiple versions of Java
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-87'>DMC-87</a>] -         Document software release process
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-105'>DMC-105</a>] -         Create DOME tutorial for integrating a 3rd party tool.
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-109'>DMC-109</a>] -         Create DOME tutorial for model deployment
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-110'>DMC-110</a>] -         Create DOME tutorial for model running
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-122'>DMC-122</a>] -         Create Jar Executable for DOME client
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-123'>DMC-123</a>] -         Create Jar Executable for DOME server
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-132'>DMC-132</a>] -         Review software stack, architecture, and responsibility matrix with security team
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-134'>DMC-134</a>] -         Compile DOME Excel plugin for Windows
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-140'>DMC-140</a>] -         Post/send software dependency list
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-151'>DMC-151</a>] -         Create requirements document for use case demonstration
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-152'>DMC-152</a>] -         Create content for A/B testing at July event.
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-153'>DMC-153</a>] -         Purchase IdM service to connect social providers.
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-162'>DMC-162</a>] -         Add a Services Server to the automated deployment process
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-171'>DMC-171</a>] -         Fix Deployment - DOME server
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-179'>DMC-179</a>] -         Add &quot;powered by UI Labs&quot;
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-180'>DMC-180</a>] -         Create Services WAR file automatically
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-181'>DMC-181</a>] -         Functional testing for fronted REST API services
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-182'>DMC-182</a>] -         Investigate process to incorporate and maintain new documentation technology
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-183'>DMC-183</a>] -         Develop oracle schema to support frontend rest API
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-184'>DMC-184</a>] -         Develop process to evaluate &quot;currentness&quot; and updated software packages
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-186'>DMC-186</a>] -         Rebrand projectdmc.org website to new DMC style
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-187'>DMC-187</a>] -         Publish workshop chat logs/FAQs
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-190'>DMC-190</a>] -         Identity service connection to DMC
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-191'>DMC-191</a>] -         Add security finding to Backlog
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-207'>DMC-207</a>] -         Most/All application service servers are directly accessible from internet through protocols including SSH and more (O.7)
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-208'>DMC-208</a>] -         Apache Solr is vulnerable to multiple exploits: CVE-2013-6407 (T.1)
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-217'>DMC-217</a>] -         publish workshop videos
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-218'>DMC-218</a>] -         Develop Product Roadmap
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-221'>DMC-221</a>] -         Dome Server  and ActiveMQ deployed via new Process
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-223'>DMC-223</a>] -         Document New Deployment Process
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-224'>DMC-224</a>] -         Locate sources of DMC documentation and consolidate
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-225'>DMC-225</a>] -         Services server deploy.me and update.me 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-226'>DMC-226</a>] -         Services server Confluence Documentation 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-227'>DMC-227</a>] -         Dome Server and Active Mq UpdateMe and DeployMe
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-228'>DMC-228</a>] -         Create Documentation Dome Server and ActiveMq
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-234'>DMC-234</a>] -         Build server is running out of disk space
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-241'>DMC-241</a>] -         Service Profile - Design
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-258'>DMC-258</a>] -         Marketplace - Store Front - High Fidelity
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-331'>DMC-331</a>] -         Build site service to create user
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-332'>DMC-332</a>] -         Identify identity provider for Alpha release
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-334'>DMC-334</a>] -         Deploy of database as part of standard deployment process
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-338'>DMC-338</a>] -         Test DNS CNAME record pointing to test.projectdmc.org that is backed by ELB in AWS US East.
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-339'>DMC-339</a>] -         Integrate frontend with Project site service 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-340'>DMC-340</a>] -         Integrate frontend with Task site service 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-341'>DMC-341</a>] -         Integrate frontend with Service site service 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-342'>DMC-342</a>] -         Integrate frontend with Services Specification site service 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-343'>DMC-343</a>] -         Integrate frontend with Projects site service
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-344'>DMC-344</a>] -         Integrate frontend with Services site service
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-345'>DMC-345</a>] -         Integrate frontend with Tasks site service
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-346'>DMC-346</a>] -         Integrate frontend with Component site service
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-347'>DMC-347</a>] -         Integrate frontend with Components site service
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-348'>DMC-348</a>] -         Integrate frontend with Discussion site service
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-349'>DMC-349</a>] -         Integrate frontend with Discussions site service
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-350'>DMC-350</a>] -         Build Project site service create method
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-351'>DMC-351</a>] -         Build Task site service create method
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-352'>DMC-352</a>] -         Build Dissusion site service create method
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-356'>DMC-356</a>] -         Create plan to release software
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-357'>DMC-357</a>] -         Publish delphi study resutls
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-358'>DMC-358</a>] -         Publish and build out product roadmap
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-359'>DMC-359</a>] -         DMC paper input for conference
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-360'>DMC-360</a>] -         Configure internal deployment
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-366'>DMC-366</a>] -         Investigate approaches to automatically draft release notes
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-367'>DMC-367</a>] -         Get certificates for opendmc.org and projectdmc.org and put on elastic load balancer
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-368'>DMC-368</a>] -         Ensure all documentation for Alpha Features is public
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-369'>DMC-369</a>] -         Edit the Pages for Alpha on ProjectDMC.org 
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-370'>DMC-370</a>] -         Selenium Tests to prove View Projects, View Tasks Comment, on Existing Project
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-371'>DMC-371</a>] -         Manual usecase validation with documentation
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-373'>DMC-373</a>] -         Take internal Usecase and create Walktrhough sample app
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-374'>DMC-374</a>] -         Announcement  to advertize Alpha release
+</li>
+<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-382'>DMC-382</a>] -         Update NodeJS server
+</li>
+</ul>
