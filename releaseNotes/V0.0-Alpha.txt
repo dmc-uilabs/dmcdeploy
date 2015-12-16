@@ -167,8 +167,6 @@
 </li>
 <li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-359'>DMC-359</a>] -         DMC paper input for conference
 </li>
-<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-360'>DMC-360</a>] -         Configure internal deployment
-</li>
 <li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-366'>DMC-366</a>] -         Investigate approaches to automatically draft release notes
 </li>
 <li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-367'>DMC-367</a>] -         Get certificates for opendmc.org and projectdmc.org and put on elastic load balancer
@@ -177,11 +175,7 @@
 </li>
 <li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-369'>DMC-369</a>] -         Edit the Pages for Alpha on ProjectDMC.org 
 </li>
-<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-370'>DMC-370</a>] -         Selenium Tests to prove View Projects, View Tasks Comment, on Existing Project
-</li>
 <li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-371'>DMC-371</a>] -         Manual usecase validation with documentation
-</li>
-<li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-373'>DMC-373</a>] -         Take internal Usecase and create Walktrhough sample app
 </li>
 <li>[<a href='https://digitalmfgcommons.atlassian.net/browse/DMC-374'>DMC-374</a>] -         Announcement  to advertize Alpha release
 </li>
