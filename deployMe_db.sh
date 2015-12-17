@@ -28,6 +28,7 @@ sudo yum -y install postgresql94.x86_64 postgresql94-server.x86_64 postgresql94-
 sudo service postgresql94 initdb
 sudo chkconfig postgresql94 on
 sudo su -c "sudo sed -i -e 's/peer/trust/g' ~postgres/data/pg_hba.conf"
+sudo su -c "sudo sed -i -e 's/ident/trust/g' ~postgres/data/pg_hba.conf"
 
 
 # Add only authorized hosts i.e DOME, Rest Services preferably via  config file
