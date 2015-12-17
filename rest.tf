@@ -12,7 +12,7 @@ resource "aws_instance" "rest" {
   # from the AWS console.
   #
 
- key_name = "production"
+ key_name = "${var.key_name}"
  
   # Our Security group to allow HTTP and SSH accessing
   security_groups = ["${aws_security_group.sg_rest.name}"]
@@ -27,7 +27,7 @@ resource "aws_instance" "rest" {
 
        connection {
         user = "ec2-user"
-        key_file  = "~/Desktop/aws/production.pem"
+        key_file  = "${var.key_full_path}"
     }
     }
 
@@ -49,7 +49,7 @@ resource "aws_instance" "rest" {
 
       connection {
         user = "ec2-user"
-        key_file  = "~/Desktop/aws/production.pem"
+        key_file  = "${var.key_full_path}"
     }
 }
 
