@@ -40,7 +40,7 @@ resource "aws_instance" "db" {
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "./script.sh",
+        "./script.sh"
 
         ]
 
