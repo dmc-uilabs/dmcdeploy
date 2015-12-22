@@ -1,5 +1,8 @@
 #!/bin/bash -v
 #install needed packages
+#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
+exec 1> >(logger -s -t $(basename $0)) 2>&1
+
     sudo yum install httpd -y
     sudo yum install php php-pgsql -y
     sudo yum install wget -y
@@ -103,17 +106,32 @@ cd /var/www/html
 sudo chown -R apache:apache *
 }
 
+
+
+
+
+function httpToHttpsRewrite {
+    sudo su -c "echo \"RewriteEngine on\" >>  /etc/httpd/conf/httpd.conf"
+    sudo su -c "echo \"RewriteCond %{HTTP:X-Forwarded-Proto} ^http$\" >>  /etc/httpd/conf/httpd.conf"
+    sudo su -c "echo \"RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\" >>  /etc/httpd/conf/httpd.conf"
+}
+
+
+
+
 ##command to create the AMI base
 #buildAMIBase
 
 
 ##command to install from latest auto build from bamboo -- cannot be used to install particular release
-#installWebsite
+installWebsite
 
 ##command to install from official DMC build repos -- used to install a particular release
-installWebsiteDMCrepos
+#installWebsiteDMCrepos
 
 # start apache then shibboleth
 sudo /etc/init.d/httpd start
 #sudo /opt/shibboleth-sp/sbin/shibd
+
+httpToHttpsRewrite
 
