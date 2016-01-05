@@ -9,7 +9,7 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 # Download DMC Solr files
 
 
-source ~/.bashrc 
+sudo yum remove sendmail -y
 
 echo "showing the var $solrDbDns"
 env | grep "$solrDbDns"

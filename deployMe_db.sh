@@ -3,7 +3,7 @@
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 #sudo yum update -y
 sudo yum install git -y
-
+sudo yum remove sendmail -y
 
 # variables (should come from terraform)
 #user='gforge'
