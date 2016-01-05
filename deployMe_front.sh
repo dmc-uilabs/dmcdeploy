@@ -125,7 +125,7 @@ function httpToHttpsRewrite {
 
 ##command to install from latest auto build from bamboo -- cannot be used to install particular release
 installWebsite
-
+httpToHttpsRewrite
 ##command to install from official DMC build repos -- used to install a particular release
 #installWebsiteDMCrepos
 
@@ -133,5 +133,5 @@ installWebsite
 sudo /etc/init.d/httpd start
 #sudo /opt/shibboleth-sp/sbin/shibd
 
-httpToHttpsRewrite
+
 

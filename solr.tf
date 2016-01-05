@@ -1,3 +1,4 @@
+/*
 resource "aws_instance" "solr" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
@@ -41,7 +42,7 @@ resource "aws_instance" "solr" {
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "./script.sh"
+        "bash -x script.sh 2>&1 | tee out.log"
         ]
 
       connection {
@@ -57,3 +58,5 @@ resource "aws_instance" "solr" {
     Name = "${var.stackPrefix}DMC-solr"
   }
 }
+
+*/
