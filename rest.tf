@@ -43,7 +43,7 @@ resource "aws_instance" "rest" {
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "./script.sh",
+        "bash -x script.sh 2>&1 | tee out.log",
 
         ]
 
