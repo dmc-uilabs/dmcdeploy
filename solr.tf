@@ -1,4 +1,4 @@
-/*
+
 resource "aws_instance" "solr" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
@@ -59,4 +59,3 @@ resource "aws_instance" "solr" {
   }
 }
 
-*/

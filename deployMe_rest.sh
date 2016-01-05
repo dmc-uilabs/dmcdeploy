@@ -7,6 +7,7 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 # yum install -y git
 # yum install -y tomcat7
 
+sudo yum remove sendmail -y
 source ~/.bashrc
 sudo service tomcat7 start
 mkdir ~/DMC
