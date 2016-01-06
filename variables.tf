@@ -1,7 +1,15 @@
 variable "access_key" {}
 variable "secret_key" {}
-variable "key_name" {}
-variable "key_full_path" {}
+variable "key_name_front" {}
+variable "key_name_rest" {}
+variable "key_name_db" {}
+variable "key_name_solr" {}
+variable "key_full_path_front" {}
+variable "key_full_path_rest" {}
+variable "key_full_path_db" {}
+variable "key_full_path_solr" {}
+
+
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}
 variable "activeMqUserPass" {}

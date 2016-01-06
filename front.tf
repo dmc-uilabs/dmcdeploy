@@ -10,7 +10,7 @@ resource "aws_instance" "front" {
   # from the AWS console.
   #
  
- key_name = "${var.key_name}"
+ key_name = "${var.key_name_front}"
 
   # Our Security group to allow HTTP and SSH access
   security_groups = ["${aws_security_group.sg_front.name}"]
@@ -26,7 +26,7 @@ provisioner "file" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_front}"
     }
     }
 
@@ -46,7 +46,7 @@ provisioner "remote-exec" {
 
         connection {
         user = "ec2-user"
-         key_file  = "${var.key_full_path}"
+         key_file  = "${var.key_full_path_front}"
     }
 }
 
