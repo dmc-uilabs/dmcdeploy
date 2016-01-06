@@ -12,7 +12,7 @@ resource "aws_instance" "rest" {
   # from the AWS console.
   #
 
- key_name = "${var.key_name}"
+ key_name = "${var.key_name_rest}"
  
   # Our Security group to allow HTTP and SSH accessing
   security_groups = ["${aws_security_group.sg_rest.name}"]
@@ -27,7 +27,7 @@ resource "aws_instance" "rest" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_rest}"
     }
     }
 
@@ -49,7 +49,7 @@ resource "aws_instance" "rest" {
 
       connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_rest}"
     }
 }
 

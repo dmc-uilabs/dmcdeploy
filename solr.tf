@@ -11,7 +11,7 @@ resource "aws_instance" "solr" {
   # from the AWS console.
   #
 
- key_name = "${var.key_name}"
+ key_name = "${var.key_name_solr}"
 
   # Our Security group to allow HTTP and SSH access
   security_groups = ["${aws_security_group.sg_solr.name}"]
@@ -29,7 +29,7 @@ resource "aws_instance" "solr" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_solr}"
     }
     }
 
@@ -47,7 +47,7 @@ resource "aws_instance" "solr" {
 
       connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_solr}"
     }
 }
 
