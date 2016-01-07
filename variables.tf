@@ -17,7 +17,7 @@ variable "PSQLUSER" {}
 variable "PSQLPASS" {}
 variable "PSQLDBNAME" {}
 variable "release" {}
-
+variable "restLb" {}
 
 variable "aws_region" {
   description = "The AWS region to create things in."
