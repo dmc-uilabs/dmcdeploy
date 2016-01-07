@@ -35,7 +35,7 @@ provisioner "file" {
 provisioner "remote-exec" {
         inline = [
         "echo 'export release=${var.release}' >> /tmp/profile",
-        "echo 'export Restip=${aws_instance.rest.public_ip}' >> /tmp/profile",   
+        "echo 'export Restip=${var.restLb}' >> /tmp/profile",   
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
