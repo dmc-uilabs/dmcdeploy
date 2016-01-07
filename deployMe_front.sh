@@ -65,14 +65,14 @@ function installWebsite {
 
     # move code to clean webroot and change owner to apache
    sudo rm -rf /var/www/html/*
-cd /tmp/dist/
-echo ">>>>$Restip<<<<"
-sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$Restip/rest'|" *.php
-sudo mkdir -p /var/www/
-sudo mkdir -p /var/www/html
-sudo mv /tmp/dist/* /var/www/html/.
-cd /var/www/html
-sudo chown -R apache:apache *
+   cd /tmp/dist/
+   echo ">>>>$Restip<<<<"
+   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$Restip/rest'|" *.php
+   sudo mkdir -p /var/www/
+   sudo mkdir -p /var/www/html
+   sudo mv /tmp/dist/* /var/www/html/.
+   cd /var/www/html
+   sudo chown -R apache:apache *
 }
 
 
@@ -81,35 +81,31 @@ function installWebsiteDMCrepos {
     cd /tmp
 
    
- if [[ $release == 'hot' ]]
+    if [[ $release == 'hot' ]]
 
-	then
-    			echo "pull from master"
-    			git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
-	else
-    			echo "pull from >> $release << release"
-    			git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
-    			cd dmcfrontend			
-				echo "git checkout tags/$release"  | bash -
-fi
+    then
+    	echo "pull from master"
+    	git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+    else
+    	echo "pull from >> $release << release"
+    	git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+    	cd dmcfrontend			
+	echo "git checkout tags/$release"  | bash -
+    fi
 
-   
-
-# move code to clean webroot and change owner to apache
-sudo rm -rf /var/www/html/*
-cd /tmp/dmcfrontend/dist
-
-echo ">>>>$Restip<<<<"
-sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$Restip:8080/rest'|" *.php
-sudo mkdir -p /var/www/
-sudo mkdir -p /var/www/html
-sudo mv /tmp/dmcfrontend/dist/* /var/www/html/
-cd /var/www/html
-sudo chown -R apache:apache *
+  
+    # move code to clean webroot and change owner to apache
+    sudo rm -rf /var/www/html/*
+    cd /tmp/dmcfrontend/dist
+    
+    echo ">>>>$Restip<<<<"
+    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$Restip:8080/rest'|" *.php
+    sudo mkdir -p /var/www/
+    sudo mkdir -p /var/www/html
+    sudo mv /tmp/dmcfrontend/dist/* /var/www/html/
+    cd /var/www/html
+    sudo chown -R apache:apache *
 }
-
-
-
 
 
 function httpToHttpsRewrite {
@@ -135,6 +131,4 @@ httpToHttpsRewrite
 # start apache then shibboleth
 sudo /etc/init.d/httpd start
 #sudo /opt/shibboleth-sp/sbin/shibd
-
-
 
