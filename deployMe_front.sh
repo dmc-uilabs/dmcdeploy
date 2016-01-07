@@ -26,21 +26,13 @@ function buildAMIBase {
     sudo echo "export serverURL=\"SERVER_URL\"" >> ~/.bashrc
     source ~/.bashrc
 
-
-    
-
     # install Shibbolth service provider and dependencies
     install_ShibbolthSpDependencies.sh
 
     # configure SP:
 
     # edit /etc/sysconfig/httpd
-    sed -i "s/#HTTPD=/usr/sbin/httpd.worker/HTTPD=/usr/sbin/httpd.worker/" /etc/sysconfig/httpd
     echo "export LD_LIBRARY_PATH=/opt/shibboleth-sp/lib" >>  /etc/sysconfig/httpd
-
-    # edit /etc/httpd/conf/httpd.conf
-    sed -i "s/#ServerName www.example.com:80/ServerName $serverURL/" /etc/httpd/conf/httpd.conf
-    sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
 
     # copy shibboleth SP Apache configuration to apache conf.d directory
     apacheConfigDir=configurationFiles/apache/version2.2
@@ -53,6 +45,15 @@ function buildAMIBase {
     cp $shibSPConfigDir/CirrusIdentitySocialProviders-metadata.xml /opt/shibboleth-sp/etc/shibboleth/CirrusIdentitySocialProviders-metadata.xml
     # need to copy sp-cert.pem to /opt/shibboleth-sp/etc/shibboleth/
     # need to copy sp-key.pem to /opt/shibboleth-sp/etc/shibboleth/
+}
+
+function configureApache {
+    # edit /etc/sysconfig/httpd
+    sed -i "s/#HTTPD=/usr/sbin/httpd.worker/HTTPD=/usr/sbin/httpd.worker/" /etc/sysconfig/httpd
+
+    # edit /etc/httpd/conf/httpd.conf
+    sed -i "s/#ServerName www.example.com:80/ServerName $serverURL/" /etc/httpd/conf/httpd.conf
+    sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
 }
 
 function installWebsite {
@@ -125,6 +126,7 @@ function httpToHttpsRewrite {
 
 
 ##command to install from latest auto build from bamboo -- cannot be used to install particular release
+configureApache
 installWebsite
 httpToHttpsRewrite
 ##command to install from official DMC build repos -- used to install a particular release
