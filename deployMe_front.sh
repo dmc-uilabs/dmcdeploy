@@ -1,34 +1,33 @@
 #!/bin/bash -v
-#install needed packages
+
+### NEEDED Variables
+# $createNewAMI
+# $serverURL
+##########
+
 #anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
+   
+
+function buildAMIBase {
+    #install needed packages
     sudo yum remove sendmail -y
     sudo yum install httpd -y
     sudo yum install php php-pgsql -y
     sudo yum install wget -y
     sudo yum install git -y
 
-   
-
-
-function buildAMIBase {
-    #yum update -y
-
-    ##if env variables need to be set set them here by uncommenting out the export lines
-    # terraform will ensure they are there when deployed 
-    #cd ~
-    # sudo echo "export var=\"value\"" >> ~/.bashrc
-    # sudo echo "export var2=\"value\"" >> ~/.bashrc
-    # sudo echo "export var3=\"value\"" >> ~/.bashrc
-
-    # serverURL is needed in httpd.conf
-    sudo echo "export serverURL=\"SERVER_URL\"" >> ~/.bashrc
-    source ~/.bashrc
+    # get Shibbolth service provider install script
+    git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+    mv dmcfrontend/install_ShibbolthSpDependencies.sh .
 
     # install Shibbolth service provider and dependencies
     install_ShibbolthSpDependencies.sh
+    configureShibbolethServiceProvider
+}
 
+function configureShibbolethServiceProvider {
     # configure SP:
 
     # edit /etc/sysconfig/httpd
@@ -52,6 +51,8 @@ function configureApache {
     sed -i "s/#HTTPD=/usr/sbin/httpd.worker/HTTPD=/usr/sbin/httpd.worker/" /etc/sysconfig/httpd
 
     # edit /etc/httpd/conf/httpd.conf
+
+    # serverURL is needed in httpd.conf and is already set by terraform
     sed -i "s/#ServerName www.example.com:80/ServerName $serverURL/" /etc/httpd/conf/httpd.conf
     sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
 }
@@ -116,15 +117,19 @@ function httpToHttpsRewrite {
 
 
 
+if($createNewAMI eq true) then
+    ##command to create the AMI base
+    buildAMIBase
+    httpToHttpsRewrite
+    # remove unneeded software
 
-##command to create the AMI base
-#buildAMIBase
-
+    # create option to makeAMISnapshot
+fi
 
 ##command to install from latest auto build from bamboo -- cannot be used to install particular release
 configureApache
 installWebsite
-httpToHttpsRewrite
+
 ##command to install from official DMC build repos -- used to install a particular release
 #installWebsiteDMCrepos
 
