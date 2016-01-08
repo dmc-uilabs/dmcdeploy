@@ -20,10 +20,13 @@ function buildAMIBase {
 
     # get Shibbolth service provider install script
     git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+    # move Shibbolth service provider install script
     mv dmcfrontend/install_ShibbolthSpDependencies.sh .
+    # move Shibbolth configuration files
+    mv dmcfrontend/configurationFiles .
 
     # install Shibbolth service provider and dependencies
-    install_ShibbolthSpDependencies.sh
+    ./install_ShibbolthSpDependencies.sh
     configureShibbolethServiceProvider
 }
 
@@ -35,7 +38,7 @@ function configureShibbolethServiceProvider {
 
     # copy shibboleth SP Apache configuration to apache conf.d directory
     apacheConfigDir=configurationFiles/apache/version2.2
-    cp $apacheConfigDir/apache22.config /etc/httpd/conf.d/apache22.conf
+    cp $apacheConfigDir/apache22.conf /etc/httpd/conf.d/apache22.conf
 
     # copy shibboleth SP configuration files to shibboleth SP configuration directory
     shibSPConfigDir=configurationFiles/shibbolethSP/version2.5.5
@@ -135,5 +138,5 @@ installWebsite
 
 # start apache then shibboleth
 sudo /etc/init.d/httpd start
-#sudo /opt/shibboleth-sp/sbin/shibd
+sudo /opt/shibboleth-sp/sbin/shibd
 
