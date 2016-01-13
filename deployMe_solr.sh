@@ -89,6 +89,17 @@ sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/users.data-config.xml > /v
 # Edit wiki.data-config.xml
 sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/wiki.data-config.xml > /var/solr/data/gforge/wiki/conf/data-config.xml
 
+# Install cron and scripts
+sudo yum install cronie -y
+sudo -u solr cp -r files/scripts  /var/solr
+sudo -u solr chmod +x /var/solr/scripts/*.sh
+sudo -u solr crontab files/scripts/cron_solr_index
+sudo -u solr crontab -l
+
+# Ensure cron is running
+sudo service crond start
+sudo service crond status
+
 # Restart solr
 echo restart solr
 sudo service solr restart
