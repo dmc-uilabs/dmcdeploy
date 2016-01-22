@@ -1,4 +1,6 @@
 #!/bin/bash
+#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
+exec 1> >(logger -s -t $(basename $0)) 2>&1
 # yum update -y
 # yum install -y java-1.8.0-openjdk.x86_64
 # yum erase -y java-1.7.0-openjdk

@@ -9,7 +9,7 @@ resource "aws_instance" "db" {
   # from the AWS console.
   #
 
- key_name = "${var.key_name}"
+ key_name = "${var.key_name_db}"
 
   # Our Security group to allow HTTP and SSH access
   security_groups = ["${aws_security_group.sg_db.name}"]
@@ -25,7 +25,7 @@ resource "aws_instance" "db" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_db}"
     }
     }
 
@@ -40,13 +40,13 @@ resource "aws_instance" "db" {
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "./script.sh",
+        "bash -x script.sh 2>&1 | tee out.log"
 
         ]
 
       connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_db}"
     }
 }
 

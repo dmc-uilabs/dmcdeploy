@@ -1,10 +1,13 @@
 #!/bin/bash
+#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
+exec 1> >(logger -s -t $(basename $0)) 2>&1
 # yum update -y
 # yum install -y java-1.8.0-openjdk.x86_64
 # yum erase -y java-1.7.0-openjdk
 # yum install -y git
 # yum install -y tomcat7
 
+sudo yum remove sendmail -y
 source ~/.bashrc
 sudo service tomcat7 start
 mkdir ~/DMC
@@ -18,7 +21,7 @@ if [[ $release == 'hot' ]]
 	else
     			echo "pull from >> $release << release"
     			git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
-    			
+    			cd dmcrestservices
 				echo "git checkout tags/$release"  | bash -
 
 fi
@@ -35,6 +38,10 @@ echo "DBip=$DBip" >> /etc/tomcat7/tomcat7.conf
 echo "DBport=$DBport" >> /etc/tomcat7/tomcat7.conf
 echo "DBpass=$DBpass" >> /etc/tomcat7/tomcat7.conf
 echo "DBuser=$DBuser" >> /etc/tomcat7/tomcat7.conf
+
+# Please also add the variable SOLR_BASE_URL to end of /etc/tomcat7/tomcat7.conf
+# Example: SOLR_BASE_URL="http://52.24.49.48:8983/solr/"  where the IP is the SOLR server IP
+# SOLR_BASE_URL="http://52.24.49.48:8983/solr/"
 
 sudo chown tomcat /etc/tomcat7/tomcat7.conf
 
