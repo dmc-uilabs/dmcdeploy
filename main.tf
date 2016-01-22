@@ -8,7 +8,7 @@ provider "aws" {
 
 
 
-
+/*
 resource "aws_elb" "loadbalancer" {
 
     name = "${var.stackPrefix}DMCLoadBalancer"
@@ -33,7 +33,7 @@ resource "aws_elb" "loadbalancer" {
     Name = "${var.stackPrefix}DMC-Load-Balancer"
   }
 }
-
+*/
 
 
 resource "aws_security_group" "sg_front" {

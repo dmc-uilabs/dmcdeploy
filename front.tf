@@ -5,12 +5,12 @@ resource "aws_instance" "front" {
 
   # Lookup the correct AMI based on the region
   # define what aim to launch 
-  ami = "${lookup(var.aws_amirehl, var.aws_region)}"
+  ami = "${lookup(var.frontSHIB, var.aws_region)}"
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.
   #
  
- key_name = "${var.key_name}"
+ key_name = "${var.key_name_front}"
 
   # Our Security group to allow HTTP and SSH access
   security_groups = ["${aws_security_group.sg_front.name}"]
@@ -26,7 +26,7 @@ provisioner "file" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_front}"
     }
     }
 
@@ -35,18 +35,19 @@ provisioner "file" {
 provisioner "remote-exec" {
         inline = [
         "echo 'export release=${var.release}' >> /tmp/profile",
-        "echo 'export Restip=${aws_instance.rest.public_ip}' >> /tmp/profile",   
+        "echo 'export Restip=${var.restLb}' >> /tmp/profile",  
+        "echo 'export serverURL=${var.serverURL}' >> /tmp/profile",  
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "./script.sh"
+        "bash -x script.sh 2>&1 | tee out.log"
         
         ]
 
         connection {
         user = "ec2-user"
-         key_file  = "${var.key_full_path}"
+         key_file  = "${var.key_full_path_front}"
     }
 }
 

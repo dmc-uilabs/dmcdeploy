@@ -1,3 +1,4 @@
+
 resource "aws_instance" "solr" {
   instance_type = "m4.large"
   depends_on = ["aws_instance.db"]
@@ -10,7 +11,7 @@ resource "aws_instance" "solr" {
   # from the AWS console.
   #
 
- key_name = "${var.key_name}"
+ key_name = "${var.key_name_solr}"
 
   # Our Security group to allow HTTP and SSH access
   security_groups = ["${aws_security_group.sg_solr.name}"]
@@ -28,7 +29,7 @@ resource "aws_instance" "solr" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_solr}"
     }
     }
 
@@ -41,12 +42,12 @@ resource "aws_instance" "solr" {
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "./script.sh"
+        "bash -x script.sh 2>&1 | tee out.log"
         ]
 
       connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_solr}"
     }
 }
 
@@ -57,3 +58,4 @@ resource "aws_instance" "solr" {
     Name = "${var.stackPrefix}DMC-solr"
   }
 }
+

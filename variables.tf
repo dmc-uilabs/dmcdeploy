@@ -1,7 +1,15 @@
 variable "access_key" {}
 variable "secret_key" {}
-variable "key_name" {}
-variable "key_full_path" {}
+variable "key_name_front" {}
+variable "key_name_rest" {}
+variable "key_name_db" {}
+variable "key_name_solr" {}
+variable "key_full_path_front" {}
+variable "key_full_path_rest" {}
+variable "key_full_path_db" {}
+variable "key_full_path_solr" {}
+
+
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}
 variable "activeMqUserPass" {}
@@ -9,6 +17,8 @@ variable "PSQLUSER" {}
 variable "PSQLPASS" {}
 variable "PSQLDBNAME" {}
 variable "release" {}
+variable "restLb" {}
+variable "serverURL" {}
 
 
 variable "aws_region" {
@@ -25,7 +35,7 @@ variable "aws_amis" {
 }
 variable "frontSHIB"{
   default = {
-  "us-west-2" ="ami-d24b57b3"
+  "us-west-2" ="ami-2ad8c34b"
   }
 }
 

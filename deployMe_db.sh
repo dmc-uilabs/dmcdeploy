@@ -1,8 +1,9 @@
 #!/bin/bash -v
-
+#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
+exec 1> >(logger -s -t $(basename $0)) 2>&1
 #sudo yum update -y
 sudo yum install git -y
-
+sudo yum remove sendmail -y
 
 # variables (should come from terraform)
 #user='gforge'
@@ -50,6 +51,7 @@ if [[ $release == 'hot' ]]
 	else
     			echo "pull from >> $release << release"
     			git clone https://bitbucket.org/DigitalMfgCommons/dmcdb.git
+    			cd dmc
 				echo "git checkout tags/$release"  | bash -
 
 fi
