@@ -13,10 +13,30 @@ resource "aws_instance" "front" {
  key_name = "${var.key_name_front}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_front.name}"]
+  security_groups = ["${aws_security_group.sg_wide.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   # in this case will be a shell but can be chef
+
+provisioner "file" {
+        source = "~/Desktop/keys/sp-cert.pem"
+        destination = "/tmp/sp-cert.pem"
+
+       connection {
+        user = "ec2-user"
+        key_file  = "${var.key_full_path_front}"
+    }
+}
+
+provisioner "file" {
+        source = "~/Desktop/keys/sp-key.pem"
+        destination = "/tmp/sp-key.pem"
+
+       connection {
+        user = "ec2-user"
+        key_file  = "${var.key_full_path_front}"
+    }
+}
 
 
 

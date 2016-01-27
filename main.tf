@@ -33,7 +33,7 @@ resource "aws_elb" "loadbalancer" {
     Name = "${var.stackPrefix}DMC-Load-Balancer"
   }
 }
-*/
+
 
 
 resource "aws_security_group" "sg_front" {
@@ -126,7 +126,7 @@ resource "aws_security_group" "sg_db" {
   }
 }
 
-/*
+
 resource "aws_security_group" "sg_dome" {
   name = "${var.stackPrefix}_DMC_sg_dome"
   description = "Security Group for the Public Apache Server"
@@ -214,11 +214,44 @@ resource "aws_security_group" "sg_git" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-*/
+
 
 resource "aws_security_group" "sg_solr" {
   name = "${var.stackPrefix}_DMC_sg_solr"
   description = "Security Group for Solr Server"
+
+  # SSH access from anywhere
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"  
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port = 0
+    to_port = 63000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+*/
+
+
+
+resource "aws_security_group" "sg_wide" {
+  name = "${var.stackPrefix}_DMC_sg_wide"
+  description = "Security Group for the Public Apache Server"
 
   # SSH access from anywhere
   ingress {

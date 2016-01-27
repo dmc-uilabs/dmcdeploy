@@ -34,30 +34,38 @@ function configureShibbolethServiceProvider {
     # configure SP:
 
     # edit /etc/sysconfig/httpd
-    echo "export LD_LIBRARY_PATH=/opt/shibboleth-sp/lib" >>  /etc/sysconfig/httpd
-
+    sudo su -c "echo \"export LD_LIBRARY_PATH=/opt/shibboleth-sp/lib\" >>  /etc/sysconfig/httpd"
+    
     # copy shibboleth SP Apache configuration to apache conf.d directory
     apacheConfigDir=configurationFiles/apache/version2.2
-    cp $apacheConfigDir/apache22.conf /etc/httpd/conf.d/apache22.conf
+    sudo -u root -E cp $apacheConfigDir/apache22.conf /etc/httpd/conf.d/apache22.conf
 
     # copy shibboleth SP configuration files to shibboleth SP configuration directory
     shibSPConfigDir=configurationFiles/shibbolethSP/version2.5.5
-    cp $shibSPConfigDir/attribute-map.xml /opt/shibboleth-sp/etc/shibboleth/attribute-map.xml
-    cp $shibSPConfigDir/shibboleth2.xml /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
-    cp $shibSPConfigDir/CirrusIdentitySocialProviders-metadata.xml /opt/shibboleth-sp/etc/shibboleth/CirrusIdentitySocialProviders-metadata.xml
+    sudo -u root -E cp $shibSPConfigDir/attribute-map.xml /opt/shibboleth-sp/etc/shibboleth/attribute-map.xml
+    sudo -u root -E cp $shibSPConfigDir/shibboleth2.xml /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
+    sudo -u root -E cp $shibSPConfigDir/CirrusIdentitySocialProviders-metadata.xml /opt/shibboleth-sp/etc/shibboleth/CirrusIdentitySocialProviders-metadata.xml
+}
+
+function moveShibbolethServiceProviderKeys {
     # need to copy sp-cert.pem to /opt/shibboleth-sp/etc/shibboleth/
+    sudo -u root -E mv /tmp/sp-cert.pem /opt/shibboleth-sp/etc/shibboleth/sp-cert.pem
+    sudo -u root -E chown root:root /opt/shibboleth-sp/etc/shibboleth/sp-cert.pem
     # need to copy sp-key.pem to /opt/shibboleth-sp/etc/shibboleth/
+    sudo -u root -E mv /tmp/sp-key.pem /opt/shibboleth-sp/etc/shibboleth/sp-key.pem
+    sudo -u root -E chown root:root /opt/shibboleth-sp/etc/shibboleth/sp-key.pem
+    sudo -u root -E chmod 600 /opt/shibboleth-sp/etc/shibboleth/sp-key.pem
 }
 
 function configureApache {
     # edit /etc/sysconfig/httpd
-    sed -i "s/#HTTPD=/usr/sbin/httpd.worker/HTTPD=/usr/sbin/httpd.worker/" /etc/sysconfig/httpd
+    sudo -u root -E sed -i "s@#HTTPD=/usr/sbin/httpd.worker@HTTPD=/usr/sbin/httpd.worker@" /etc/sysconfig/httpd
 
     # edit /etc/httpd/conf/httpd.conf
 
     # serverURL is needed in httpd.conf and is already set by terraform
-    sed -i "s/#ServerName www.example.com:80/ServerName $serverURL/" /etc/httpd/conf/httpd.conf
-    sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
+    sudo -u root -E sed -i "s@#ServerName www.example.com:80@ServerName https://$serverURL@" /etc/httpd/conf/httpd.conf
+    sudo -u root -E sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
 }
 
 function installWebsite {
@@ -88,13 +96,13 @@ function installWebsiteDMCrepos {
     if [[ $release == 'hot' ]]
 
     then
-    	echo "pull from master"
-    	git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+        echo "pull from master"
+        git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
     else
-    	echo "pull from >> $release << release"
-    	git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
-    	cd dmcfrontend			
-	echo "git checkout tags/$release"  | bash -
+        echo "pull from >> $release << release"
+        git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
+        cd dmcfrontend          
+    echo "git checkout tags/$release"  | bash -
     fi
 
   
@@ -118,25 +126,27 @@ function httpToHttpsRewrite {
     sudo su -c "echo \"RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\" >>  /etc/httpd/conf/httpd.conf"
 }
 
+##command to create the AMI base
+#buildAMIBase
 
 
-if($createNewAMI eq true) then
-    ##command to create the AMI base
-    buildAMIBase
-    httpToHttpsRewrite
-    # remove unneeded software
-
-    # create option to makeAMISnapshot
-fi
 
 ##command to install from latest auto build from bamboo -- cannot be used to install particular release
 configureApache
-installWebsite
 
+## used to redirect traffic from HTTP to HTTPS
+httpToHttpsRewrite
+
+moveShibbolethServiceProviderKeys
+
+## update shibboleth SP entityID
+sudo -u root -E sed -i "s@test.projectdmc.org@$serverURL@" /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
+
+installWebsite
+    
 ##command to install from official DMC build repos -- used to install a particular release
 #installWebsiteDMCrepos
 
 # start apache then shibboleth
 sudo /etc/init.d/httpd start
 sudo /opt/shibboleth-sp/sbin/shibd
-
