@@ -14,7 +14,7 @@ resource "aws_instance" "solr" {
  key_name = "${var.key_name_solr}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_solr.name}"]
+  security_groups = ["${aws_security_group.sg_wide.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables

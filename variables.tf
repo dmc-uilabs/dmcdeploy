@@ -35,7 +35,8 @@ variable "aws_amis" {
 }
 variable "frontSHIB"{
   default = {
-  "us-west-2" ="ami-2ad8c34b"
+  "us-east-1" = "ami-a27556c8"
+  "us-west-2" ="ami-cd3228ac"
   }
 }
 
