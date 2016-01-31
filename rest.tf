@@ -39,6 +39,7 @@ resource "aws_instance" "rest" {
         "echo 'export DBip=${aws_instance.db.private_ip}' >> /tmp/profile",
         "echo 'export release=${var.release}' >> /tmp/profile",
         "echo 'export DBport=5432' >> /tmp/profile",
+        "echo 'export use_swagger=${var.use_swagger}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",

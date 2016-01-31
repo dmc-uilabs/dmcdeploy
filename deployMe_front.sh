@@ -45,6 +45,7 @@ function configureShibbolethServiceProvider {
     sudo -u root -E cp $shibSPConfigDir/attribute-map.xml /opt/shibboleth-sp/etc/shibboleth/attribute-map.xml
     sudo -u root -E cp $shibSPConfigDir/shibboleth2.xml /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
     sudo -u root -E cp $shibSPConfigDir/CirrusIdentitySocialProviders-metadata.xml /opt/shibboleth-sp/etc/shibboleth/CirrusIdentitySocialProviders-metadata.xml
+    sudo -u root -E cp $shibSPConfigDir/azure.xml /opt/shibboleth-sp/etc/shibboleth/azure.xml
 }
 
 function moveShibbolethServiceProviderKeys {
@@ -127,7 +128,7 @@ function httpToHttpsRewrite {
 }
 
 ##command to create the AMI base
-#buildAMIBase
+buildAMIBase
 
 
 
