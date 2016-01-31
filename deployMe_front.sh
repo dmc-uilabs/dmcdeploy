@@ -127,8 +127,69 @@ function httpToHttpsRewrite {
     sudo su -c "echo \"RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\" >>  /etc/httpd/conf/httpd.conf"
 }
 
+
+
+
+function setLogLevel {
+###########################################################
+#
+# tests for appropriate log level settings in php.ini
+# 
+# author: james.barkley@uilabs.org
+#
+# last update: Jan 2016
+#
+###########################################################
+
+#uncomment to test pre-set variable $loglevel
+#export loglevel='development'
+#export loglevel='nonsense'
+
+# first, test to make sure variable exists
+if [ -z "$loglevel" ]; then
+  export loglevel='production'
+fi
+
+
+# next, make sure variable is in the valid range (production, development)
+if [ "$loglevel" == "production" ]; then
+  echo "loglevel is $loglevel"
+elif [ "$loglevel" == "development" ]; then
+  echo "loglevel is $loglevel"
+else
+  export loglevel='production'
+  echpo "loglevel is $loglevel"
+fi
+
+sudo cp /etc/php.ini php.ini.orig
+
+# finally, depending on loglevel, update php.ini file
+if [ "$loglevel" == "production" ]; then
+  echo "setting loglevel to prod environment"
+  sudo sed -i "s/^error_reporting\s*=.*/error_reporting= E_STRICT/" /etc/php.ini
+  sudo sed -i "s/^display_errors\s*=.*/display_errors = Off/" /etc/php.ini
+  sudo sed -i "s/^display_startup_errors\s*=.*/display_startup_errors = Off/" /etc/php.ini
+  sudo sed -i "s/^html_errors\s*=.*/display_html_errors = Off/" /etc/php.ini
+  sudo sed -i "s/^log_errors\s*=.*/log_errors = On/" /etc/php.ini
+else
+  echo "setting loglevel to dev environment"
+  sudo sed -i "s/^error_reporting\s*=.*/error_reporting= E_ALL/" /etc/php.ini
+  sudo sed -i "s/^display_errors\s*=.*/display_errors = On/" /etc/php.ini
+  sudo sed -i "s/^display_startup_errors\s*=.*/display_startup_errors = On/" /etc/php.ini
+  sudo sed -i "s/^html_errors\s*=.*/display_html_errors = On/" /etc/php.ini
+  sudo sed -i "s/^log_errors\s*=.*/log_errors = On/" /etc/php.ini
+fi
+
+}
+##set the appropriate level of logging
+setLogLevel
+
+
+
+
+
 ##command to create the AMI base
-buildAMIBase
+#buildAMIBase
 
 
 

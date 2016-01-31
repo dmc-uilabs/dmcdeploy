@@ -57,6 +57,7 @@ provisioner "remote-exec" {
         "echo 'export release=${var.release}' >> /tmp/profile",
         "echo 'export Restip=${var.restLb}' >> /tmp/profile",  
         "echo 'export serverURL=${var.serverURL}' >> /tmp/profile",  
+        "echo 'export loglevel=${var.loglevel}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
