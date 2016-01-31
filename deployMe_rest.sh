@@ -30,7 +30,16 @@ fi
 
 
 cd ~/DMC/dmcrestservices/target
-cp dmc*.war rest.war
+
+if [[ $use_swagger == '0' ]]
+	then
+		cp dmc-site-services-0.1.0.war rest.war
+	else
+		cp dmc-site-services-0.1.0-swagger.war rest.war
+
+fi
+
+
 
 sudo chown ec2-user /etc/tomcat7/tomcat7.conf 
 
