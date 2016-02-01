@@ -109,10 +109,27 @@ function installWebsiteDMCrepos {
   
     # move code to clean webroot and change owner to apache
     sudo rm -rf /var/www/html/*
-    cd /tmp/dmcfrontend/dist
+    
     
     echo ">>>>$Restip<<<<"
+    cd /tmp/dmcfrontend/dist/templates/common/header 
+    if [[ $loginURL == 'production' ]]
+
+    then
+
+        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://beta.opendmc.org/shibboleth&return=https://beta.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fbeta.opendmc.org|" header-tpl.html
+    
+    else
+        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://ben-web.opendmc.org/shibboleth&amp;return=https://ben-web.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fben-web.opendmc.org|" header-tpl.html
+    
+    fi
+
+    cd /tmp/dmcfrontend/dist
+
+
     sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$Restip:8080/rest'|" *.php
+
+
     sudo mkdir -p /var/www/
     sudo mkdir -p /var/www/html
     sudo mv /tmp/dmcfrontend/dist/* /var/www/html/
