@@ -10,6 +10,9 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 
 sudo yum remove sendmail -y
+sudo yum install git -y
+
+function getRepo {
 
 echo "showing the var $solrDbDns"
 env | grep "$solrDbDns"
@@ -35,7 +38,11 @@ fi
 
 
 cd /tmp/dmcsolr
+}
 
+
+function installSolr {
+sudo yum update -y
 
 # download solr 
 echo Downloading and installing solr
@@ -63,6 +70,17 @@ mkdir /tmp/solr
 cd /tmp/solr
 tar xvfz /tmp/dmcsolr/files/solr5.tar.gz
 
+
+# Install cron and scripts
+sudo yum install cronie -y
+}
+
+
+
+
+
+
+function configureSolr{
 # Log in as solr user
 echo chown directories to solr
 sudo chown -R solr /tmp/solr
@@ -89,8 +107,7 @@ sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/users.data-config.xml > /v
 # Edit wiki.data-config.xml
 sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/wiki.data-config.xml > /var/solr/data/gforge/wiki/conf/data-config.xml
 
-# Install cron and scripts
-sudo yum install cronie -y
+
 sudo -u solr cp -r files/scripts  /var/solr
 sudo -u solr chmod +x /var/solr/scripts/*.sh
 sudo -u solr crontab files/scripts/cron_solr_index
@@ -107,3 +124,14 @@ sudo service solr restart
 # check solr status
 echo check solr status
 sudo service solr status
+}
+
+
+#get appropriate code
+getRepo
+
+#install solr if not using a base image that contains it
+installSolr
+
+# configure solr and the cron jobs
+configureSolr

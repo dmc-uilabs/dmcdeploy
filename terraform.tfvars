@@ -17,7 +17,7 @@ key_full_path_solr = "~/Desktop/keys/2016_01_05_23_35_02_alpha_4"
 
 activeMqRootPass = "admin1"
 activeMqUserPass = "user1"
-stackPrefix = "prod-1-27-"
+stackPrefix = "prod-1-31-"
 release = "hot"
 PSQLUSER = "gforge"
 PSQLPASS= "gforge"
