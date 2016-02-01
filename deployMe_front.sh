@@ -78,6 +78,21 @@ function installWebsite {
 
     # move code to clean webroot and change owner to apache
    sudo rm -rf /var/www/html/*
+    cd /tmp/dist/templates/common/header 
+    if [[ $loginURL == 'production' ]]
+
+    then
+
+        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://beta.opendmc.org/shibboleth&return=https://beta.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fbeta.opendmc.org|" header-tpl.html
+    
+    else
+        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://ben-web.opendmc.org/shibboleth&amp;return=https://ben-web.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fben-web.opendmc.org|" header-tpl.html
+    
+    fi
+    echo "set loginURL to $loginURL "
+    cd /tmp/dmcfrontend/dist
+
+
    cd /tmp/dist/
    echo ">>>>$Restip<<<<"
    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$Restip/rest'|" *.php
@@ -123,7 +138,7 @@ function installWebsiteDMCrepos {
         sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://ben-web.opendmc.org/shibboleth&amp;return=https://ben-web.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fben-web.opendmc.org|" header-tpl.html
     
     fi
-
+    echo "set loginURL to $loginURL "
     cd /tmp/dmcfrontend/dist
 
 
