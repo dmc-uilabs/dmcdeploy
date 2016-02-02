@@ -39,6 +39,7 @@ resource "aws_instance" "rest" {
         "echo 'export DBip=${aws_instance.db.private_ip}' >> /tmp/profile",
         "echo 'export release=${var.release}' >> /tmp/profile",
         "echo 'export DBport=5432' >> /tmp/profile",
+        "echo 'export solrDbDns=http://${aws_instance.solr.public_ip}:8983/solr/' >> /tmp/profile",
         "echo 'export use_swagger=${var.use_swagger}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
         "source /etc/profile" ,
