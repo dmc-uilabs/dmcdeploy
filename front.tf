@@ -48,7 +48,7 @@ provisioner "file" {
         user = "ec2-user"
         key_file  = "${var.key_full_path_front}"
     }
-    }
+}
 
 
 
@@ -57,6 +57,7 @@ provisioner "remote-exec" {
         "echo 'export release=${var.release}' >> /tmp/profile",
         "echo 'export Restip=${var.restLb}' >> /tmp/profile",  
         "echo 'export serverURL=${var.serverURL}' >> /tmp/profile",  
+        "echo 'export restIP=${aws_instance.rest.private_ip}' >> /tmp/profile",  
         "echo 'export loglevel=${var.loglevel}' >> /tmp/profile",
         "echo 'export loginURL=${var.loginURL}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   

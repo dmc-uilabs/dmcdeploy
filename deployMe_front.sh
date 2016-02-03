@@ -8,28 +8,6 @@
 #anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
-   
-
-function buildAMIBase {
-    #install needed packages
-    sudo yum remove sendmail -y
-    sudo yum install httpd -y
-    sudo yum install php php-pgsql -y
-    sudo yum install wget -y
-    sudo yum install git -y
-
-    # get Shibbolth service provider install script
-    git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
-    # move Shibbolth service provider install script
-    mv dmcfrontend/install_ShibbolthSpDependencies.sh .
-    # move Shibbolth configuration files
-    mv dmcfrontend/configurationFiles .
-
-    # install Shibbolth service provider and dependencies
-    ./install_ShibbolthSpDependencies.sh
-    configureShibbolethServiceProvider
-}
-
 function configureShibbolethServiceProvider {
     # configure SP:
 
@@ -69,6 +47,14 @@ function configureApache {
     sudo -u root -E sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
 }
 
+function ajpProxy {
+
+    sudo su -c "echo \"ProxyIOBufferSize 65536\" >>  /etc/httpd/conf/httpd.conf"
+
+    sudo su -c "echo \"ProxyPass /rest ajp://$restIP:8009/rest\" >>  /etc/httpd/conf/httpd.conf"
+
+}
+
 function installWebsite {
     # download newest build to tmp
     cd /tmp
@@ -95,7 +81,7 @@ function installWebsite {
 
    cd /tmp/dist/
    echo ">>>>$Restip<<<<"
-   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$Restip/rest'|" *.php
+   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$serverURL/rest'|" *.php
    sudo mkdir -p /var/www/
    sudo mkdir -p /var/www/html
    sudo mv /tmp/dist/* /var/www/html/.
@@ -216,13 +202,7 @@ fi
 ##set the appropriate level of logging
 setLogLevel
 
-
-
-
-
-##command to create the AMI base
-#buildAMIBase
-
+configureShibbolethServiceProvider
 
 
 ##command to install from latest auto build from bamboo -- cannot be used to install particular release
@@ -231,10 +211,21 @@ configureApache
 ## used to redirect traffic from HTTP to HTTPS
 httpToHttpsRewrite
 
+
+## add rest services proxy configuration
+
+ajpProxy
+
+
+
 moveShibbolethServiceProviderKeys
 
 ## update shibboleth SP entityID
 sudo -u root -E sed -i "s@test.projectdmc.org@$serverURL@" /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
+
+sudo -u root -E sed -i "s@REMOTE_USER=\"eppn persistent-id targeted-id\"@REMOTE_USER=\"eppn persistent-id targeted-id\" attributePrefix=\"AJP_\"@" /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
+
+
 
 installWebsite
     
