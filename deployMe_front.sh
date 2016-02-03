@@ -81,7 +81,7 @@ function installWebsite {
 
    cd /tmp/dist/
    echo ">>>>$Restip<<<<"
-   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$serverURL/rest'|" *.php
+   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
    sudo mkdir -p /var/www/
    sudo mkdir -p /var/www/html
    sudo mv /tmp/dist/* /var/www/html/.
