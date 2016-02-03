@@ -4,7 +4,7 @@
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
     #sudo yum update -y
-
+ sudo yum update -y
 function buildAMIBase {
     #install needed packages
     sudo yum remove sendmail -y

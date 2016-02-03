@@ -25,7 +25,13 @@ cd ~
 #sudo echo user_allow_other >> fuse.conf
 #sudo mv fuse.conf /etc/fuse.conf
 #sudo chmod 644 /etc/fuse.conf
-sudo yum -y install postgresql94.x86_64 postgresql94-server.x86_64 postgresql94-contrib.x86_64 git
+function installdb {
+	sudo yum -y install postgresql94.x86_64 postgresql94-server.x86_64 postgresql94-contrib.x86_64 git
+
+}
+#use this function if not using a base image
+installdb
+
 sudo service postgresql94 initdb
 sudo chkconfig postgresql94 on
 sudo su -c "sudo sed -i -e 's/peer/trust/g' ~postgres/data/pg_hba.conf"

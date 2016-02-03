@@ -5,10 +5,6 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 # deployMe.sh for Apache Solr
 #
 
-
-# Download DMC Solr files
-
-
 sudo yum remove sendmail -y
 sudo yum install git -y
 
