@@ -47,6 +47,9 @@ echo "DBip=$DBip" >> /etc/tomcat7/tomcat7.conf
 echo "DBport=$DBport" >> /etc/tomcat7/tomcat7.conf
 echo "DBpass=$DBpass" >> /etc/tomcat7/tomcat7.conf
 echo "DBuser=$DBuser" >> /etc/tomcat7/tomcat7.conf
+echo "SOLR_BASE_URL=$solrDbDns" >> /etc/tomcat7/tomcat7.conf 
+sudo -u root -E sed -i "s@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" />@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" tomcatAuthentication=\"false\" packetSize=\"65536\" />@" /etc/tomcat7/server.xml
+
 
 # Please also add the variable SOLR_BASE_URL to end of /etc/tomcat7/tomcat7.conf
 # Example: SOLR_BASE_URL="http://52.24.49.48:8983/solr/"  where the IP is the SOLR server IP
