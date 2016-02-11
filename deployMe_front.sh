@@ -57,29 +57,18 @@ function ajpProxy {
 
 
 function setLoginUrl {
-    if [[ $loginURL == 'production' ]]
-
-    then
-
-        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://beta.opendmc.org/shibboleth\&return=https://beta.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fbeta.opendmc.org|" header-tpl.html
-                               
-    else
-        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://ben-web.opendmc.org/shibboleth\&amp;return=https://ben-web.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fben-web.opendmc.org|" header-tpl.html
+  
+  sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://beta.opendmc.org/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html 
     
-    fi
-
 }
 
 
-<<<<<<< HEAD
+
 function commonInstallWebsiteConfig {
 
-   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$Restip'|" *.php
-=======
    cd /tmp/dist/
    echo ">>>>$Restip<<<<"
    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
->>>>>>> aaed664a338e46449bdb054adc251c80feb6c961
    sudo mkdir -p /var/www/
    sudo mkdir -p /var/www/html
    sudo mv /tmp/dist/* /var/www/html/.
@@ -180,7 +169,7 @@ if [ -z "$loglevel" ]; then
 fi
 
 
-Re# next, make sure variable is in the valid range (production, development)
+# next, make sure variable is in the valid range (production, development)
 if [ "$loglevel" == "production" ]; then
   echo "loglevel is $loglevel"
 elif [ "$loglevel" == "development" ]; then
