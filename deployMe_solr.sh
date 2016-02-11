@@ -76,7 +76,7 @@ sudo yum install cronie -y
 
 
 
-function configureSolr{
+function configureSolr {
 # Log in as solr user
 echo chown directories to solr
 sudo chown -R solr /tmp/solr

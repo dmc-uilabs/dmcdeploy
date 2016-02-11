@@ -55,16 +55,8 @@ function ajpProxy {
 
 }
 
-function installWebsite {
-    # download newest build to tmp
-    cd /tmp
 
-    wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip 
-    unzip DMCFrontendDist.zip  #code is now in /tmp/dist
-
-    # move code to clean webroot and change owner to apache
-   sudo rm -rf /var/www/html/*
-    cd /tmp/dist/templates/common/header 
+function setLoginUrl {
     if [[ $loginURL == 'production' ]]
 
     then
@@ -75,18 +67,40 @@ function installWebsite {
         sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://ben-web.opendmc.org/shibboleth\&amp;return=https://ben-web.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fben-web.opendmc.org|" header-tpl.html
     
     fi
-    echo "set loginURL to $loginURL "
-    
+
+}
 
 
-   cd /tmp/dist/
-   echo ">>>>$Restip<<<<"
-   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$serverURL/rest'|" *.php
+function commonInstallWebsiteConfig {
+
+   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$Restip'|" *.php
    sudo mkdir -p /var/www/
    sudo mkdir -p /var/www/html
    sudo mv /tmp/dist/* /var/www/html/.
    cd /var/www/html
    sudo chown -R apache:apache *
+}
+
+
+function installWebsite {
+    # download newest build to tmp
+    cd /tmp
+
+    wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip 
+    unzip DMCFrontendDist.zip  #code is now in /tmp/dist
+
+    # move code to clean webroot and change owner to apache
+   sudo rm -rf /var/www/html/*
+    cd /tmp/dist/templates/common/header 
+    
+    echo "set loginURL to $loginURL "
+    setLoginUrl
+
+
+   cd /tmp/dist/
+
+   commonInstallWebsiteConfig
+  
 }
 
 
@@ -112,30 +126,21 @@ function installWebsiteDMCrepos {
     sudo rm -rf /var/www/html/*
     
     
-    echo ">>>>$Restip<<<<"
+    
     cd /tmp/dmcfrontend/dist/templates/common/header 
-    if [[ $loginURL == 'production' ]]
-
-    then
-
-        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://beta.opendmc.org/shibboleth&return=https://beta.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fbeta.opendmc.org|" header-tpl.html
-    
-    else
-        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://ben-web.opendmc.org/shibboleth&amp;return=https://ben-web.opendmc.org/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2Fben-web.opendmc.org|" header-tpl.html
-    
-    fi
+   
     echo "set loginURL to $loginURL "
+    setLoginUrl
+
+
+
     cd /tmp/dmcfrontend/dist
 
 
-    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$Restip:8080/rest'|" *.php
+    commonInstallWebsiteConfig
 
 
-    sudo mkdir -p /var/www/
-    sudo mkdir -p /var/www/html
-    sudo mv /tmp/dmcfrontend/dist/* /var/www/html/
-    cd /var/www/html
-    sudo chown -R apache:apache *
+
 }
 
 
@@ -169,7 +174,7 @@ if [ -z "$loglevel" ]; then
 fi
 
 
-# next, make sure variable is in the valid range (production, development)
+Re# next, make sure variable is in the valid range (production, development)
 if [ "$loglevel" == "production" ]; then
   echo "loglevel is $loglevel"
 elif [ "$loglevel" == "development" ]; then
