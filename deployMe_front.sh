@@ -71,9 +71,15 @@ function setLoginUrl {
 }
 
 
+<<<<<<< HEAD
 function commonInstallWebsiteConfig {
 
    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='http://$Restip'|" *.php
+=======
+   cd /tmp/dist/
+   echo ">>>>$Restip<<<<"
+   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
+>>>>>>> aaed664a338e46449bdb054adc251c80feb6c961
    sudo mkdir -p /var/www/
    sudo mkdir -p /var/www/html
    sudo mv /tmp/dist/* /var/www/html/.
