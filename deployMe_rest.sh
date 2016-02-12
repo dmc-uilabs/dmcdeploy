@@ -12,28 +12,34 @@ env | grep "rel"
 
 if [[ $release == 'hot' ]]
 	then
-    			echo "pull from master"
-    			git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
+    			echo "pull from S3 build from commit -- $commit_rest "
+    			if [[ $use_swagger == '0' ]]
+					then
+					    wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$commit_rest-dmc-site-services-0.1.0.war
+					else
+						wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$commit_rest-dmc-site-services-0.1.0-swagger.war
+				fi
+				cp *.war rest.war
 	else
     			echo "pull from >> $release << release"
     			git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
     			cd dmcrestservices
 				echo "git checkout tags/$release"  | bash -
+				
+				
+				cd ~/DMC/dmcrestservices/target
+
+				if [[ $use_swagger == '0' ]]
+					then
+						cp *.war rest.war
+					else
+						cp *-swagger.war rest.war
+
+				fi
 
 fi
 
 
-
-
-cd ~/DMC/dmcrestservices/target
-
-if [[ $use_swagger == '0' ]]
-	then
-		cp dmc-site-services-0.1.0.war rest.war
-	else
-		cp dmc-site-services-0.1.0-swagger.war rest.war
-
-fi
 
 
 
