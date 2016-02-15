@@ -9,8 +9,9 @@ variable "key_full_path_rest" {}
 variable "key_full_path_db" {}
 variable "key_full_path_solr" {}
 variable "use_swagger" {}
-variable "loginURL" {}
 
+variable "commit_rest" {}
+variable "commit_front" {}
 
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}

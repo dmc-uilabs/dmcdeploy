@@ -80,12 +80,24 @@ function commonInstallWebsiteConfig {
 function installWebsite {
     # download newest build to tmp
     cd /tmp
+    echo "value of commit_front is $commit_front"
+    if [[ $commit_front == 'hot' ]]
 
-    wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip 
-    unzip DMCFrontendDist.zip  #code is now in /tmp/dist
+      then
+          echo "pull from latest build"
+          wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip 
+      else
+          echo "pull from >> $commit_front << commit"
+          wget https://s3.amazonaws.com/dmc-frontend-distribution/$commit_front-DMCFrontendDist.zip
+          
+    fi
+
+
+    rm -fr /tmp/dist
+    unzip *.zip  #code is now in /tmp/dist
 
     # move code to clean webroot and change owner to apache
-   sudo rm -rf /var/www/html/*
+    sudo rm -rf /var/www/html/*
     cd /tmp/dist/templates/common/header 
     
     echo "set loginURL to $loginURL "
