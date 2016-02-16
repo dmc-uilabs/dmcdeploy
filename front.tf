@@ -19,7 +19,7 @@ resource "aws_instance" "front" {
   # in this case will be a shell but can be chef
 
 provisioner "file" {
-        source = "${var.sp-cert}"
+        source = "${var.sp_cert_location}"
         destination = "/tmp/sp-cert.pem"
 
        connection {
@@ -29,7 +29,7 @@ provisioner "file" {
 }
 
 provisioner "file" {
-        source = "${var.sp-key}"
+        source = "${var.sp_key_location}"
         destination = "/tmp/sp-key.pem"
 
        connection {
