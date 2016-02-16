@@ -20,6 +20,9 @@ key_full_path_front = "~/Desktop/keys/DMCDriver.pem"
 commit_front = "352beb61d4206de468124e6d2924271502528662"
 
 
+sp_cert_location = "~/Desktop/keys/sp-cert.pem"
+sp_key_location = "~/Desktop/keys/sp-key.pem"
+
 
 # keys for the rest machine
 key_name_rest = "DMCDriver"

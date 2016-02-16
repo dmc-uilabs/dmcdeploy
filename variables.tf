@@ -13,6 +13,9 @@ variable "use_swagger" {}
 variable "commit_rest" {}
 variable "commit_front" {}
 
+variable "sp_cert_location" {} 
+variable "sp_key_location" {}
+
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}
 variable "activeMqUserPass" {}
