@@ -41,7 +41,7 @@ variable "aws_amis" {
 }
 variable "frontSHIB"{
   default = {
-  "us-east-1" = "ami-dd7c52b7"
+  "us-east-1" = "ami-d86553b2"
   "us-west-2" = "ami-1220c672"
   }
 }
@@ -59,5 +59,21 @@ variable "aws_amirehl_tom" {
   default = {
     "us-east-1" = "ami-271c654d"
     "us-west-2" = "ami-86a6b4e7"
+  }
+}
+
+# base db image
+variable "aws_baseDb" {
+  default = {
+    "us-east-1" = "ami-ac80b7c6"
+    "us-west-2" = "ami-f0091d91"
+  }
+}
+
+# base solr image
+variable "aws_baseSolr" {
+  default = {
+    "us-east-1" = "ami-6082b50a"
+    "us-west-2" = "ami-f0091d91"
   }
 }
