@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 #!/bin/bash -v
 
-=======
->>>>>>> 969dd8f2c453667c6605eeb1569d76bee0018c52
+
 # Use this script to update your existing stack
 # 
 # edit the variables to the appropriate values and 
