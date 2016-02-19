@@ -1,18 +1,17 @@
-
 /*
-resource "aws_instance" "activeMq" {
+resource "aws_instance" "stackMon" {
   instance_type = "m4.large"
- 
+  
 
   # Lookup the correct AMI based on the region
   # we specified
-   ami = "${lookup(var.aws_amirehl_tom, var.aws_region)}"
+  ami = "${lookup(var.aws_amirehl, var.aws_region)}"
 
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.
   #
 
- key_name = "${var.key_name_activeMq}"
+ key_name = "${var.key_name_stackMon}"
 
   # Our Security group to allow HTTP and SSH access
   security_groups = ["${aws_security_group.sg_wide.name}"]
@@ -21,23 +20,20 @@ resource "aws_instance" "activeMq" {
   #this is where we set the env variables
 
 
-
-
-
   provisioner "file" {
-        source = "deployMe_active.sh"
+        source = "deployMe_stackMon.sh"
         destination = "/tmp/script.sh"
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path_activeMq}"
+        key_file  = "${var.key_full_path_stackMon}"
     }
     }
 
   
    provisioner "remote-exec" {
         inline = [
-         "echo 'export commit_front=${var.commit_front}' >> /tmp/profile",   
+        "echo 'export commit_front=${var.commit_front}' >> /tmp/profile",   
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
@@ -47,7 +43,7 @@ resource "aws_instance" "activeMq" {
 
       connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path_activeMq}"
+        key_file  = "${var.key_full_path_stackMon}"
     }
 }
 
@@ -55,8 +51,7 @@ resource "aws_instance" "activeMq" {
 
   #Instance tags
   tags {
-    Name = "${var.stackPrefix}DMC-activeMq"
+    Name = "${var.stackPrefix}DMC-stackMon"
   }
 }
-
 */
