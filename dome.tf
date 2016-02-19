@@ -11,10 +11,10 @@ resource "aws_instance" "dome" {
   # from the AWS console.
   #
 
- key_name = "${var.key_name}"
+ key_name = "${var.key_name_dome}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.default.name}"]
+  security_groups = ["${aws_security_group.sg_wide.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables
@@ -26,23 +26,24 @@ resource "aws_instance" "dome" {
 
        connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_dome}"
     }
     }
 
   
    provisioner "remote-exec" {
         inline = [
-        "echo 'export ActiveMQdns=${aws_instance.activeMq.private_ip}' >> ~/.bashrc",  
+        "echo 'export commit_front=${var.commit_front}' >> /tmp/profile",   
+        "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
+        "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "source ~/.bashrc",
-        " ./script.sh"
+        "bash -x script.sh 2>&1 | tee out.log"
         ]
 
       connection {
         user = "ec2-user"
-        key_file  = "${var.key_full_path}"
+        key_file  = "${var.key_full_path_dome}"
     }
 }
 
