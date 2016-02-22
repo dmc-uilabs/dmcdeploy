@@ -1,9 +1,9 @@
-access_key = 
-secret_key = 
+access_key = "AKIAJ5QXSD2KD2CUKZNQ"
+secret_key = "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"
 
 
 
-bucket_name = "public_web_bucket"
+bucket_name = "db_web_bucket"
 
 
-stackPrefix = "1_25_"
+stackPrefix = "2_12_"

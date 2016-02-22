@@ -1,12 +1,12 @@
-resource "aws_s3_bucket" "b2" {
-    bucket = "dmc-restServices-distribution"
-    acl = "public-read-write"
-   
 
+resource "aws_s3_bucket" "b9" {
+    bucket = "db-web-bucket"
+    acl = "private"
+    
 
-    versioning {
-        enabled = true
+    tags {
+        Name = "My db bucket"
+        Environment = "Dev"
+
     }
 }
-
-
