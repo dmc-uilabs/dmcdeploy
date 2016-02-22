@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+## this script requires a program called jq --
+# install it if not available
+./ifNotHaveInstall.sh jq 
 
 #remove quotes form variable
 removeQuotes(){
@@ -174,7 +177,7 @@ tightenSolr () {
 #Select which tighening rules you wish to apply
 
 #tightenFront
-tightenRest
+#tightenRest
 #tightenDb
 #tightenSolr
 
