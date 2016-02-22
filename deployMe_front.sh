@@ -211,6 +211,29 @@ else
 fi
 
 }
+
+
+function sanityTest {
+
+
+cd ~
+
+
+
+response=$(curl -o /dev/null --silent --head --write-out '%{http_code}' "localhost")
+echo "Attemting to see if server can be reached " >> frontSanityTest.log
+echo "server response -- $response" >> frontSanityTest.log
+
+echo "Login url is set to -- " >> frontSanityTest.log
+
+
+
+
+
+}
+
+
+
 ##set the appropriate level of logging
 setLogLevel
 
@@ -247,3 +270,6 @@ installWebsite
 # start apache then shibboleth
 sudo /etc/init.d/httpd start
 sudo /opt/shibboleth-sp/sbin/shibd
+
+
+sanityTest
