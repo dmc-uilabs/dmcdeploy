@@ -1,7 +1,14 @@
 #!/bin/bash
 
-## will check if provided program exists if not try to install it from appropriate repo
+#remove quotes form variable
+removeQuotes(){
+    echo "$1" | sed -e 's/^"//'  -e 's/"$//'
+}
 
+
+
+
+#check if program exists if not install it
 ifNotHaveInstall (){
 
     if hash $1 2>/dev/null; then
