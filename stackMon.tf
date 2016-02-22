@@ -1,4 +1,4 @@
-/*
+
 resource "aws_instance" "stackMon" {
   instance_type = "m4.large"
   
@@ -14,7 +14,7 @@ resource "aws_instance" "stackMon" {
  key_name = "${var.key_name_stackMon}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_wide.name}"]
+  security_groups = ["${aws_security_group.sg_stackmon.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables
@@ -54,4 +54,3 @@ resource "aws_instance" "stackMon" {
     Name = "${var.stackPrefix}DMC-stackMon"
   }
 }
-*/

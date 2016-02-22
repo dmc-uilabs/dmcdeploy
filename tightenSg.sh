@@ -1,8 +1,13 @@
 #!/bin/bash 
 
-## this script requires a program called jq --
+## this script requires a program called jq -- https://stedolan.github.io/jq/
 # install it if not available
 ./ifNotHaveInstall.sh jq 
+
+
+## Also required is a terraform.tfstate file that reflects the state of the stack you wish to work with
+
+
 
 #remove quotes form variable
 removeQuotes(){
