@@ -15,7 +15,7 @@ resource "aws_instance" "activeMq" {
  key_name = "${var.key_name_activeMq}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_wide.name}"]
+  security_groups = ["${aws_security_group.sg_activemq.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables

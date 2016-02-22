@@ -5,7 +5,7 @@ resource "aws_instance" "solr" {
 
   # Lookup the correct AMI based on the region
   # we specified
-   ami = "${lookup(var.aws_amirehl_tom, var.aws_region)}"
+   ami = "${lookup(var.aws_baseSolr, var.aws_region)}"
 
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.
@@ -14,7 +14,7 @@ resource "aws_instance" "solr" {
  key_name = "${var.key_name_solr}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_wide.name}"]
+  security_groups = ["${aws_security_group.sg_solr.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables

@@ -3,7 +3,7 @@ resource "aws_instance" "db" {
 
   # Lookup the correct AMI based on the region
   # we specified
-  ami = "${lookup(var.aws_amirehl, var.aws_region)}"
+  ami = "${lookup(var.aws_baseDb, var.aws_region)}"
 
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.
@@ -12,7 +12,7 @@ resource "aws_instance" "db" {
  key_name = "${var.key_name_db}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_wide.name}"]
+  security_groups = ["${aws_security_group.sg_db.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables
