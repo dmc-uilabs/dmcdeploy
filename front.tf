@@ -52,7 +52,10 @@ provisioner "file" {
 
 
 
-provisioner "remote-exec" {
+
+
+provisioner "remote-exec"{
+ 
         inline = [
         "echo 'export release=${var.release}' >> /tmp/profile",
         "echo 'export Restip=${var.restLb}' >> /tmp/profile",  
@@ -70,16 +73,21 @@ provisioner "remote-exec" {
 
         connection {
         user = "ec2-user"
-         key_file  = "${var.key_full_path_front}"
+        key_file  = "${var.key_full_path_front}"
+
     }
 }
-
-
 
   #Instance tags -- name the vm in amazon to find easier
   tags {
     Name = "${var.stackPrefix}DMC-front"
     Prefix = "${var.stackPrefix}"
+    Kname = "${var.key_name_front}"
+  }
+
+
+    provisioner "local-exec" {
+          command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_front} ec2-user@${aws_instance.front.public_ip}:/home/ec2-user/frontSanityTest.log ."
   }
 }
 
