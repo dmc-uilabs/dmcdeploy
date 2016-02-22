@@ -14,6 +14,39 @@ resource "aws_ami_from_instance" "frontBaseAmi" {
     name = "${var.stackPrefix}_frontBase_ami"
     source_instance_id = "${aws_instance.frontAmi.id}"
 }
+
+## must only uncomment after the base image compilation process is done
+## when taking a snapshot aws kills the running instance being imaged 
+## therefore wait until the base image creation is done and then create the AMI 
+## by uncommenting this block and running terraform apply once more
+resource "aws_ami_from_instance" "restBaseAmi" {
+    depends_on = ["aws_instance.restAmi"]
+    name = "${var.stackPrefix}_restBase_ami"
+    source_instance_id = "${aws_instance.restAmi.id}"
+}
+
+
+## must only uncomment after the base image compilation process is done
+## when taking a snapshot aws kills the running instance being imaged 
+## therefore wait until the base image creation is done and then create the AMI 
+## by uncommenting this block and running terraform apply once more
+resource "aws_ami_from_instance" "dbBaseAmi" {
+    depends_on = ["aws_instance.dbAmi"]
+    name = "${var.stackPrefix}_dbBase_ami"
+    source_instance_id = "${aws_instance.dbAmi.id}"
+}
+
+
+## must only uncomment after the base image compilation process is done
+## when taking a snapshot aws kills the running instance being imaged 
+## therefore wait until the base image creation is done and then create the AMI 
+## by uncommenting this block and running terraform apply once more
+resource "aws_ami_from_instance" "solrBaseAmi" {
+    depends_on = ["aws_instance.solrAmi"]
+    name = "${var.stackPrefix}_solrBase_ami"
+    source_instance_id = "${aws_instance.solrAmi.id}"
+}
+
 */
 
 resource "aws_security_group" "sg_wide" {
