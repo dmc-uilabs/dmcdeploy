@@ -30,7 +30,7 @@ function installdb {
 
 }
 #use this function if not using a base image
-installdb
+#installdb
 
 sudo service postgresql94 initdb
 sudo chkconfig postgresql94 on

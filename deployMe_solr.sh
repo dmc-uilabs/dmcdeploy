@@ -37,6 +37,8 @@ cd /tmp/dmcsolr
 }
 
 
+
+
 function installSolr {
 sudo yum update -y
 
@@ -127,7 +129,7 @@ sudo service solr status
 getRepo
 
 #install solr if not using a base image that contains it
-installSolr
+#installSolr
 
 # configure solr and the cron jobs
 configureSolr
