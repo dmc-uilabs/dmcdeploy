@@ -1,18 +1,17 @@
 #!/bin/bash 
 
-## this script requires a program called jq -- https://stedolan.github.io/jq/
-# install it if not available
-./ifNotHaveInstall.sh jq 
 
 
 ## Also required is a terraform.tfstate file that reflects the state of the stack you wish to work with
 
 
 
-#remove quotes form variable
-removeQuotes(){
-    echo "$1" | sed -e 's/^"//'  -e 's/"$//'
-}
+#importing devUtil
+source ./devUtil.sh
+
+## this script requires a program called jq -- https://stedolan.github.io/jq/
+# install it if not available
+ifNotHaveInstall jq 
 
 
 
@@ -70,7 +69,7 @@ showSecGroupDetails (){
 tightenFront () {
 
 
-	front_sg="${stackprefix}_DMC_sg_front"
+	front_sg="$(echo "${stackprefix}" | sed -e 's/^"//'  -e 's/"$//')_DMC_sg_front"
 
 	echo "the fron sg is -- $front_sg"
 
@@ -82,7 +81,7 @@ tightenFront () {
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
 	# do not allow traffic on port 22 
-	aws ec2 revoke-security-group-ingress --group-name $front_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
+	#aws ec2 revoke-security-group-ingress --group-name $front_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
 	  
 	 #show secrutity group details for the sec group with name 
@@ -113,7 +112,7 @@ tightenRest () {
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
 	# do not allow traffic on port 22 
-	aws ec2 revoke-security-group-ingress --group-name $rest_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
+	#aws ec2 revoke-security-group-ingress --group-name $rest_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
   
 
@@ -144,7 +143,7 @@ tightenDb () {
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
 	# do not allow traffic on port 22 
-	aws ec2 revoke-security-group-ingress --group-name $db_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
+	#aws ec2 revoke-security-group-ingress --group-name $db_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
 	  
 
@@ -167,7 +166,7 @@ tightenSolr () {
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
 	# do not allow traffic on port 22 
-	aws ec2 revoke-security-group-ingress --group-name $solr_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
+	#aws ec2 revoke-security-group-ingress --group-name $solr_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
   
 
@@ -181,10 +180,10 @@ tightenSolr () {
 
 #Select which tighening rules you wish to apply
 
-#tightenFront
-#tightenRest
-#tightenDb
-#tightenSolr
+tightenFront
+tightenRest
+tightenDb
+tightenSolr
 
 
 

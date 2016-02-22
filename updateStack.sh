@@ -1,35 +1,77 @@
-#!/bin/bash -v
+#!/bin/bash 
 
 
-# Use this script to update your existing stack
+#importing devUtil
+source ./devUtil.sh
+
+# Use this script to update your existing stack 
+# Make sure that ssh 22 is enabled in the security groups
 # 
 # edit the variables to the appropriate values and 
 # uncomment out the function calls
 
-export front_ssh_key=/home/ti/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_1
+#calculates the key prefix
+key_prefix=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes."tags.Kname"' ) 
+key_prefix=$(removeQuotes $key_prefix)
+key_prefix=$(echo $key_prefix | sed 's/.$//')
+
+
+# folder where you keys are located
+key_location=/home/ti/Desktop/keys/
+
+
+
+
+export front_ssh_key=${key_location}${key_prefix}1
 export front_user=ec2-user
-export front_host=54.174.108.18
-export front_deploy_commit=352beb61d4206de468124e6d2924271502528662
+front_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes.public_ip')
+front_public_ip=$(removeQuotes $front_public_ip)
+# for host comming from your current stack
+export front_host=$front_public_ip
+# for any host
+#export front_host=54.174.108.18
+export front_deploy_commit=hot
 export serverURL="beta.opendmc.org"
 
 
-export rest_ssh_key=/home/ti/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_2
+export rest_ssh_key=${key_location}${key_prefix}2
 export rest_user=ec2-user
-export rest_host=54.175.165.3
+rest_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.rest".primary.attributes.public_ip')
+rest_public_ip=$(removeQuotes $rest_public_ip)
+# for host comming from your current stack
+export rest_host=$rest_public_ip
+# for any host
+#export rest_host=54.175.165.3
 export rest_deploy_commit=hot
 export use_swagger=1
 
 
+export db_ssh_key=${key_location}${key_prefix}3
+export db_user=ec2-user
+db_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.db".primary.attributes.public_ip')
+db_public_ip=$(removeQuotes $db_public_ip)
+# for host comming from your current stack
+export db_host=$db_public_ip
+# for any host
+#export db_host=54.175.165.3
 
-
-
+export solr_ssh_key=${key_location}${key_prefix}4
+export solr_user=ec2-user
+solr_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.solr".primary.attributes.public_ip')
+solr_public_ip=$(removeQuotes $solr_public_ip)
+# for host comming from your current stack
+export solr_host=$solr_public_ip
+# for any host
+#export solr_host=54.175.165.3
 
 
 
 
 updateFront() {
-    ssh -tti $front_ssh_key $front_user@$front_host <<+
+  ssh -tti $front_ssh_key $front_user@$front_host <<+
  
+    sudo yum update -y
+  
     pwd
    	cd /tmp
 
@@ -83,7 +125,7 @@ updateFront() {
 
 updateRest() {
     ssh -tti $rest_ssh_key $rest_user@$rest_host <<+
- 
+     sudo yum update -y
     pwd
 
     echo "value of rest_deploy_commit is $rest_deploy_commit"
@@ -117,21 +159,38 @@ updateRest() {
 
 
 
+updateDb() {
+  ssh -tti $db_ssh_key $db_user@$db_host <<+
+  sudo yum update -y
++
+}
+
+
+
+updateSolr(){
+  ssh -tti $solr_ssh_key $solr_user@$solr_host <<+
+  sudo yum update -y
++
+}
+
 
 
 
 
 
 #uncomment function to update the frontend machine
-# updateFront
+#updateFront
 
 
 #uncomment function to update the rest machine
 #updateRest
 
 
+#uncomment function to update the db machine
+#updateDb
 
+#uncomment function to update the solr machine
+#updateSolr
 
 
 echo "back on local and done :)"
-
