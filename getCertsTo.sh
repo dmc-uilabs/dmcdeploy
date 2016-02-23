@@ -11,4 +11,3 @@ echo "Will be getting $dump from $s3_bucket "
 aws s3 cp s3://$s3_bucket/$dump $dump_location
 echo "Got it."
 
-2016_02_15_10_22_15_alpha-2-15_3
