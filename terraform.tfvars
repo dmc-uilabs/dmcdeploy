@@ -20,8 +20,9 @@ key_full_path_front = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_1"
 commit_front = "hot"
 
 
-sp_cert_location = "~/Desktop/keys/sp-cert.pem"
-sp_key_location = "~/Desktop/keys/sp-cert.pem"
+# uncomment only if you wish to change the default location 
+#sp_cert_location = "/tmp"
+#sp_key_location = "/tmp"
 
 
 # keys for the rest machine
@@ -30,7 +31,7 @@ key_full_path_rest = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_2"
 
 # which comit to deploy on the rest machine
 # if commit_rest = 'hot' -- the latest availble build will be selected
-commit_rest = "ecb5bedeaf21f1f4e855bf0d2b59be199b087b3f"
+commit_rest = "hot"
 
 
 
@@ -66,7 +67,7 @@ activeMqRootPass = "admin1"
 activeMqUserPass = "user1"
 
 
-stackPrefix = "alex-2-16-"
+stackPrefix = "alex-2-23-"
 release = "hot"
 
 

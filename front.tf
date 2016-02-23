@@ -18,6 +18,17 @@ resource "aws_instance" "front" {
   # We run a remote provisioner on the instance after creating it.
   # in this case will be a shell but can be chef
 
+
+  provisioner "local-exec" {
+          command = "./getCertsTo.sh ${var.access_key} ${var.secret_key} ${var.cert-web-bucket} sp-cert.pem ${var.sp_cert_location}"
+  }
+  
+  provisioner "local-exec" {
+          command = "./getCertsTo.sh ${var.access_key} ${var.secret_key} ${var.cert-web-bucket} sp-key.pem ${var.sp_key_location}"
+  }
+
+
+
 provisioner "file" {
         source = "${var.sp_cert_location}"
         destination = "/tmp/sp-cert.pem"
@@ -88,6 +99,10 @@ provisioner "remote-exec"{
 
     provisioner "local-exec" {
           command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_front} ec2-user@${aws_instance.front.public_ip}:/home/ec2-user/frontSanityTest.log ."
+  }
+
+   provisioner "local-exec" {
+          command = "rm ${var.sp_key_location} && rm ${var.sp_cert_location}"
   }
 }
 

@@ -17,6 +17,9 @@ variable "key_full_path_dome" {}
 variable "key_full_path_stackMon" {}
 variable "key_full_path_activeMq" {}
 
+variable "cert-web-bucket" {
+  default = "cert-web-bucket"
+}
 
 
 variable "use_swagger" {}
@@ -24,8 +27,12 @@ variable "use_swagger" {}
 variable "commit_rest" {}
 variable "commit_front" {}
 
-variable "sp_cert_location" {} 
-variable "sp_key_location" {}
+variable "sp_cert_location" {
+  default = "/tmp/sp-cert.pem"
+} 
+variable "sp_key_location" {
+  default = "/tmp/sp-key.pem"
+}
 
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}
@@ -64,7 +71,7 @@ variable "frontSHIB"{
 variable "aws_amirehl" {
   default = {
     "us-east-1" = "ami-60b6c60a"
-    "us-west-2" = "ami-f0091d91"
+    "us-west-2" = "ami-b52cced5"
   }
 }
 
@@ -72,7 +79,7 @@ variable "aws_amirehl" {
 variable "aws_amirehl_tom" {
   default = {
     "us-east-1" = "ami-271c654d"
-    "us-west-2" = "ami-86a6b4e7"
+    "us-west-2" = "ami-cb2dcfab"
   }
 }
 
@@ -80,7 +87,7 @@ variable "aws_amirehl_tom" {
 variable "aws_baseDb" {
   default = {
     "us-east-1" = "ami-ac80b7c6"
-    "us-west-2" = "ami-f0091d91"
+    "us-west-2" = "ami-cb2dcfab"
   }
 }
 
@@ -88,6 +95,6 @@ variable "aws_baseDb" {
 variable "aws_baseSolr" {
   default = {
     "us-east-1" = "ami-6082b50a"
-    "us-west-2" = "ami-f0091d91"
+    "us-west-2" = "ami-cb2dcfab"
   }
 }
