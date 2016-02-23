@@ -3,15 +3,16 @@
 {
 #if -d is the first parameter then the second must be the name of the key to be deleted
 
-#$1 -- the number of keys needed 
+#$1 -- the number of keys needed
 #$2 -- the prefix of the keys
 #$3 -- the region where to send the keys us-east-1  or us-west-2
 #$4 -- the location where the keys should be stored locally default ~/Desktop/keys
 #$5 -- aws key
-#$6 -- aws secret 
+#$6 -- aws secret
 
-# -- keys get the following name [date_keyprefix_keynumber]  2016_01_05_21_57_47_production_1  
+# -- keys get the following name [date_keyprefix_keynumber]  2016_01_05_21_57_47_production_1
 # ex ./keymaker.sh 6 alexWest us-west-2 ~/Desktop/keys
+# ex ./keymaker.sh 6 alexWest us-west-2 ~/Desktop/keys/ awskey awssecret
 
 export AWS_ACCESS_KEY_ID=$5
 export AWS_SECRET_ACCESS_KEY=$6
@@ -40,7 +41,7 @@ aws ec2 import-key-pair --region $3  --key-name  ${NOW}_$2_$n --public-key-mater
 
 #verify the signatures match
 openssl pkey -in $4/${NOW}_$2_$n -pubout -outform DER | openssl md5 -c
- 
+
   done
   echo "look in file -- keyNameZ -- to see the names of the generated keys"
 
