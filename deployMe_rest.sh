@@ -72,3 +72,18 @@ sudo cp rest.war /var/lib/tomcat7/webapps
 sudo service tomcat7 restart
 
 
+
+
+function sanityTest {
+
+
+cd ~
+#response=$(curl http://localhost:8080/rest/projects)
+
+echo "Attemting to see if server can be reached " >> restSanityTest.log
+echo "server response from http://localhost:8080/rest/projects -- $response" >> restSanityTest.log
+
+
+}
+
+sanityTest
