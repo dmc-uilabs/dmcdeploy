@@ -65,7 +65,7 @@ The actual keys are placed in the location specified by $4
 
 
 ### Lock down the security groups
-
+- Edit tightenSg.sh to include your aws key and aws secret
 - $ ./tightenSg.sh --- to lock down the security groups [at the moment can only  be run from a linux machine]
 - #### on windows dev environments the security groups must be set manually from the aws web console
 
