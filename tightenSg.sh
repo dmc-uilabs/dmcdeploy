@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 
 
@@ -11,10 +11,10 @@ source ./devUtil.sh
 
 ## this script requires a program called jq -- https://stedolan.github.io/jq/
 # install it if not available
-ifNotHaveInstall jq 
+ifNotHaveInstall jq
 
-
-
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
 
 
 # server connection variables
@@ -41,7 +41,7 @@ getSecGroupIdfromName (){
   t=$1
   partial=$(echo ".modules[0].resources.\"aws_security_group.$t\".primary.attributes.id")
   sg_id=$(cat terraform.tfstate | jq $partial)
-  #removing quotes form the var 
+  #removing quotes form the var
   sg_id="$(echo "${sg_id}" | sed -e 's/^"//'  -e 's/"$//')"
   echo "$sg_id"
 }
@@ -54,10 +54,10 @@ showSecGroupDetails (){
   # extract the sgid from tfvars file
   partial=$(echo ".modules[0].resources.\"aws_security_group.$t\".primary.attributes.id")
   sg_id=$(cat terraform.tfstate | jq $partial)
-  #removing quotes form the var 
+  #removing quotes form the var
   sg_id="$(echo "${sg_id}" | sed -e 's/^"//'  -e 's/"$//')"
   # retreving sg details from aws
-  aws ec2 describe-security-groups --group-ids $sg_id	
+  aws ec2 describe-security-groups --group-ids $sg_id
 }
 
 
@@ -80,12 +80,12 @@ tightenFront () {
 	# allow all traffic from port 443
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
-	# do not allow traffic on port 22 
+	# do not allow traffic on port 22
 	#aws ec2 revoke-security-group-ingress --group-name $front_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
-	  
-	 #show secrutity group details for the sec group with name 
-	 showSecGroupDetails sg_front	
+
+	 #show secrutity group details for the sec group with name
+	 showSecGroupDetails sg_front
 }
 
 
@@ -97,8 +97,8 @@ tightenRest () {
 	rest_sg="$(echo "${stackprefix}" | sed -e 's/^"//'  -e 's/"$//')_DMC_sg_rest"
 	#get the sg id from name
 	rest_sg_id=$(getSecGroupIdfromName sg_rest)
- 
-  
+
+
 
 	# allow all traffic from port 8009 only from the front machine for ajp
 	#  set ip cidr ip range to only allow include the front private ip
@@ -106,22 +106,22 @@ tightenRest () {
 	aws ec2 authorize-security-group-ingress --group-name $rest_sg --protocol tcp --port 8009 --cidr $cidr_f
 
 	# allow the rest machine to only talk to front end machine on port 8009
-	#aws ec2 authorize-security-group-egress --group-id $rest_sg_id --ip-permissions "[{\"IpProtocol\": \"tcp\", \"FromPort\": 8009, \"ToPort\": 8009, \"IpRanges\": [{\"CidrIp\": \"$(echo $cidr_f)\"}]}]"	
+	#aws ec2 authorize-security-group-egress --group-id $rest_sg_id --ip-permissions "[{\"IpProtocol\": \"tcp\", \"FromPort\": 8009, \"ToPort\": 8009, \"IpRanges\": [{\"CidrIp\": \"$(echo $cidr_f)\"}]}]"
 
 	# allow all traffic from port 443
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
-	# do not allow traffic on port 22 
+	# do not allow traffic on port 22
 	#aws ec2 revoke-security-group-ingress --group-name $rest_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
-  
-
-   
 
 
-    #show secrutity group details for the sec group with name 
+
+
+
+    #show secrutity group details for the sec group with name
     showSecGroupDetails sg_rest
-  
+
 }
 
 
@@ -131,7 +131,7 @@ tightenRest () {
 tightenDb () {
     #extract the security group from the stack prefix
 	db_sg="$(echo "${stackprefix}" | sed -e 's/^"//'  -e 's/"$//')_DMC_sg_db"
-	
+
 
 	# allow all traffic from rest private ip to port 5432
 	# set ip cidr ip range to only allow include the rest private ip
@@ -142,13 +142,13 @@ tightenDb () {
 	# allow all traffic from port 443
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
-	# do not allow traffic on port 22 
+	# do not allow traffic on port 22
 	#aws ec2 revoke-security-group-ingress --group-name $db_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
-	  
+
 
     #show secrutity group details for the sec group with name
-	showSecGroupDetails sg_db	
+	showSecGroupDetails sg_db
 }
 
 
@@ -165,14 +165,14 @@ tightenSolr () {
 	# allow all traffic from port 443
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
 
-	# do not allow traffic on port 22 
+	# do not allow traffic on port 22
 	#aws ec2 revoke-security-group-ingress --group-name $solr_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
 
-  
+
 
 
     #show secrutity group details for the sec group with name
-	showSecGroupDetails sg_solr		
+	showSecGroupDetails sg_solr
 }
 
 
@@ -184,6 +184,3 @@ tightenFront
 tightenRest
 tightenDb
 tightenSolr
-
-
-
