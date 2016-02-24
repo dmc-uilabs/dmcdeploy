@@ -10,10 +10,10 @@ last added on -- Feb. 23.16
 
 - use the keymaker.sh script found in the devtools folder
 
-#$1 -- the number of keys needed
-#$2 -- the prefix of the keys
-#$3 -- the region where to send the keys us-east-1  or us-west-2
-#$4 -- the location where your keys should be stored
+\#$1 -- the number of keys needed
+\#$2 -- the prefix of the keys
+\#$3 -- the region where to send the keys us-east-1  or us-west-2
+\#$4 -- the location where your keys should be stored
 
 ex.
 ./keymaker.sh 4 alpha-2-15 us-east-1 ~/Desktop/keys
