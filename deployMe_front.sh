@@ -224,7 +224,10 @@ response=$(curl -o /dev/null --silent --head --write-out '%{http_code}' "localho
 echo "Attemting to see if server can be reached " >> frontSanityTest.log
 echo "server response -- $response" >> frontSanityTest.log
 
-echo "Login url is set to -- " >> frontSanityTest.log
+echo "Showing that certs made it to right place -- " >> frontSanityTest.log
+
+find /opt/shibboleth-sp/etc/shibboleth -name "sp*" >> frontSanityTest.log
+
 
 
 

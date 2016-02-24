@@ -19,35 +19,32 @@ resource "aws_instance" "front" {
   # in this case will be a shell but can be chef
 
 
-  provisioner "local-exec" {
-          command = "./getCertsTo.sh ${var.access_key} ${var.secret_key} ${var.cert-web-bucket} sp-cert.pem ${var.sp_cert_location}"
-  }
+
+
+provisioner "remote-exec"{
+ 
+        inline = [
+        "echo 'export AWS_ACCESS_KEY_ID=${var.access_key}' >> /tmp/profile",
+        "echo 'export AWS_SECRET_ACCESS_KEY=${var.secret_key}' >> /tmp/profile",  
+        "echo 'export s3_bucket=${var.cert-web-bucket}' >> /tmp/profile",  
+        "echo 'export dump=sp-cert.pem' >> /tmp/profile", 
+        "echo 'export dump2=sp-key.pem' >> /tmp/profile",  
+        "echo 'export dump_location=${var.sp_cert_location}' >> /tmp/profile",
+        "echo 'export dump_location1=${var.sp_key_location}' >> /tmp/profile",
+        "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
+        "source /etc/profile" ,
+        "aws s3 cp s3://$s3_bucket/$dump $dump_location",
+        "aws s3 cp s3://$s3_bucket/$dump2 $dump_location1"        
+        ]
+
+        connection {
+        user = "ec2-user"
+        key_file  = "${var.key_full_path_front}"
+
+    }
+}
+
   
-  provisioner "local-exec" {
-          command = "./getCertsTo.sh ${var.access_key} ${var.secret_key} ${var.cert-web-bucket} sp-key.pem ${var.sp_key_location}"
-  }
-
-
-
-provisioner "file" {
-        source = "${var.sp_cert_location}"
-        destination = "/tmp/sp-cert.pem"
-
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_front}"
-    }
-}
-
-provisioner "file" {
-        source = "${var.sp_key_location}"
-        destination = "/tmp/sp-key.pem"
-
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_front}"
-    }
-}
 
 
 
@@ -101,8 +98,6 @@ provisioner "remote-exec"{
           command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_front} ec2-user@${aws_instance.front.public_ip}:/home/ec2-user/frontSanityTest.log ."
   }
 
-   provisioner "local-exec" {
-          command = "rm ${var.sp_key_location} && rm ${var.sp_cert_location}"
-  }
+   
 }
 
