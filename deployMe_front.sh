@@ -13,7 +13,7 @@ function configureShibbolethServiceProvider {
 
     # edit /etc/sysconfig/httpd
     sudo su -c "echo \"export LD_LIBRARY_PATH=/opt/shibboleth-sp/lib\" >>  /etc/sysconfig/httpd"
-    
+
     # copy shibboleth SP Apache configuration to apache conf.d directory
     apacheConfigDir=configurationFiles/apache/version2.2
     sudo -u root -E cp $apacheConfigDir/apache22.conf /etc/httpd/conf.d/apache22.conf
@@ -57,9 +57,9 @@ function ajpProxy {
 
 
 function setLoginUrl {
-  
-  sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html 
-    
+
+  sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+
 }
 
 
@@ -85,11 +85,11 @@ function installWebsite {
 
       then
           echo "pull from latest build"
-          wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip 
+          wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip
       else
           echo "pull from >> $commit_front << commit"
           wget https://s3.amazonaws.com/dmc-frontend-distribution/$commit_front-DMCFrontendDist.zip
-          
+
     fi
 
 
@@ -98,8 +98,8 @@ function installWebsite {
 
     # move code to clean webroot and change owner to apache
     sudo rm -rf /var/www/html/*
-    cd /tmp/dist/templates/common/header 
-    
+    cd /tmp/dist/templates/common/header
+
     echo "set loginURL to $loginURL "
     setLoginUrl
 
@@ -107,7 +107,7 @@ function installWebsite {
    cd /tmp/dist/
 
    commonInstallWebsiteConfig
-  
+
 }
 
 
@@ -115,7 +115,7 @@ function installWebsiteDMCrepos {
     # download newest build to tmp
     cd /tmp
 
-   
+
     if [[ $release == 'hot' ]]
 
     then
@@ -124,18 +124,18 @@ function installWebsiteDMCrepos {
     else
         echo "pull from >> $release << release"
         git clone https://bitbucket.org/DigitalMfgCommons/dmcfrontend.git
-        cd dmcfrontend          
+        cd dmcfrontend
     echo "git checkout tags/$release"  | bash -
     fi
 
-  
+
     # move code to clean webroot and change owner to apache
     sudo rm -rf /var/www/html/*
-    
-    
-    
-    cd /tmp/dmcfrontend/dist/templates/common/header 
-   
+
+
+
+    cd /tmp/dmcfrontend/dist/templates/common/header
+
     echo "set loginURL to $loginURL "
     setLoginUrl
 
@@ -164,7 +164,7 @@ function setLogLevel {
 ###########################################################
 #
 # tests for appropriate log level settings in php.ini
-# 
+#
 # author: james.barkley@uilabs.org
 #
 # last update: Jan 2016
@@ -225,10 +225,9 @@ echo "Attemting to see if server can be reached " >> frontSanityTest.log
 echo "server response -- $response" >> frontSanityTest.log
 
 echo "Showing that certs made it to right place -- " >> frontSanityTest.log
-
 find /opt/shibboleth-sp/etc/shibboleth -name "sp*" >> frontSanityTest.log
 
-
+echo "The commit we are pulling from >> $commit_front" >> frontSanityTest.log
 
 
 
@@ -266,7 +265,7 @@ sudo -u root -E sed -i "s@REMOTE_USER=\"eppn persistent-id targeted-id\"@REMOTE_
 
 
 installWebsite
-    
+
 ##command to install from official DMC build repos -- used to install a particular release
 #installWebsiteDMCrepos
 

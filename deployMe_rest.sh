@@ -17,7 +17,7 @@ if [[ $release == 'hot' ]]
                 	then
                 		echo "pull from S3 build from latest available build"
                 		 wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/dmc-site-services-0.1.0.war
-		
+
                 	else
 
 		    			echo "pull from S3 build from commit -- $commit_rest "
@@ -27,7 +27,7 @@ if [[ $release == 'hot' ]]
 							else
 								wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$commit_rest-dmc-site-services-0.1.0-swagger.war
 						fi
-						
+
 				fi
 				cp *.war rest.war
 
@@ -36,8 +36,8 @@ if [[ $release == 'hot' ]]
     			git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
     			cd dmcrestservices
 				echo "git checkout tags/$release"  | bash -
-				
-				
+
+
 				cd ~/DMC/dmcrestservices/target
 
 				if [[ $use_swagger == '0' ]]
@@ -54,13 +54,13 @@ fi
 
 
 
-sudo chown ec2-user /etc/tomcat7/tomcat7.conf 
+sudo chown ec2-user /etc/tomcat7/tomcat7.conf
 
 echo "DBip=$DBip" >> /etc/tomcat7/tomcat7.conf
 echo "DBport=$DBport" >> /etc/tomcat7/tomcat7.conf
 echo "DBpass=$DBpass" >> /etc/tomcat7/tomcat7.conf
 echo "DBuser=$DBuser" >> /etc/tomcat7/tomcat7.conf
-echo "SOLR_BASE_URL=$solrDbDns" >> /etc/tomcat7/tomcat7.conf 
+echo "SOLR_BASE_URL=$solrDbDns" >> /etc/tomcat7/tomcat7.conf
 sudo -u root -E sed -i "s@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" />@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" tomcatAuthentication=\"false\" packetSize=\"65536\" />@" /etc/tomcat7/server.xml
 
 
@@ -78,10 +78,11 @@ function sanityTest {
 
 
 cd ~
-#response=$(curl http://localhost:8080/rest/projects)
+response=$(curl localhost:8080/rest/services/2)
+
 
 echo "Attemting to see if server can be reached " >> restSanityTest.log
-echo "server response from http://localhost:8080/rest/projects -- $response" >> restSanityTest.log
+echo "server response from http://localhost:8080/rest/services/2 -- $response" >> restSanityTest.log
 
 
 }
