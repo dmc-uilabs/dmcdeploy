@@ -29,7 +29,7 @@ variable "commit_front" {}
 
 variable "sp_cert_location" {
   default = "/tmp/sp-cert.pem"
-} 
+}
 variable "sp_key_location" {
   default = "/tmp/sp-key.pem"
 }
@@ -47,7 +47,7 @@ variable "release" {}
 variable "restLb" {}
 variable "serverURL" {}
 variable "loglevel" {}
- 
+
 variable "aws_region" {
   description = "The AWS region to create things in."
   default = "us-east-1"
@@ -70,16 +70,16 @@ variable "frontSHIB"{
 # rehl (x64)
 variable "aws_amirehl" {
   default = {
-    "us-east-1" = "ami-60b6c60a"
-    "us-west-2" = "ami-b52cced5"
+    "us-east-1" = "ami-8fcee4e5"
+    "us-west-2" = "ami-63b25203"
   }
 }
 
 # rehl with tomcat container(x64)
 variable "aws_amirehl_tom" {
   default = {
-    "us-east-1" = "ami-271c654d"
-    "us-west-2" = "ami-cb2dcfab"
+    "us-east-1" = "ami-6d675107"
+    "us-west-2" = "ami-2730d247"
   }
 }
 
@@ -95,6 +95,6 @@ variable "aws_baseDb" {
 variable "aws_baseSolr" {
   default = {
     "us-east-1" = "ami-6082b50a"
-    "us-west-2" = "ami-cb2dcfab"
+    "us-west-2" = "ami-4230d222"
   }
 }
