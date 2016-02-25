@@ -1,17 +1,17 @@
-#!/bin/bash 
+#!/bin/bash
 
 
 #importing devUtil
 source ./devUtil.sh
 
-# Use this script to update your existing stack 
+# Use this script to update your existing stack
 # Make sure that ssh 22 is enabled in the security groups
-# 
-# edit the variables to the appropriate values and 
+#
+# edit the variables to the appropriate values and
 # uncomment out the function calls
 
 #calculates the key prefix
-key_prefix=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes."tags.Kname"' ) 
+key_prefix=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes."tags.Kname"' )
 key_prefix=$(removeQuotes $key_prefix)
 key_prefix=$(echo $key_prefix | sed 's/.$//')
 
@@ -42,7 +42,7 @@ rest_public_ip=$(removeQuotes $rest_public_ip)
 export rest_host=$rest_public_ip
 # for any host
 #export rest_host=54.175.165.3
-export rest_deploy_commit=hot
+export rest_deploy_commit=ecb5bedeaf21f1f4e855bf0d2b59be199b087b3f
 export use_swagger=1
 
 
@@ -69,9 +69,9 @@ export solr_host=$solr_public_ip
 
 updateFront() {
   ssh -tti $front_ssh_key $front_user@$front_host <<+
- 
+
     sudo yum update -y
-  
+
     pwd
    	cd /tmp
 
@@ -82,12 +82,12 @@ updateFront() {
       then
       	  rm DMCFrontendDist.zip
           echo "pull from latest build"
-          wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip 
+          wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip
       else
       	  rm *-DMCFrontendDist.zip
           echo "pull from >> $front_deploy_commit << commit"
           wget https://s3.amazonaws.com/dmc-frontend-distribution/$front_deploy_commit-DMCFrontendDist.zip
-          
+
     fi
 
 
@@ -96,16 +96,16 @@ updateFront() {
 
     # move code to clean webroot and change owner to apache
     sudo rm -rf /var/www/html/*
-    cd /tmp/dist/templates/common/header 
-    
+    cd /tmp/dist/templates/common/header
+
     echo "set loginURL to $loginURL "
-    sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html 
-  
+    sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+
 
 
    cd /tmp/dist/
 
-   
+
    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
    sudo mkdir -p /var/www/
    sudo mkdir -p /var/www/html
@@ -115,7 +115,7 @@ updateFront() {
 
 
    exit
-  
+
 +
 }
 
@@ -134,24 +134,25 @@ updateRest() {
                 	then
                 		echo "pull from S3 build from latest available build"
                 		 wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/dmc-site-services-0.1.0.war
-		
+
                 	else
 
-		    			echo "pull from S3 build from commit -- $rest_deploy_commit "
-		    			if [[ $use_swagger == '0' ]]
-							then
-							    wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$rest_deploy_commit-dmc-site-services-0.1.0.war
-							else
-								wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$rest_deploy_commit-site-services-0.1.0-swagger.war
-						fi
-						
-				fi
-	cp *.war rest.war
-	
-   	sudo -S cp rest.war /var/lib/tomcat7/webapps
-    sudo -S service tomcat7 restart
+        		    			echo "pull from S3 build from commit -- $rest_deploy_commit "
+        		    			if [[ $use_swagger == '0' ]]
+        							then
+        							    wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$rest_deploy_commit-dmc-site-services-0.1.0.war
+        							else
+        								wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$rest_deploy_commit-dmc-site-services-0.1.0-swagger.war
+        						fi
 
-	rm *.war
+				fi
+
+	 cp *.war rest.war
+
+    	sudo -S cp rest.war /var/lib/tomcat7/webapps
+     sudo -S service tomcat7 restart
+
+	 rm *.war
 	exit
 +
 }
@@ -162,6 +163,7 @@ updateRest() {
 updateDb() {
   ssh -tti $db_ssh_key $db_user@$db_host <<+
   sudo yum update -y
+  exit
 +
 }
 
@@ -170,6 +172,7 @@ updateDb() {
 updateSolr(){
   ssh -tti $solr_ssh_key $solr_user@$solr_host <<+
   sudo yum update -y
+  exit
 +
 }
 
