@@ -19,7 +19,7 @@ export AWS_SECRET_ACCESS_KEY=$6
 
 UUID=$(cat /proc/sys/kernel/random/uuid)
 NOW=$(date +"%Y_%m_%d_%H_%M_%S")
-
+cd $4
 if [  $1 == "-d" ];
  then
       #aws  ec2 delete-key-pair --key-name $2
@@ -34,7 +34,7 @@ if [  $1 == "-d" ];
    echo "generating key $n  ${NOW}_$2_$n"
          echo "${NOW}_$2_$n" >> keyNameZ
 
-ssh-keygen -b 2048 -t rsa -f $4${NOW}_$2_$n -q -N ""
+ssh-keygen -b 2048 -t rsa -f $4/${NOW}_$2_$n -q -N ""
 chmod 400 $4/${NOW}_$2_$n
 chmod 400 $4/${NOW}_$2_$n.pub
 aws ec2 import-key-pair --region $3  --key-name  ${NOW}_$2_$n --public-key-material "file://$4/${NOW}_$2_$n.pub"
