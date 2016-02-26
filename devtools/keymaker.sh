@@ -19,7 +19,10 @@ export AWS_SECRET_ACCESS_KEY=$6
 
 UUID=$(cat /proc/sys/kernel/random/uuid)
 NOW=$(date +"%Y_%m_%d_%H_%M_%S")
+ rm keyNameZ
 cd $4
+
+
 if [  $1 == "-d" ];
  then
       #aws  ec2 delete-key-pair --key-name $2
@@ -28,11 +31,13 @@ if [  $1 == "-d" ];
       echo "deleted keys "
 
   else
-   rm keyNameZ
+
      for ((n=1;n<=$1;n++))
   do
    echo "generating key $n  ${NOW}_$2_$n"
-         echo "${NOW}_$2_$n" >> keyNameZ
+   cd -
+   echo "${NOW}_$2_$n" >> keyNameZ
+   cd -
 echo "in in $(pwd)"
 ssh-keygen -b 2048 -t rsa -f ${NOW}_$2_$n -q -N ""
 chmod 400 ${NOW}_$2_$n
