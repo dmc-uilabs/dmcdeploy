@@ -1,10 +1,10 @@
 
-# the aws keys 
+# the aws keys
 access_key = ""
 secret_key = ""
 
-# the region you wish to deploy to 
-aws_region = "us-east-1"
+# the region you wish to deploy to
+aws_region = ""
 
 
 
@@ -12,32 +12,32 @@ aws_region = "us-east-1"
 
 
 # keys for the front end machine
-key_name_front = "2016_02_15_10_22_15_alpha-2-15_1"
-key_full_path_front = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_1"
+key_name_front = ""
+key_full_path_front = ""
 
-# which comit to deploy on the front end machine
+# which commit to deploy on the front end machine
 # if commit_front = 'hot' -- the latest available build will be selected
 commit_front = "hot"
 
 
-# uncomment only if you wish to change the default location 
+# uncomment only if you wish to change the default location
 #sp_cert_location = "/tmp"
 #sp_key_location = "/tmp"
 
 
 # keys for the rest machine
-key_name_rest = "2016_02_15_10_22_15_alpha-2-15_2"
-key_full_path_rest = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_2"
+key_name_rest = ""
+key_full_path_rest = ""
 
 # which comit to deploy on the rest machine
-# if commit_rest = 'hot' -- the latest availble build will be selected
+# if commit_rest = 'hot' -- the latest available build will be selected
 commit_rest = "hot"
 
 
 
 # keys to the db machine
-key_name_db = "2016_02_15_10_22_15_alpha-2-15_3"
-key_full_path_db = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_3"
+key_name_db = ""
+key_full_path_db = ""
 
 # Postgress credentials
 PSQLUSER = "gforge"
@@ -47,38 +47,38 @@ PSQLDBNAME = "gforge"
 
 
 # keys to the solr machine
-key_name_solr = "2016_02_15_10_22_15_alpha-2-15_4"
-key_full_path_solr = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_4"
+key_name_solr = ""
+key_full_path_solr = ""
 
 
 # keys to the dome machine
-key_name_dome = "2016_02_15_10_22_15_alpha-2-15_4"
-key_full_path_dome = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_4"
+key_name_dome = ""
+key_full_path_dome = ""
 
 # keys to the stackMon machine
-key_name_stackMon = "2016_02_15_10_22_15_alpha-2-15_4"
-key_full_path_stackMon = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_4"
+key_name_stackMon = ""
+key_full_path_stackMon = ""
 
 
 # credentials for activeMQ
-key_name_activeMq = "2016_02_15_10_22_15_alpha-2-15_4"
-key_full_path_activeMq = "~/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_4"
+key_name_activeMq = ""
+key_full_path_activeMq = ""
 activeMqRootPass = "admin1"
 activeMqUserPass = "user1"
 
 
-stackPrefix = "alex-2-23-"
+stackPrefix = ""
 release = "hot"
 
 
 
 
 # Server load balancers
-restLb = "ben-rest.opendmc.org"
-serverURL = "beta.opendmc.org"
+restLb = ""
+serverURL = ""
 
 # server log level (production, development)
-loglevel = "production"
+loglevel = ""
 
 # deploy stack with swagger
 use_swagger = "1"
