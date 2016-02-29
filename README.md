@@ -12,13 +12,15 @@ Last changed on -- Feb. 23.16
 
 Use the keymaker.sh script found in the devtools folder. ***Can only be used from a linux based development environment*** Skip this step if you plan on using already existing keys.
 > ###### Variables needed for the script: <br />
->#$1 -- the number of keys needed
->#$2 -- the prefix of the keys
->#$3 -- the region where to send the keys us-east-1  or us-west-2
->#$4 -- the location where your keys should be stored
+>###$1 -- the number of keys needed
+>###$2 -- the prefix of the keys
+>###$3 -- the region where to send the keys us-east-1  or us-west-2
+>###$4 -- the location where your keys should be stored
+>###$5 -- aws key
+>###$6 -- aws secret
 
 `
-./keymaker.sh 4 alpha-2-15 us-east-1 ~/Desktop/keys `
+.ex ./keymaker.sh 6 alexWest us-west-2 ~/Desktop/keys/ awskey awssecret `
 
 The names of the generated keys can be found in a file called keyNameZ
 
