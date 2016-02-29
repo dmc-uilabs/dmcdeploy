@@ -33,6 +33,10 @@ variable "sp_cert_location" {
 variable "sp_key_location" {
   default = "/tmp/sp-key.pem"
 }
+variable "inc-md-cert_location" {
+  default = "/tmp/inc-md-cert.pem"
+}
+
 
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}
