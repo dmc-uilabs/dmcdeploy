@@ -24,16 +24,22 @@ function configureShibbolethServiceProvider {
     sudo -u root -E cp $shibSPConfigDir/shibboleth2.xml /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
     sudo -u root -E cp $shibSPConfigDir/CirrusIdentitySocialProviders-metadata.xml /opt/shibboleth-sp/etc/shibboleth/CirrusIdentitySocialProviders-metadata.xml
     sudo -u root -E cp $shibSPConfigDir/azure.xml /opt/shibboleth-sp/etc/shibboleth/azure.xml
+    sudo -u root -E cp $shibSPConfigDir/FederationMetadataCirrus.xml /opt/shibboleth-sp/etc/shibboleth/FederationMetadataCirrus.xml
 }
 
 function moveShibbolethServiceProviderKeys {
     # need to copy sp-cert.pem to /opt/shibboleth-sp/etc/shibboleth/
     sudo -u root -E mv /tmp/sp-cert.pem /opt/shibboleth-sp/etc/shibboleth/sp-cert.pem
     sudo -u root -E chown root:root /opt/shibboleth-sp/etc/shibboleth/sp-cert.pem
+    sudo -u root -E chmod 400 /opt/shibboleth-sp/etc/shibboleth/sp-cert.pem
     # need to copy sp-key.pem to /opt/shibboleth-sp/etc/shibboleth/
     sudo -u root -E mv /tmp/sp-key.pem /opt/shibboleth-sp/etc/shibboleth/sp-key.pem
     sudo -u root -E chown root:root /opt/shibboleth-sp/etc/shibboleth/sp-key.pem
-    sudo -u root -E chmod 600 /opt/shibboleth-sp/etc/shibboleth/sp-key.pem
+    sudo -u root -E chmod 400 /opt/shibboleth-sp/etc/shibboleth/sp-key.pem
+
+    sudo -u root -E mv /tmp/inc-md-cert.pem /opt/shibboleth-sp/etc/shibboleth/inc-md-cert.pem
+    sudo -u root -E chown root:root /opt/shibboleth-sp/etc/shibboleth/inc-md-cert.pem
+    sudo -u root -E chmod 400 /opt/shibboleth-sp/etc/shibboleth/inc-md-cert.pem
 }
 
 function configureApache {
