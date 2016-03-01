@@ -91,6 +91,9 @@ sed -i.bak "s|commit_rest = \"\"|commit_rest = \"$commit_rest\"|" terraform.tfva
 sed -i.bak "s|commit_front = \"\"|commit_front = \"$commit_front\"|" terraform.tfvars
 
 
+sed -i.bak "s|AWS_ACCESS_KEY_ID = \"\"|AWS_ACCESS_KEY_ID = \"$AWS_ACCESS_KEY_ID\"|" tightenSg.sh
+sed -i.bak "s|AWS_SECRET_ACCESS_KEY = \"\"|AWS_SECRET_ACCESS_KEY = \"$AWS_SECRET_ACCESS_KEY\"|" tightenSg.sh
+
 
 myip=$(curl http://ident.me/)
 echo "To download the private key you have just created run the following command to copy it to the local machine of your wish."
