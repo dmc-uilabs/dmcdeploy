@@ -35,12 +35,12 @@ echo  "2. Update an Existing Stack"
 read -n 1 choice
 
 printf "\nYou chose $choice"
-
+case $name in [qQ]) exit;; esac
 if [ $choice == 1 ]
   then
     printf "\nCreating a new stack. \n Will need more information."
-    ./createDevStack.sh
+    ./createDevStack.sh $uname
   else
     printf "\nUpdating your existing infrastructure."
-    
+
 fi
