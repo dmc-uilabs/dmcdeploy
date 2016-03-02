@@ -93,8 +93,9 @@ export commit_rest=$sec4
 
  echo "Edit terraform.tfvars as appropriate."
 
- cd /home/ec2-user/dmcdeploy
+ cd /home/ec2-user/$1/dmcdeploy
  git checkout terraform.tfvars
+ git checkout tightenSg
 
  #auto fill in as much as possible
  sed -i.bak "s|access_key = \"\"|access_key = \"$AWS_ACCESS_KEY_ID\"|" terraform.tfvars
@@ -137,8 +138,8 @@ export commit_rest=$sec4
  sed -i.bak "s|commit_front = \"\"|commit_front = \"$commit_front\"|" terraform.tfvars
 
 
- sed -i.bak "s|export AWS_ACCESS_KEY_ID = \"\"|export AWS_ACCESS_KEY_ID = \"$AWS_ACCESS_KEY_ID\"|" tightenSg.sh
- sed -i.bak "s|export AWS_SECRET_ACCESS_KEY = \"\"|export AWS_SECRET_ACCESS_KEY = \"$AWS_SECRET_ACCESS_KEY\"|" tightenSg.sh
+ sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID = \"$AWS_ACCESS_KEY_ID\"|" tightenSg.sh
+ sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY = \"$AWS_SECRET_ACCESS_KEY\"|" tightenSg.sh
 
 
  myip=$(curl http://ident.me/)
