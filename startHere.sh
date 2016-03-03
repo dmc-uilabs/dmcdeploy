@@ -74,16 +74,19 @@ if [ $choice == 1 ]
 
 
 
-        echo "Tightening the Security groups so that the machines can talk to one another."
-        ./tightenSg.sh
+        echo "Tightening the Dev Security groups so that the machines can talk to one another."
+        ./tightenSgDev.sh
 
         echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
+        echo "Cleanup of Personal Identifiable information"
         sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
         sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
 
-        sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSg.sh
-        sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSg
+        sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSgDev.sh
+        sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSgDev.sh
 
+
+        echo "Great Job Pal. "
 
       else
        exit
@@ -96,7 +99,7 @@ if [ $choice == 1 ]
     sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
     sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
 
-    sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSg.sh
-    sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSg
+    sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSgDev.sh
+    sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSgDev.sh
 
 fi
