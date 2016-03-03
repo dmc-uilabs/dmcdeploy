@@ -29,8 +29,9 @@ read sec1
 if [ -z "$sec1" ]
   then
     NOW=$(date +"%Y_%m_%d_%H_%M_%S")
-    echo "Setting to default -- $uname_$NOW"
-    sec1=${uname}_${NOW}
+    sec1=$1_${NOW}
+    echo "Setting to default -- $sec1"
+
 fi
 case $sec1 in [qQ]) exit;; esac
 export stackPrefix=$sec1
@@ -139,9 +140,9 @@ export commit_rest=$sec4
  sed -i.bak "s|commit_front = \"\"|commit_front = \"$commit_front\"|" terraform.tfvars
 
 
- sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"|" tightenSg.sh
- sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"|" tightenSg.sh
- sed -i.bak "s|export AWS_DEFAULT_REGION=\"\"|export AWS_DEFAULT_REGION=\"us-west-2\"|" tightenSg.sh
+ sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"|" tightenSgDev.sh
+ sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"|" tightenSgDev.sh
+ sed -i.bak "s|export AWS_DEFAULT_REGION=\"\"|export AWS_DEFAULT_REGION=\"us-west-2\"|" tightenSgDev.sh
 
 
 sed -i.bak "s|export serverURL=\"\"|export serverURL=\"$serverURL\"|" updateDevStack.sh
