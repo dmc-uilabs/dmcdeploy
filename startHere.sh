@@ -78,7 +78,12 @@ if [ $choice == 1 ]
         ./tightenSg.sh
 
         echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
-        git checkout
+        sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
+        sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
+
+        sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSg.sh
+        sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSg
+
 
       else
        exit
@@ -87,5 +92,11 @@ if [ $choice == 1 ]
   else
     printf "\nUpdating your existing infrastructure."
     updateDevStack.sh
+
+    sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
+    sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
+
+    sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSg.sh
+    sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSg
 
 fi
