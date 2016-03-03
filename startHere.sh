@@ -30,8 +30,10 @@ git pull
 
 echo "Your code base is up to date.";
 echo  "What would you like to do?  [ENTER][q to quit] "
-echo  "1. Create or Update DMC Stack"
-echo  "2. Update the codebase on an Existing DMC Stack without altering the infrastructure"
+echo  "1. Create a new DMC Stack"
+echo  "2. Update an existing DMC Stack Infrastructure"
+echo  "3. Update the codebase on an Existing DMC Stack without altering the infrastructure"
+echo  "4. Destroy existing DMC Stack Infrastructure"
 read -n 1 choice
 
 printf "\nYou chose $choice"
@@ -92,14 +94,52 @@ if [ $choice == 1 ]
        exit
     fi
 
-  else
-    printf "\nUpdating your existing infrastructure."
-    updateDevStack.sh
 
-    sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
-    sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
 
-    sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSgDev.sh
-    sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSgDev.sh
+
+fi
+
+
+if [ $choice == 2 ]
+  then
+
+  printf "\nWorking on it will be available soon"
+  # printf "\nUpdating your existing infrastructure."
+  # updateDevStack.sh
+  #
+  # sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
+  # sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
+  #
+  # sed 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSgDev.sh
+  # sed 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSgDev.sh
+
+fi
+
+if [ $choice == 3 ]
+  then
+
+  printf "\nWhich instance do you wish to update? [q to quit]\n"
+  echo  "1. Front End Machine"
+  echo  "2. Rest Machine"
+  echo  "3. Db Machine"
+  echo  "4. Solr Machine"
+  read -n 1 tainted
+  case $apply in [qQ]) exit;; esac
+
+
+
+
+  taintng="aws_instance_"${tainted}
+
+  printf "\nUpdating the $taintng"
+  #terrafom taint
+ printf "\nWorking on it will be available soon"
+
+fi
+
+if [ $choice == 4 ]
+  then
+    printf "\nYour infrastructure will be obliterated."
+    terraform destroy
 
 fi
