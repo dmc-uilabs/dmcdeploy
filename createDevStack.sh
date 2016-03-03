@@ -30,7 +30,7 @@ if [ -z "$sec1" ]
   then
     NOW=$(date +"%Y_%m_%d_%H_%M_%S")
     echo "Setting to default -- $uname_$NOW"
-    sec1=$uname_$NOW
+    sec1=${uname}_${NOW}
 fi
 case $sec1 in [qQ]) exit;; esac
 export stackPrefix=$sec1
