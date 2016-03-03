@@ -24,12 +24,13 @@ case $sec in [qQ]) exit;; esac
 export AWS_SECRET_ACCESS_KEY=$sec
 
 
-echo -n "stackPrefix [ENTER][q to quit] "
+echo -n "stackPrefix { leaving blank will default to -- nanme_date } [ENTER][q to quit] "
 read sec1
 if [ -z "$sec1" ]
   then
-    echo "No arguments supplied quitting"
-    exit
+    NOW=$(date +"%Y_%m_%d_%H_%M_%S")
+    echo "Setting to default -- $uname_$NOW"
+    sec1=$uname_$NOW
 fi
 case $sec1 in [qQ]) exit;; esac
 export stackPrefix=$sec1
@@ -46,24 +47,24 @@ case $sec2 in [qQ]) exit;; esac
 export serverURL=$sec2
 
 
-echo -n "commit_front [ENTER][q to quit] "
+echo -n "commit_front { leaving blank will default to deploying from the latest successful build } [ENTER][q to quit] "
 read sec3
 if [ -z "$sec3" ]
   then
-    echo "No arguments supplied quitting"
-    exit
+    echo "Setting to default [ hot ]"
+    sec3='hot'
 fi
 case $sec3 in [qQ]) exit;; esac
 export commit_front=$sec3
 
 
 
-echo -n "commit_rest [ENTER][q to quit] "
+echo -n "commit_rest { leaving blank will default to deploying from the latest successful build } [ENTER][q to quit] "
 read sec4
 if [ -z "$sec4" ]
   then
-    echo "No arguments supplied quitting"
-    exit
+    echo "Setting to default [ hot ]"
+    sec4='hot'
 fi
 case $sec4 in [qQ]) exit;; esac
 export commit_rest=$sec4
@@ -98,8 +99,8 @@ export commit_rest=$sec4
  git checkout tightenSg
 
  #auto fill in as much as possible
- # sed -i.bak "s|access_key = \"\"|access_key = \"$AWS_ACCESS_KEY_ID\"|" terraform.tfvars
- # sed -i.bak "s|secret_key = \"\"|secret_key = \"$AWS_SECRET_ACCESS_KEY\"|" terraform.tfvars
+ sed -i.bak "s|access_key = \"\"|access_key = \"$AWS_ACCESS_KEY_ID\"|" terraform.tfvars
+ sed -i.bak "s|secret_key = \"\"|secret_key = \"$AWS_SECRET_ACCESS_KEY\"|" terraform.tfvars
  sed -i.bak "s|aws_region = \"\"|aws_region = \"us-west-2\"|" terraform.tfvars
 
  sed -i.bak "s|stackPrefix = \"\"|stackPrefix = \"$stackPrefix\"|" terraform.tfvars
