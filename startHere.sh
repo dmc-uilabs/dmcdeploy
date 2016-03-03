@@ -45,7 +45,7 @@ if [ $choice == 1 ]
        terraform show
        printf "You have existing infrastructure on aws."
 
-       printf "If you continue this script will edit that infrastructure in place.\n Would you like to continue? [y] [q to quit].\n You may wish to quit now and use terraform destroy to remove the infrastructure and rerun this script to make a new set"
+       printf "If you continue this script will edit that infrastructure in place.\n Would you like to continue? [y] [q to quit].\n You may wish to quit now and use terraform destroy to remove the infrastructure and rerun this script to make a new set.\n"
        read tfstate
        case $tfstate in [qQ]) exit;; esac
    fi
@@ -75,9 +75,10 @@ if [ $choice == 1 ]
 
 
         echo "Tightening the Security groups so that the machines can talk to one another."
-        ./tightenSg
+        ./tightenSg.sh
 
         echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
+        git checkout
 
       else
        exit
@@ -85,5 +86,6 @@ if [ $choice == 1 ]
 
   else
     printf "\nUpdating your existing infrastructure."
+    updateDevStack.sh
 
 fi
