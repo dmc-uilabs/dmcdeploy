@@ -140,6 +140,10 @@ export commit_rest=$sec4
 
  sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"|" tightenSg.sh
  sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"|" tightenSg.sh
+ sed -i.bak "s|export AWS_DEFAULT_REGION=\"\"|export AWS_DEFAULT_REGION=\"us-west-2\"|" tightenSg.sh
+
+
+sed -i.bak "s|export serverURL=\"\"|export serverURL=\"$serverURL\"|" updateDevStack.sh
 
 
  myip=$(curl http://ident.me/)
