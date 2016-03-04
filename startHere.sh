@@ -12,9 +12,7 @@ if [ -z "$uname" ]
 fi
 case $uname in [qQ]) exit;; esac
 
-
-echo "if [[ ! -d "~/$uname" ]];"
-if [ ! -d "~/$uname" ];
+if [[ ! -d ~/$uname ]];
    then
     # dir does not exist under that name make it
     echo "Creating your work dir in ~/$uname"
@@ -83,14 +81,7 @@ if [ $choice == 1 ]
         ./tightenSgDev.sh
 
         echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
-        echo "Cleanup of Personal Identifiable information"
-        sed -i.bak 's/^access_key = ".*/access_key = ""/' terraform.tfvars
-        sed -i.bak 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
 
-        sed -i.bak 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSgDev.sh
-        sed -i.bak 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSgDev.sh
-        rm terrafom.tfvars.bak
-        rm tightenSgDev.sh.bak
 
         echo "Great Job Pal. "
 
@@ -108,7 +99,16 @@ if [ $choice == 2 ]
   then
 
   printf "\nUpdating your existing infrastructure."
-  ./updateStack.sh
+
+  #importing devUtil
+  source ./devUtil.sh
+  removePII
+
+
+
+
+
+  #./updateStack.sh
   #
   # sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
   # sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
