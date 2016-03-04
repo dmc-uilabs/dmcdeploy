@@ -89,7 +89,8 @@ if [ $choice == 1 ]
 
         sed -i.bak 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSgDev.sh
         sed -i.bak 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSgDev.sh
-
+        rm terrafom.tfvars.bak
+        rm tightenSgDev.sh.bak
 
         echo "Great Job Pal. "
 
@@ -106,9 +107,8 @@ fi
 if [ $choice == 2 ]
   then
 
-  printf "\nWorking on it will be available soon"
-  # printf "\nUpdating your existing infrastructure."
-  # updateDevStack.sh
+  printf "\nUpdating your existing infrastructure."
+  ./updateStack.sh
   #
   # sed 's/^access_key = ".*/access_key = ""/' terraform.tfvars
   # sed 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
