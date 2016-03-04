@@ -1,28 +1,13 @@
 #!/bin/bash
+#importing devUtil
+source ./devUtil.sh
 
+cd /home/ec2-user/$1/dmcdeploy
+git checkout terraform.tfvars
+git checkout tightenSg
 
-
-echo -n "AWS_ACCESS_KEY_ID [ENTER][q to quit] "
-read name
-if [ -z "$name" ]
-  then
-    echo "No arguments supplied quitting"
-    exit
-fi
-case $name in [qQ]) exit;; esac
-export AWS_ACCESS_KEY_ID=$name
-
-
-echo -n "AWS_SECRET_ACCESS_KEY [ENTER][q to quit] "
-read sec
-if [ -z "$sec" ]
-  then
-    echo "No arguments supplied quitting"
-    exit
-fi
-case $sec in [qQ]) exit;; esac
-export AWS_SECRET_ACCESS_KEY=$sec
-
+# this will add the Personal Identifiable Information aws 
+addPII
 
 echo -n "stackPrefix { leaving blank will default to -- nanme_date } [ENTER][q to quit] "
 read sec1
@@ -95,13 +80,11 @@ export commit_rest=$sec4
 
  echo "Edit terraform.tfvars as appropriate."
 
- cd /home/ec2-user/$1/dmcdeploy
- git checkout terraform.tfvars
- git checkout tightenSg
+
 
  #auto fill in as much as possible
- sed -i.bak "s|access_key = \"\"|access_key = \"$AWS_ACCESS_KEY_ID\"|" terraform.tfvars
- sed -i.bak "s|secret_key = \"\"|secret_key = \"$AWS_SECRET_ACCESS_KEY\"|" terraform.tfvars
+ # sed -i.bak "s|access_key = \"\"|access_key = \"$AWS_ACCESS_KEY_ID\"|" terraform.tfvars
+ # sed -i.bak "s|secret_key = \"\"|secret_key = \"$AWS_SECRET_ACCESS_KEY\"|" terraform.tfvars
  sed -i.bak "s|aws_region = \"\"|aws_region = \"us-west-2\"|" terraform.tfvars
 
  sed -i.bak "s|stackPrefix = \"\"|stackPrefix = \"$stackPrefix\"|" terraform.tfvars
@@ -140,8 +123,8 @@ export commit_rest=$sec4
  sed -i.bak "s|commit_front = \"\"|commit_front = \"$commit_front\"|" terraform.tfvars
 
 
- sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"|" tightenSgDev.sh
- sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"|" tightenSgDev.sh
+ # sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"|" tightenSgDev.sh
+ # sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"|" tightenSgDev.sh
  sed -i.bak "s|export AWS_DEFAULT_REGION=\"\"|export AWS_DEFAULT_REGION=\"us-west-2\"|" tightenSgDev.sh
 
 
