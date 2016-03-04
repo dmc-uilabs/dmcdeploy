@@ -145,7 +145,7 @@ export commit_rest=$sec4
  sed -i.bak "s|export AWS_DEFAULT_REGION=\"\"|export AWS_DEFAULT_REGION=\"us-west-2\"|" tightenSgDev.sh
 
 
-sed -i.bak "s|export serverURL=\"\"|export serverURL=\"$serverURL\"|" updateDevStack.sh
+sed -i.bak "s|export serverURL=\"\"|export serverURL=\"$serverURL\"|" updateStack.sh
 
 
  myip=$(curl http://ident.me/)
