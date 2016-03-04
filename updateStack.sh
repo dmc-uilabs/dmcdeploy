@@ -42,7 +42,7 @@ rest_public_ip=$(removeQuotes $rest_public_ip)
 export rest_host=$rest_public_ip
 # for any host
 #export rest_host=54.175.165.3
-export rest_deploy_commit=ecb5bedeaf21f1f4e855bf0d2b59be199b087b3f
+export rest_deploy_commit=hot
 export use_swagger=1
 
 
@@ -69,14 +69,14 @@ export solr_host=$solr_public_ip
 
 updateFront() {
   ssh -tti $front_ssh_key $front_user@$front_host <<+
-
+    printf "Updating froned Code Base"
     sudo yum update -y
 
-    pwd
-   	cd /tmp
+    cd /tmp
+    mkdir commit
+    cd commit
 
-
-    echo "value of front_deploy_commit is $front_deploy_commit"
+    printf "Value of front_deploy_commit is $front_deploy_commit"
     if [[ $front_deploy_commit == 'hot' ]]
 
       then
@@ -85,27 +85,23 @@ updateFront() {
           wget https://s3.amazonaws.com/dmc-frontend-distribution/DMCFrontendDist.zip
       else
       	  rm *-DMCFrontendDist.zip
-          echo "pull from >> $front_deploy_commit << commit"
+          echo "pullin from >> $front_deploy_commit << commit"
           wget https://s3.amazonaws.com/dmc-frontend-distribution/$front_deploy_commit-DMCFrontendDist.zip
 
     fi
 
-
-    rm -fr /tmp/dist
     unzip *.zip  #code is now in /tmp/dist
+    mv dist/ ../
 
+    rm -rf /tmp/commit
     # move code to clean webroot and change owner to apache
     sudo rm -rf /var/www/html/*
     cd /tmp/dist/templates/common/header
 
-    echo "set loginURL to $loginURL "
+    echo "set loginURL to $serverURL "
     sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
 
-
-
    cd /tmp/dist/
-
-
    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
    sudo mkdir -p /var/www/
    sudo mkdir -p /var/www/html
@@ -113,7 +109,7 @@ updateFront() {
    cd /var/www/html
    sudo chown -R apache:apache *
 
-
+   sudo /etc/init.d/httpd restart
    exit
 
 +
@@ -182,7 +178,7 @@ updateSolr(){
 
 
 #uncomment function to update the frontend machine
-#updateFront
+updateFront
 
 
 #uncomment function to update the rest machine
