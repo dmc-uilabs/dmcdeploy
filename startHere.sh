@@ -129,9 +129,7 @@ if [ $choice == 3 ]
 
       serverURL=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes."tags.serverURL"' )
       serverURL=$(removeQuotes $serverURL)
-      serverURL=$(echo $serverURL | sed 's/.$//')
-
-
+  
       echo ">>> $serverURL"
       printf "\nWhich build do you wish to deploy? [hot -- latest] [ commit hash -- for particular build] [q to quit]\n"
       read fbuild
