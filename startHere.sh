@@ -101,26 +101,64 @@ if [ $choice == 2 ]
   then
   addPII
   printf "\nUpdating your existing infrastructure."
-  ./updateStack.sh
+  ./updateStack.sh ~/keys/
   removePII
 fi
 
 if [ $choice == 3 ]
   then
-  addPII
+
+    if [ ! -f terraform.tfstate ]; then
+      printf "\nNo terrafom.tfstate found EXITING.\n Ensure you have a running stack."
+      exit
+    fi
+
+  source ./updateStack.sh
+  # addPII
   printf "\nWhich instance do you wish to update? [q to quit]\n"
   echo  "1. Front End Machine"
   echo  "2. Rest Machine"
   echo  "3. Db Machine"
   echo  "4. Solr Machine"
-  read -n 1 tainted
-  case $apply in [qQ]) exit;; esac
+  read -n 1 iupdate
+  case $iupdate
+     in [qQ])
+       exit;;
+      1)
+
+
+      serverURL=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes."tags.serverURL"' )
+      serverURL=$(removeQuotes $serverURL)
+      serverURL=$(echo $serverURL | sed 's/.$//')
+
+
+      echo ">>> $serverURL"
+      printf "\nWhich build do you wish to deploy? [hot -- latest] [ commit hash -- for particular build] [q to quit]\n"
+      read fbuild
+
+      printf "updating the front with $serverURL >> from commit $fbuild"
+
+      updateFront $serverURL $fbuild
+
+
+      ;;
+      2)
+      printf "rest"
+      ;;
+      3)
+       printf "db"
+      ;;
+     4)
+        printf "solr"
+      ;;
+
+  esac
   taintng="aws_instance_"${tainted}
 
-  printf "\nUpdating the $taintng"
+  printf "\nUpdating the $taintng machine."
   #terrafom taint
- printf "\nWorking on it will be available soon"
-  removePII
+ # printf "\nWorking on it will be available soon"
+ #  removePII
 fi
 
 if [ $choice == 4 ]
@@ -131,4 +169,4 @@ if [ $choice == 4 ]
     removePII
 fi
 
-removePII
+# removePII
