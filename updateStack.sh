@@ -17,7 +17,7 @@ key_prefix=$(echo $key_prefix | sed 's/.$//')
 
 
 # folder where you keys are located
-key_location=/home/ti/Desktop/keys/
+key_location=$1
 
 
 
@@ -66,15 +66,26 @@ export solr_host=$solr_public_ip
 
 
 
+###
+# will update the frontend machines
+# inputs :
+# $1 -- serverURL
+# $2 -- frontend dmcdeploy commit
+#
+
+##
+
 
 updateFront() {
   ssh -tti $front_ssh_key $front_user@$front_host <<+
-    printf "Updating froned Code Base"
+    printf "Updating frontend Code Base"
     sudo yum update -y
 
     cd /tmp
     mkdir commit
     cd commit
+    front_deploy_commit=$1
+    serverURL=$2
 
     printf "Value of front_deploy_commit is $front_deploy_commit"
     if [[ $front_deploy_commit == 'hot' ]]
@@ -178,7 +189,7 @@ updateSolr(){
 
 
 #uncomment function to update the frontend machine
-updateFront
+#updateFront
 
 
 #uncomment function to update the rest machine

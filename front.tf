@@ -91,6 +91,7 @@ provisioner "remote-exec"{
     Name = "${var.stackPrefix}DMC-front"
     Prefix = "${var.stackPrefix}"
     Kname = "${var.key_name_front}"
+    serverURL = "${var.serverURL}"
   }
 
 
