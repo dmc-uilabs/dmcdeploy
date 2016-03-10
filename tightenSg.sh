@@ -13,9 +13,10 @@ source ./devUtil.sh
 # install it if not available
 ifNotHaveInstall jq
 
-export AWS_ACCESS_KEY_ID=""
-export AWS_SECRET_ACCESS_KEY=""
-export AWS_DEFAULT_REGION=""
+export AWS_ACCESS_KEY_ID="AKIAJFDN5TADRMF2W6OQ"
+export AWS_SECRET_ACCESS_KEY="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"
+export AWS_DEFAULT_REGION="us-east-1"
+
 
 
 # server connection variables

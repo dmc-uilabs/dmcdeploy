@@ -59,7 +59,19 @@ if [ $choice == 1 ]
 
 
     printf "\nCreating a new stack. \n Will need more information."
-    ./createDevStack.sh $uname
+    printf "\nWhat kind of stack would you like to deploy?"
+    printf "\n1. Developmnet Stack"
+    printf "\n2. Production Stack"
+    read -n 1 schoice
+    if [ $schoice == 1]; then
+      printf "\nCreating Developmnet Stack"
+      ./createDevStack.sh $uname
+    else
+      printf "\n Production Stack"
+      printf "\n That part is not yet automated."
+
+    fi
+
     terraform plan
     printf  "\n Are you happy with the terrafom plan described above? \n Must answer yes or progam will not create your infrastructure. \n If you disagree go back and edit your terrafom.tfvars file manually and execute terraform apply.  [yes][q to quit] "
     read apply
@@ -79,6 +91,7 @@ if [ $choice == 1 ]
       else
        exit
     fi
+    removePII
 fi
 
 
@@ -171,5 +184,3 @@ if [ $choice == 4 ]
     terraform destroy
     removePII
 fi
-
-# removePII

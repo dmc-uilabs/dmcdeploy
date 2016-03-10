@@ -13,9 +13,9 @@ source ./devUtil.sh
 # install it if not available
 ifNotHaveInstall jq
 
-export AWS_ACCESS_KEY_ID=""
-export AWS_SECRET_ACCESS_KEY=""
-export AWS_DEFAULT_REGION=""
+export AWS_ACCESS_KEY_ID="accesskey"
+export AWS_SECRET_ACCESS_KEY="secretkey"
+export AWS_DEFAULT_REGION="us-west-2"
 
 
 # server connection variables
@@ -109,8 +109,8 @@ tightenRest () {
 	# allow the rest machine to only talk to front end machine on port 8009
 	#aws ec2 authorize-security-group-egress --group-id $rest_sg_id --ip-permissions "[{\"IpProtocol\": \"tcp\", \"FromPort\": 8009, \"ToPort\": 8009, \"IpRanges\": [{\"CidrIp\": \"$(echo $cidr_f)\"}]}]"
 
-	# allow all traffic from port 443
-	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
+	# allow all traffic from port 8080
+	aws ec2 authorize-security-group-ingress --group-name $rest_sg --protocol tcp --port 8080 --cidr 0.0.0.0/0
 
 	# do not allow traffic on port 22
 	#aws ec2 revoke-security-group-ingress --group-name $rest_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
@@ -137,7 +137,7 @@ tightenDb () {
 	# allow all traffic from rest private ip to port 5432
 	# set ip cidr ip range to only allow include the rest private ip
 	cidr_r=$(echo "${rest_private_ip}/32")
-	aws ec2 authorize-security-group-ingress --group-name $db_sg --protocol tcp --port 5432 --cidr $cidr_r
+	aws ec2 authorize-security-group-ingress --group-name $db_sg --protocol tcp --port 5432 --cidr 0.0.0.0/0
 
 
 	# allow all traffic from port 443
