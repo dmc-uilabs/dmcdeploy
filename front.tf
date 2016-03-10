@@ -89,10 +89,7 @@ provisioner "remote-exec"{
   #Instance tags -- name the vm in amazon to find easier
   tags {
     Name = "${var.stackPrefix}DMC-front"
-    Prefix = "${var.stackPrefix}"
-    Kname = "${var.key_name_front}"
-    serverURL = "${var.serverURL}"
-  }
+    }
 
 
     provisioner "local-exec" {

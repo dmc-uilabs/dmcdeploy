@@ -64,11 +64,23 @@ addPII () {
     case $sec in [qQ]) exit;; esac
     export AWS_SECRET_ACCESS_KEY=$sec
 
-  
+
     sed -i.bak "s|access_key = \"\"|access_key = \"$name\"|" terraform.tfvars
     sed -i.bak "s|secret_key = \"\"|secret_key = \"$sec\"|" terraform.tfvars
 
     sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$name\"|" tightenSgDev.sh
     sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$sec\"|" tightenSgDev.sh
 
+}
+
+
+
+#####
+# Will extract value from terraform,state within the tags
+#
+# usage getFromTfVars key_full_path_front << will return the value for that key
+#####
+getFromTfVars () {
+  var=$(awk  '/'$1'/{print $NF}' terraform.tfvars)
+  removeQuotes $var
 }
