@@ -60,40 +60,25 @@ if [ $choice == 1 ]
 
     printf "\nCreating a new stack. \n Will need more information."
     ./createDevStack.sh $uname
-
     terraform plan
     printf  "\n Are you happy with the terrafom plan described above? \n Must answer yes or progam will not create your infrastructure. \n If you disagree go back and edit your terrafom.tfvars file manually and execute terraform apply.  [yes][q to quit] "
-
     read apply
     case $apply in [qQ]) exit;; esac
     if [ $apply == yes ]
       then
-
         terraform apply
-
         echo "Results of Sanity Test Front"
         cat frontSanityTest.log
-
         echo "Results of Sanity Test Rest"
         cat restSanityTest.log
-
-
-
         echo "Tightening the Dev Security groups so that the machines can talk to one another."
         ./tightenSgDev.sh
-
         echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
 
-
         echo "Great Job Pal. "
-
       else
        exit
     fi
-
-
-
-
 fi
 
 
@@ -101,7 +86,18 @@ if [ $choice == 2 ]
   then
   addPII
   printf "\nUpdating your existing infrastructure."
-  ./updateStack.sh ~/keys/
+  printf "\n At the moment only the infrastructure found on the front end machine can be updated without destroying the rest of the stack. \n Do you wish to upgrade the infrastructure underpinning the frontend machine? [yes to upgrade ][q to quit]"
+  read taintfront
+  case $taintfront
+    in [qQ])
+     exit
+     ;;
+     yes)
+       terrafom taint aws_instance.fornt
+       terrafom apply
+     ;;
+  esac
+
   removePII
 fi
 
@@ -114,49 +110,58 @@ if [ $choice == 3 ]
     fi
 
   source ./updateStack.sh
-  # addPII
+  addPII
   printf "\nWhich instance do you wish to update? [q to quit]\n"
   echo  "1. Front End Machine"
   echo  "2. Rest Machine"
   echo  "3. Db Machine"
   echo  "4. Solr Machine"
+  echo  "5. Update all stack components to latest available builds. "
   read -n 1 iupdate
   case $iupdate
      in [qQ])
        exit;;
       1)
 
-
-      serverURL=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes."tags.serverURL"' )
       serverURL=$(removeQuotes $serverURL)
-  
-      echo ">>> $serverURL"
       printf "\nWhich build do you wish to deploy? [hot -- latest] [ commit hash -- for particular build] [q to quit]\n"
       read fbuild
-
+      case $fbuild in [qQ]) exit;; esac
       printf "updating the front with $serverURL >> from commit $fbuild"
-
       updateFront $serverURL $fbuild
 
 
       ;;
       2)
-      printf "rest"
+      printf "\nWhich build do you wish to deploy on the rest machine? [hot -- latest] [ commit hash -- for particular build] [q to quit]\n"
+      read fbuild
+      case $fbuild in [qQ]) exit;; esac
+      printf "\nUpdating the rest machine  >> from commit $fbuild"
+      updateRest $fbuild
+
       ;;
       3)
-       printf "db"
+       printf "\nWhich build do you wish to deploy on the db machine? [hot -- latest] [ commit hash -- for particular build] [q to quit]\n"
+       read fbuild
+       case $fbuild in [qQ]) exit;; esac
+       printf "\nUpdating the db machine  >> from commit $fbuild"
+       updateDb $fbuild
+
       ;;
      4)
         printf "solr"
       ;;
 
-  esac
-  taintng="aws_instance_"${tainted}
+      5)
+         printf "\Updating the entire stack"
+         updateFront hot
+         updateRest hot
+         updateDb hot
+         updateSolr hot
+       ;;
 
-  printf "\nUpdating the $taintng machine."
-  #terrafom taint
- # printf "\nWorking on it will be available soon"
- #  removePII
+  esac
+   removePII
 fi
 
 if [ $choice == 4 ]
