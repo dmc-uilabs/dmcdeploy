@@ -63,7 +63,7 @@ if [ $choice == 1 ]
     printf "\n1. Developmnet Stack"
     printf "\n2. Production Stack"
     read -n 1 schoice
-    if [ $schoice == 1]; then
+    if [ $schoice == 1 ]; then
       printf "\nCreating Developmnet Stack"
       ./createDevStack.sh $uname
     else
