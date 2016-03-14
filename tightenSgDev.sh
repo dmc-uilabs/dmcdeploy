@@ -20,7 +20,7 @@ export AWS_DEFAULT_REGION="us-west-2"
 
 # server connection variables
 
-stackprefix=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes."tags.Prefix"')
+stackprefix=$(getFromTfVars stackprefix)
 
 front_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes.private_ip')
 #removing quotes from variable
