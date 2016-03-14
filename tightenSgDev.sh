@@ -20,7 +20,7 @@ export AWS_DEFAULT_REGION="us-west-2"
 
 # server connection variables
 
-stackprefix=$(getFromTfVars stackprefix)
+stackprefix=$(getFromTfVars stackPrefix)
 
 front_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes.private_ip')
 #removing quotes from variable
@@ -72,7 +72,7 @@ tightenFront () {
 
 	front_sg="$(echo "${stackprefix}" | sed -e 's/^"//'  -e 's/"$//')_DMC_sg_front"
 
-	echo "the fron sg is -- $front_sg"
+	echo "the front sg is -- $front_sg"
 
 	# allow all traffic from port 80
 	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 80 --cidr 0.0.0.0/0
