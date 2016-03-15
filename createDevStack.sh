@@ -6,7 +6,7 @@ cd /home/ec2-user/$1/dmcdeploy
 git checkout terraform.tfvars
 git checkout tightenSg
 
-# this will add the Personal Identifiable Information aws 
+# this will add the Personal Identifiable Information aws
 addPII
 
 echo -n "stackPrefix { leaving blank will default to -- nanme_date } [ENTER][q to quit] "
@@ -90,28 +90,28 @@ export commit_rest=$sec4
  sed -i.bak "s|stackPrefix = \"\"|stackPrefix = \"$stackPrefix\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_front = \"\"|key_name_front = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_front = \"\"|key_full_path_front = \"~/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_front = \"\"|key_full_path_front = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_rest = \"\"|key_name_rest = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_rest = \"\"|key_full_path_rest = \"~/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_rest = \"\"|key_full_path_rest = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
 
  sed -i.bak "s|key_name_db = \"\"|key_name_db = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_db = \"\"|key_full_path_db = \"~/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_db = \"\"|key_full_path_db = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
 
  sed -i.bak "s|key_name_solr = \"\"|key_name_solr = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_solr = \"\"|key_full_path_solr = \"~/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_solr = \"\"|key_full_path_solr = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
 
  sed -i.bak "s|key_name_activeMq = \"\"|key_name_activeMq = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_activeMq = \"\"|key_full_path_activeMq = \"~/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_activeMq = \"\"|key_full_path_activeMq = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_stackMon = \"\"|key_name_stackMon = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_stackMon = \"\"|key_full_path_stackMon = \"~/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_stackMon = \"\"|key_full_path_stackMon = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_dome = \"\"|key_name_dome = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_dome = \"\"|key_full_path_dome = \"~/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_dome = \"\"|key_full_path_dome = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
 
 
