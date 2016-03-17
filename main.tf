@@ -1,7 +1,7 @@
 # Specify the provider and access details
 provider "aws" {
   region = "${var.aws_region}"
-  access_key = "${var.access_key}" 
+  access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
 }
 
@@ -16,7 +16,7 @@ resource "aws_security_group" "sg_front" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -27,7 +27,7 @@ resource "aws_security_group" "sg_front" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
    # HTTPS access from anywhere
   ingress {
     from_port = 443
@@ -55,12 +55,12 @@ resource "aws_security_group" "sg_rest" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
-  
- 
+
+
+
 
   # outbound internet access
   egress {
@@ -81,11 +81,11 @@ resource "aws_security_group" "sg_db" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  
+
   # outbound internet access
   egress {
     from_port = 0
@@ -106,10 +106,10 @@ resource "aws_security_group" "sg_dome" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-   
+
   # HTTPS access from anywhere
   ingress {
     from_port = 443
@@ -120,8 +120,8 @@ resource "aws_security_group" "sg_dome" {
 
   # HTTP access from anywhere
   ingress {
-    from_port = 0
-    to_port = 80
+    from_port = 7795
+    to_port = 7795
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -144,7 +144,7 @@ resource "aws_security_group" "sg_activemq" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -183,11 +183,11 @@ resource "aws_security_group" "sg_solr" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
- 
+
 
   # outbound internet access
   egress {
@@ -209,7 +209,7 @@ resource "aws_security_group" "sg_stackmon" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -250,7 +250,7 @@ resource "aws_security_group" "sg_wide" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
