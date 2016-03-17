@@ -17,7 +17,7 @@ key_full_path_front = ""
 
 # which commit to deploy on the front end machine
 # if commit_front = 'hot' -- the latest available build will be selected
-commit_front = "hot"
+commit_front = ""
 
 
 # uncomment only if you wish to change the default location
@@ -31,7 +31,7 @@ key_full_path_rest = ""
 
 # which comit to deploy on the rest machine
 # if commit_rest = 'hot' -- the latest available build will be selected
-commit_rest = "hot"
+commit_rest = ""
 
 
 
@@ -40,9 +40,9 @@ key_name_db = ""
 key_full_path_db = ""
 
 # Postgress credentials
-PSQLUSER = "gforge"
-PSQLPASS= "gforge"
-PSQLDBNAME = "gforge"
+PSQLUSER = ""
+PSQLPASS= ""
+PSQLDBNAME = ""
 
 
 
@@ -54,6 +54,9 @@ key_full_path_solr = ""
 # keys to the dome machine
 key_name_dome = ""
 key_full_path_dome = ""
+commit_dome = "hot"
+dome_server_user=""
+dome_server_pw=""
 
 # keys to the stackMon machine
 key_name_stackMon = ""
@@ -62,13 +65,14 @@ key_full_path_stackMon = ""
 
 # credentials for activeMQ
 key_name_activeMq = ""
-key_full_path_activeMq = ""
-activeMqRootPass = "admin1"
-activeMqUserPass = "user1"
+key_full_path_activeMq =""
+commit_activeMq = "hot"
+activeMqRootPass = ""
+activeMqUserPass = ""
 
 
 stackPrefix = ""
-release = "hot"
+release = ""
 
 
 

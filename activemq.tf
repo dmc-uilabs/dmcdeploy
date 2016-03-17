@@ -1,8 +1,8 @@
 
-/*
+
 resource "aws_instance" "activeMq" {
   instance_type = "m4.large"
- 
+
 
   # Lookup the correct AMI based on the region
   # we specified
@@ -34,10 +34,13 @@ resource "aws_instance" "activeMq" {
     }
     }
 
-  
+
    provisioner "remote-exec" {
         inline = [
-         "echo 'export commit_front=${var.commit_front}' >> /tmp/profile",   
+        "echo 'export  activeMqRootPass=${var.activeMqRootPass}' >> /tmp/profile",
+        "echo 'export activeMqUserPass=${var.activeMqUserPass}' >> /tmp/profile",
+        "echo 'export release=${var.release}' >> /tmp/profile",
+         "echo 'export commit_activeMq=${var.commit_activeMq}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
@@ -57,6 +60,11 @@ resource "aws_instance" "activeMq" {
   tags {
     Name = "${var.stackPrefix}DMC-activeMq"
   }
+
+
+  provisioner "local-exec" {
+        command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_activeMq} ec2-user@${aws_instance.activeMq.public_ip}:/home/ec2-user/activeMqSanityTest.log ."
 }
 
-*/
+
+}

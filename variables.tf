@@ -26,6 +26,8 @@ variable "use_swagger" {}
 
 variable "commit_rest" {}
 variable "commit_front" {}
+variable "commit_dome" {}
+variable "commit_activeMq" {}
 
 variable "sp_cert_location" {
   default = "/tmp/sp-cert.pem"
@@ -37,6 +39,12 @@ variable "inc-md-cert_location" {
   default = "/tmp/inc-md-cert.pem"
 }
 
+variable "dome_server_user" {
+  default = "ceed"
+}
+variable "dome_server_pw" {
+  default = "ceed"
+}
 
 variable "activeMqRootPass" {}
 variable "stackPrefix" {}

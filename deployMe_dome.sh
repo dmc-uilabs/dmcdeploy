@@ -7,8 +7,8 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 # yum install -y git
 # yum install -y tomcat7
 sudo /etc/init.d/tomcat7 start
-mkdir -p DOME
-cd DOME
+cd /tmp
+
 rm -rf *
 
 if [[ $release == 'hot' ]]
@@ -18,17 +18,21 @@ if [[ $release == 'hot' ]]
 	else
     			echo "pull from >> $release << release"
     			git clone https://bitbucket.org/DigitalMfgCommons/dmcdomeserver.git
-                cd dmcdomeserver 
+                cd dmcdomeserver
 				echo "git checkout tags/$release"  | bash -
 
 fi
 
 
-cd ~/DOME/dmcdomeserver
+cd /tmp/dmcdomeserver
+
 #mvn package
 
 sudo cp DOMEApiServicesV7.war /var/lib/tomcat7/webapps
 echo "queue=tcp://$ActiveMQdns:61616" >> config.properties
+echo "dome.server.user=$dome_server_user" >> config.properties
+echo "dome.server.pw=$dome_server_pw" >> config.properties
+
 while [ ! -f /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties ]
 do
     echo "waiting"
@@ -37,3 +41,26 @@ done
 
 sudo cp config.properties /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties
 sudo /etc/init.d/tomcat7 restart
+
+
+function sanityTest {
+
+
+cd ~
+
+
+
+response=$(curl -o /dev/null --silent --head --write-out '%{http_code}' "localhost:8080/DOMEApiServicesV7/")
+echo "Attemting to see if server can be reached " >> domeSanityTest.log
+echo "server response -- $response" >> domeSanityTest.log
+
+
+
+echo "The commit we are pulling from >> $commit_dome" >> domeSanityTest.log
+
+
+
+
+}
+
+sanityTest
