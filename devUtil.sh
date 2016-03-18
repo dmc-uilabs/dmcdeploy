@@ -29,11 +29,6 @@ removePII () {
   sed -i.bak 's/^access_key = ".*/access_key = ""/' terraform.tfvars
   sed -i.bak 's/^secret_key = ".*/secret_key = ""/' terraform.tfvars
 
-  sed -i.bak 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSgDev.sh
-  sed -i.bak 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSgDev.sh
-
-  sed -i.bak 's/^export AWS_ACCESS_KEY_ID=".*/export AWS_ACCESS_KEY_ID=""/' tightenSg.sh
-  sed -i.bak 's/^export AWS_SECRET_ACCESS_KEY=".*/export AWS_SECRET_ACCESS_KEY=""/' tightenSg.sh
   rm terraform.tfvars.bak
   rm tightenSgDev.sh.bak
 
@@ -71,10 +66,19 @@ addPII () {
     sed -i.bak "s|access_key = \"\"|access_key = \"$name\"|" terraform.tfvars
     sed -i.bak "s|secret_key = \"\"|secret_key = \"$sec\"|" terraform.tfvars
 
-    sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$name\"|" tightenSgDev.sh
-    sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$sec\"|" tightenSgDev.sh
+
 
 }
+
+
+spacer () {
+    echo "##########################################"
+    echo $@
+    echo "##########################################"
+}
+
+
+
 
 
 

@@ -65,7 +65,7 @@ if [ $choice == 1 ]
     read -n 1 schoice
     if [ $schoice == 1 ]; then
       printf "\nCreating Developmnet Stack"
-      ./createDevStack.sh $uname
+      ./populateTerraformtfvarsDev.sh
     else
       printf "\n Production Stack"
       printf "\n That part is not yet automated."
@@ -83,7 +83,9 @@ if [ $choice == 1 ]
         cat frontSanityTest.log
         echo "Results of Sanity Test Rest"
         cat restSanityTest.log
-        echo "Tightening the Dev Security groups so that the machines can talk to one another."
+        echo "Link the Stack Machines Together"
+        ./linkMachines.sh
+        echo "Tightening the Dev Security groups where apropriate for the Dev Stack."
         ./tightenSgDev.sh
         echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
 
