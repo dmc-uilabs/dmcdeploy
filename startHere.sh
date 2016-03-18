@@ -60,8 +60,8 @@ if [ $choice == 1 ]
 
     printf "\nCreating a new stack. \n Will need more information."
     printf "\nWhat kind of stack would you like to deploy?"
-    printf "\n1. Developmnet Stack"
-    printf "\n2. Production Stack"
+    printf "\n1. Development Stack"
+    printf "\n2. Production Stack \n"
     read -n 1 schoice
     if [ $schoice == 1 ]; then
       printf "\nCreating Developmnet Stack"
