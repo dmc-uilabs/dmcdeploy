@@ -192,6 +192,7 @@ updateDb() {
 
   psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
   psql -U postgres -d gforge < gforge.psql
+  psql -U postgres -d gforge < V1_1__OrganizationTestData.psql
   exit
 +
 }
