@@ -1,7 +1,7 @@
 
 # the aws keys
-access_key = "access"
-secret_key = "secret"
+access_key = ""
+secret_key = ""
 
 # the region you wish to deploy to
 aws_region = "us-west-2"
