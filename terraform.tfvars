@@ -65,7 +65,7 @@ key_full_path_stackMon = "/home/ec2-user/keys/DMCDriver.pem"
 
 # credentials for activeMQ
 key_name_activeMq = "DMCDriver"
-key_full_path_activeMq =""
+key_full_path_activeMq = ""
 commit_activeMq = ""
 activeMqRootPass = ""
 activeMqUserPass = ""
