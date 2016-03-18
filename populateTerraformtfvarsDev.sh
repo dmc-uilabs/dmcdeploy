@@ -3,7 +3,7 @@
 source ./devUtil.sh
 
 
-# git checkout terraform.tfvars
+git checkout terraform.tfvars
 
 # this will add the Personal Identifiable Information aws
 addPII
