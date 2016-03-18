@@ -54,7 +54,7 @@ key_full_path_solr = ""
 # keys to the dome machine
 key_name_dome = ""
 key_full_path_dome = ""
-commit_dome = "hot"
+commit_dome = ""
 dome_server_user=""
 dome_server_pw=""
 
@@ -66,7 +66,7 @@ key_full_path_stackMon = ""
 # credentials for activeMQ
 key_name_activeMq = ""
 key_full_path_activeMq =""
-commit_activeMq = "hot"
+commit_activeMq = ""
 activeMqRootPass = ""
 activeMqUserPass = ""
 
@@ -85,4 +85,4 @@ serverURL = ""
 loglevel = ""
 
 # deploy stack with swagger
-use_swagger = "1"
+use_swagger = ""
