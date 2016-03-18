@@ -65,7 +65,7 @@ if [ $choice == 1 ]
     read -n 1 schoice
     if [ $schoice == 1 ]; then
       printf "\nCreating Developmnet Stack"
-      ./populateTerraformtfvarsDev.sh
+      ./populateTerraformtfvarsDev.sh $uname
     else
       printf "\n Production Stack"
       printf "\n That part is not yet automated."
