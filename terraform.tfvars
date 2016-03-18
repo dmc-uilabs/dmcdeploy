@@ -41,7 +41,7 @@ key_full_path_db = ""
 
 # Postgress credentials
 PSQLUSER = ""
-PSQLPASS= ""
+PSQLPASS = ""
 PSQLDBNAME = ""
 
 
@@ -55,8 +55,8 @@ key_full_path_solr = ""
 key_name_dome = ""
 key_full_path_dome = ""
 commit_dome = ""
-dome_server_user=""
-dome_server_pw=""
+dome_server_user =""
+dome_server_pw =""
 
 # keys to the stackMon machine
 key_name_stackMon = ""
