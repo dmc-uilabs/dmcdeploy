@@ -27,7 +27,7 @@ if [[ ! -d ~/$uname ]];
 fi
 
 
-cd ~/$uname/dmcdeploy
+cd ~/$uname/dmcdeploy
 echo "Updating the repo"
 git pull
 
