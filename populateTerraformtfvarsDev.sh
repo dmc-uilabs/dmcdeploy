@@ -120,8 +120,8 @@ echo -n "DOME User Name { leaving blank will default domeUser } [ENTER][q to qui
 read sec4
 if [ -z "$sec4" ]
   then
-    echo "Setting to default [ domeUser ]"
-    sec4='domeUser'
+    echo "Setting to default [ ceed ]"
+    sec4='ceed'
 fi
 case $sec4 in [qQ]) exit;; esac
 dome_server_user=$sec4
@@ -130,8 +130,8 @@ echo -n "Dome User Password { leaving blank will default domePass } [ENTER][q to
 read sec4
 if [ -z "$sec4" ]
   then
-    echo "Setting to default [ domePass ]"
-    sec4='domePass'
+    echo "Setting to default [ ceed ]"
+    sec4='ceed'
 fi
 case $sec4 in [qQ]) exit;; esac
 dome_server_pw=$sec4
