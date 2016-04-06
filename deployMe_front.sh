@@ -8,23 +8,41 @@
 #anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
+
+
+function configureShibolethApache {
+  # edit /etc/sysconfig/httpd
+  sudo su -c "echo \"export LD_LIBRARY_PATH=/opt/shibboleth-sp/lib\" >>  /etc/sysconfig/httpd"
+
+  # copy shibboleth SP Apache configuration to apache conf.d directory
+  apacheConfigDir=configurationFiles/apache/version2.2
+  sudo -u root -E cp $apacheConfigDir/apache22.conf /etc/httpd/conf.d/apache22.conf
+
+}
+
+
 function configureShibbolethServiceProvider {
     # configure SP:
 
-    # edit /etc/sysconfig/httpd
-    sudo su -c "echo \"export LD_LIBRARY_PATH=/opt/shibboleth-sp/lib\" >>  /etc/sysconfig/httpd"
-
-    # copy shibboleth SP Apache configuration to apache conf.d directory
-    apacheConfigDir=configurationFiles/apache/version2.2
-    sudo -u root -E cp $apacheConfigDir/apache22.conf /etc/httpd/conf.d/apache22.conf
-
-    # copy shibboleth SP configuration files to shibboleth SP configuration directory
     shibSPConfigDir=configurationFiles/shibbolethSP/version2.5.5
+
+    # ensure any recent changes to the shib configuration are available to the deployment
+    cd /tmp/dmcfrontend
+    git pull
+    mv -f $shibSPConfigDir/*.xml ../$shibSPConfigDir
+    cd -
+    # copy shibboleth SP configuration files to shibboleth SP configuration directory
+
     sudo -u root -E cp $shibSPConfigDir/attribute-map.xml /opt/shibboleth-sp/etc/shibboleth/attribute-map.xml
     sudo -u root -E cp $shibSPConfigDir/shibboleth2.xml /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
     sudo -u root -E cp $shibSPConfigDir/CirrusIdentitySocialProviders-metadata.xml /opt/shibboleth-sp/etc/shibboleth/CirrusIdentitySocialProviders-metadata.xml
     sudo -u root -E cp $shibSPConfigDir/azure.xml /opt/shibboleth-sp/etc/shibboleth/azure.xml
     sudo -u root -E cp $shibSPConfigDir/FederationMetadataCirrus.xml /opt/shibboleth-sp/etc/shibboleth/FederationMetadataCirrus.xml
+
+    ## update shibboleth SP entityID
+    sudo -u root -E sed -i "s@test.projectdmc.org@$serverURL@" /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
+
+
 }
 
 function moveShibbolethServiceProviderKeys {
@@ -244,7 +262,7 @@ echo "The commit we are pulling from >> $commit_front" >> frontSanityTest.log
 
 ##set the appropriate level of logging
 setLogLevel
-
+configureShibolethApache
 configureShibbolethServiceProvider
 
 
@@ -263,13 +281,6 @@ ajpProxy
 
 moveShibbolethServiceProviderKeys
 
-## update shibboleth SP entityID
-sudo -u root -E sed -i "s@test.projectdmc.org@$serverURL@" /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
-
-sudo -u root -E sed -i "s@REMOTE_USER=\"eppn persistent-id targeted-id\"@REMOTE_USER=\"eppn persistent-id targeted-id\" attributePrefix=\"AJP_\"@" /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
-
-
-
 installWebsite
 
 ##command to install from official DMC build repos -- used to install a particular release
@@ -278,6 +289,6 @@ installWebsite
 # start apache then shibboleth
 sudo /etc/init.d/httpd start
 sudo /opt/shibboleth-sp/sbin/shibd
-
+sudo /etc/init.d/httpd restart
 
 sanityTest
