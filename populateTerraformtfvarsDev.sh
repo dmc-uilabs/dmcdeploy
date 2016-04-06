@@ -200,7 +200,7 @@ activeMqRootPass=$sec4
  sed -i.bak "s|aws_region = \"\"|aws_region = \"us-west-2\"|" terraform.tfvars
 
  sed -i.bak "s|stackPrefix = \"\"|stackPrefix = \"$stackPrefix\"|" terraform.tfvars
- sed -i.bak "s|use_swagger = \"\"|use_swagger= \"1\"|" terraform.tfvars
+ sed -i.bak "s|use_swagger = \"\"|use_swagger= \"0\"|" terraform.tfvars
  sed -i.bak "s|release = \"\"|release = \"hot\"|" terraform.tfvars
 
 
