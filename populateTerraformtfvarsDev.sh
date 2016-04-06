@@ -116,7 +116,7 @@ fi
 case $sec4 in [qQ]) exit;; esac
 commit_dome=$sec4
 
-echo -n "DOME User Name { leaving blank will default domeUser } [ENTER][q to quit] "
+echo -n "DOME User Name { leaving blank will default ceed } [ENTER][q to quit] "
 read sec4
 if [ -z "$sec4" ]
   then
@@ -126,7 +126,7 @@ fi
 case $sec4 in [qQ]) exit;; esac
 dome_server_user=$sec4
 
-echo -n "Dome User Password { leaving blank will default domePass } [ENTER][q to quit] "
+echo -n "Dome User Password { leaving blank will default ceed } [ENTER][q to quit] "
 read sec4
 if [ -z "$sec4" ]
   then
