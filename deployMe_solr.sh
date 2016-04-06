@@ -34,6 +34,16 @@ fi
 
 
 cd /tmp/dmcsolr
+
+# re-create solr5.tar.gz
+echo "Creating solr5.tar.gz"
+pwd
+cd solr5
+rm -fr ../files/solr5.tar.gz
+tar acf ../files/solr5.tar.gz .
+cd ..
+ls -l files/solr5.tar.gz
+
 }
 
 
