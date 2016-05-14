@@ -72,4 +72,6 @@ psql -U postgres -c "CREATE ROLE $PSQLUSER NOSUPERUSER NOCREATEDB NOCREATEROLE I
 psql -U postgres -c "CREATE DATABASE $DB WITH OWNER $PSQLUSER;"
 
 psql -U postgres -d gforge < gforge.psql
-psql -U postgres -d gforge < sample_data/V1_1__OrganizationTestData.psql
+
+# load sample data, including DMDII member organizations
+psql -U postgres -d gforge < insert_sample_data.psql
