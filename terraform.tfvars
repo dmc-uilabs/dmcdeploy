@@ -74,7 +74,8 @@ activeMqUserPass = ""
 stackPrefix = ""
 release = ""
 
-
+S3SourceBucket = ""
+S3DestBucket = ""
 
 
 # Server load balancers

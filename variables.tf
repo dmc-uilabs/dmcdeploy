@@ -22,6 +22,16 @@ variable "cert-web-bucket" {
 }
 
 
+
+variable "S3SourceBucket" {}
+variable "S3DestBucket" {}
+
+
+
+
+
+
+
 variable "use_swagger" {}
 
 variable "commit_rest" {}
