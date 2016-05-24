@@ -30,8 +30,8 @@ echo -n "serverURL { leaving blank will default to -- ben-web.opendmc.org } [ENT
 read sec2
 if [ -z "$sec2" ]
   then
-    echo "Setting to default [ ben-web.opendmc.org ]"
-    sec2='ben-web.opendmc.org'
+    echo "Setting to default [ dev-web.opendmc.org ]"
+    sec2='dev-web.opendmc.org'
 fi
 case $sec2 in [qQ]) exit;; esac
 serverURL=$sec2
@@ -173,6 +173,26 @@ fi
 case $sec4 in [qQ]) exit;; esac
 activeMqRootPass=$sec4
 
+spacer "AWS upload settings"
+echo -n "temp upload bucket { leaving blank will default to default bucket } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ dmc-uploads2 ]"
+    sec4='dmc-uploads2'
+fi
+case $sec4 in [qQ]) exit;; esac
+temp_upload_bucket=$sec4
+
+echo -n "final asset bucket { leaving blank will default to default bucket } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ dmc-profiletest ]"
+    sec4='dmc-profiletest'
+fi
+case $sec4 in [qQ]) exit;; esac
+final_upload_bucket=$sec4
 
 
 
@@ -266,7 +286,8 @@ activeMqRootPass=$sec4
  # sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"|" tightenSgDev.sh
  # sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"|" tightenSgDev.sh
 
-
+sed -i.bak "s|S3SourceBucket = \"\"|S3SourceBucket = \"$temp_upload_bucket\"|" terraform.tfvars
+sed -i.bak "s|S3DestBucket = \"\"|S3DestBucket = \"$final_upload_bucket\"|" terraform.tfvars
 
 
 
