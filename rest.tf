@@ -34,6 +34,11 @@ resource "aws_instance" "rest" {
 
    provisioner "remote-exec" {
         inline = [
+
+        "echo 'export S3SourceBucket=${var.S3SourceBucket}' >> /tmp/profile",
+        "echo 'export S3DestBucket=${var.S3DestBucket}' >> /tmp/profile",
+        "echo 'export S3AccessKey=${var.access_key}' >> /tmp/profile",
+        "echo 'export S3SecretKey=${var.PSQLUSER}' >> /tmp/profile",
         "echo 'export DBuser=${var.PSQLUSER}' >> /tmp/profile",
         "echo 'export DBpass=${var.PSQLPASS}' >> /tmp/profile",
         "echo 'export DBip=${aws_instance.db.private_ip}' >> /tmp/profile",
@@ -68,4 +73,5 @@ resource "aws_instance" "rest" {
   }
 
 }
+
 
