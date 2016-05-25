@@ -11,6 +11,21 @@ rm -rf *
 env | grep "rel"
 
 
+sudo chown ec2-user /etc/tomcat7/tomcat7.conf
+
+echo "DBip=$DBip" >> /etc/tomcat7/tomcat7.conf
+echo "DBport=$DBport" >> /etc/tomcat7/tomcat7.conf
+echo "DBpass=$DBpass" >> /etc/tomcat7/tomcat7.conf
+echo "DBuser=$DBuser" >> /etc/tomcat7/tomcat7.conf
+echo "SOLR_BASE_URL=$solrDbDns" >> /etc/tomcat7/tomcat7.conf
+sudo -u root -E sed -i "s@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" />@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" tomcatAuthentication=\"false\" packetSize=\"65536\" />@" /etc/tomcat7/server.xml
+
+
+
+
+sudo chown tomcat /etc/tomcat7/tomcat7.conf
+
+
 
                 if [[ $commit_rest == 'hot' ]]
                 	then
@@ -36,19 +51,7 @@ env | grep "rel"
 
 
 
-sudo chown ec2-user /etc/tomcat7/tomcat7.conf
 
-echo "DBip=$DBip" >> /etc/tomcat7/tomcat7.conf
-echo "DBport=$DBport" >> /etc/tomcat7/tomcat7.conf
-echo "DBpass=$DBpass" >> /etc/tomcat7/tomcat7.conf
-echo "DBuser=$DBuser" >> /etc/tomcat7/tomcat7.conf
-echo "SOLR_BASE_URL=$solrDbDns" >> /etc/tomcat7/tomcat7.conf
-sudo -u root -E sed -i "s@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" />@<Connector port=\"8009\" protocol=\"AJP/1.3\" redirectPort=\"8443\" tomcatAuthentication=\"false\" packetSize=\"65536\" />@" /etc/tomcat7/server.xml
-
-
-
-
-sudo chown tomcat /etc/tomcat7/tomcat7.conf
 
 sudo cp rest.war /var/lib/tomcat7/webapps
 sudo service tomcat7 restart
