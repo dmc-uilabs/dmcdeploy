@@ -10,8 +10,7 @@ rm -rf *
 
 env | grep "rel"
 
-if [[ $release == 'hot' ]]
-	then
+
 
                 if [[ $commit_rest == 'hot' ]]
                 	then
@@ -31,9 +30,7 @@ if [[ $release == 'hot' ]]
 				fi
 				cp *.war rest.war
 
-	else
 
-fi
 
 
 
