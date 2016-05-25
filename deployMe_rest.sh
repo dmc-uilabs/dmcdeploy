@@ -32,21 +32,7 @@ if [[ $release == 'hot' ]]
 				cp *.war rest.war
 
 	else
-    			echo "pull from >> $release << release"
-    			git clone https://bitbucket.org/DigitalMfgCommons/dmcrestservices.git
-    			cd dmcrestservices
-				echo "git checkout tags/$release"  | bash -
 
-
-				cd ~/DMC/dmcrestservices/target
-
-				if [[ $use_swagger == '0' ]]
-					then
-						cp *.war rest.war
-					else
-						cp *-swagger.war rest.war
-
-				fi
 
 fi
 
