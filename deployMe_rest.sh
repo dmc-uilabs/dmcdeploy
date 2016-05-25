@@ -33,7 +33,6 @@ if [[ $release == 'hot' ]]
 
 	else
 
-
 fi
 
 
