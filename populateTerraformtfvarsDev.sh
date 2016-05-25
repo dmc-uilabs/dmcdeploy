@@ -26,7 +26,7 @@ stackPrefix=$sec1
 
 
 spacer "Front End machine settings"
-echo -n "serverURL { leaving blank will default to -- ben-web.opendmc.org } [ENTER][q to quit] "
+echo -n "serverURL { leaving blank will default to -- dev-web.opendmc.org } [ENTER][q to quit] "
 read sec2
 if [ -z "$sec2" ]
   then
