@@ -1,22 +1,18 @@
-access_key = ""
-secret_key = ""
+access_key = "AKIAJNQ5YB24CR3Q2DTQ"
+secret_key = "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"
 
-key_name_front = "DMCDrive"
-key_name_rest = "DMCDriver"
-key_name_db = "DMCDriver"
-key_name_solr = "DMCDriver"
+key_name_front = "beta"
+key_name_rest = "beta"
+key_name_db = "beta"
+key_name_solr = "beta"
 
-key_full_path_front = "~/Desktop/keys/DMCDriver.pem"
-key_full_path_rest = "~/Desktop/keys/DMCDriver.pem"
-key_full_path_db = "~/Desktop/keys/DMCDriver.pem"
-key_full_path_solr = "~/Desktop/keys/DMCDriver.pem"
-
-
-
-
-stackPrefix = "baseAmi-2-22-"
-aws_region = "us-west-2"
+key_full_path_front = "~/Desktop/keys/beta.pem"
+key_full_path_rest = "~/Desktop/keys/beta.pem"
+key_full_path_db = "~/Desktop/keys/beta.pem"
+key_full_path_solr = "~/Desktop/keys/beta.pem"
 
 
 
 
+stackPrefix = "baseAmi-6-29"
+aws_region = "us-east-1"

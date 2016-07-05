@@ -100,7 +100,7 @@ variable "aws_amirehl" {
 # rehl with tomcat container(x64)
 variable "aws_amirehl_tom" {
   default = {
-    "us-east-1" = "ami-6d675107"
+    "us-east-1" = "ami-d3f048c4"
     "us-west-2" = "ami-2730d247"
   }
 }
@@ -108,7 +108,7 @@ variable "aws_amirehl_tom" {
 # base db image
 variable "aws_baseDb" {
   default = {
-    "us-east-1" = "ami-ac80b7c6"
+    "us-east-1" = "ami-fcfd45eb"
     "us-west-2" = "ami-cb2dcfab"
   }
 }
@@ -116,7 +116,15 @@ variable "aws_baseDb" {
 # base solr image
 variable "aws_baseSolr" {
   default = {
-    "us-east-1" = "ami-6082b50a"
+    "us-east-1" = "ami-fdfd45ea"
+    "us-west-2" = "ami-4230d222"
+  }
+}
+
+# base active image
+variable "aws_baseActive" {
+  default = {
+    "us-east-1" = "ami-cffb43d8"
     "us-west-2" = "ami-4230d222"
   }
 }

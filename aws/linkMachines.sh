@@ -14,7 +14,7 @@ source ./devUtil.sh
 ifNotHaveInstall jq
 
 export AWS_ACCESS_KEY_ID=$(getFromTfVars access_key)
-export AWS_SECRET_ACCESS_KEY=$(getFromTfVars secret_ke)
+export AWS_SECRET_ACCESS_KEY=$(getFromTfVars secret_key)
 export AWS_DEFAULT_REGION=$(getFromTfVars aws_region)
 
 
@@ -23,20 +23,20 @@ export AWS_DEFAULT_REGION=$(getFromTfVars aws_region)
 
 stackprefix=$(getFromTfVars stackPrefix)
 
-front_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes.private_ip')
+front_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.front"].primary.attributes.private_ip')
 #removing quotes from variable
 front_private_ip=$(removeQuotes $front_private_ip)
 echo "front_private_ip -- $front_private_ip"
 
 
 
-rest_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.rest".primary.attributes.private_ip')
+rest_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.rest"].primary.attributes.private_ip')
 #removing quotes fom variable
 #rest_private_ip="$(echo "${rest_private_ip}" | sed -e 's/^"//'  -e 's/"$//')"
 rest_private_ip=$(removeQuotes $rest_private_ip)
 echo "rest_private_ip -- $rest_private_ip"
 
-dome_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.dome".primary.attributes.private_ip')
+dome_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.dome"].primary.attributes.private_ip')
 #removing quotes fom variable
 #rest_private_ip="$(echo "${rest_private_ip}" | sed -e 's/^"//'  -e 's/"$//')"
 dome_private_ip=$(removeQuotes $dome_private_ip)
@@ -47,7 +47,7 @@ echo "dome_private_ip -- $dome_private_ip"
 
 getSecGroupIdfromName (){
   t=$1
-  partial=$(echo ".modules[0].resources.\"aws_security_group.$t\".primary.attributes.id")
+  partial=$(echo ".modules[0].resources [\"aws_security_group.$t\"] .primary.attributes.id")
   sg_id=$(cat terraform.tfstate | jq $partial)
   #removing quotes form the var
   sg_id="$(echo "${sg_id}" | sed -e 's/^"//'  -e 's/"$//')"
@@ -60,7 +60,7 @@ showSecGroupDetails (){
   t=$1
   echo "Showing sec group -- $t -- description"
   # extract the sgid from tfvars file
-  partial=$(echo ".modules[0].resources.\"aws_security_group.$t\".primary.attributes.id")
+  partial=$(echo ".modules[0].resources[\"aws_security_group.$t\"].primary.attributes.id")
   sg_id=$(cat terraform.tfstate | jq $partial)
   #removing quotes form the var
   sg_id="$(echo "${sg_id}" | sed -e 's/^"//'  -e 's/"$//')"
