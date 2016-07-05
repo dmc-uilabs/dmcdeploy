@@ -6,7 +6,7 @@ resource "aws_instance" "activeMq" {
 
   # Lookup the correct AMI based on the region
   # we specified
-   ami = "${lookup(var.aws_amirehl_tom, var.aws_region)}"
+   ami = "${lookup(var.aws_baseActive, var.aws_region)}"
 
   # The name of our SSH keypair you've created and downloaded
   # from the AWS console.

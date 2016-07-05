@@ -1,5 +1,5 @@
 
-resource "aws_instance" "frontAmi" {
+resource "aws_instance" "activeAmi" {
   instance_type = "m4.large"
 
   # Lookup the correct AMI based on the region
@@ -22,7 +22,7 @@ resource "aws_instance" "frontAmi" {
 
 
 provisioner "file" {
-        source = "buildMachineImage_front.sh"
+        source = "buildMachineImage_active.sh"
         destination = "/tmp/script.sh"
 
        connection {
@@ -50,6 +50,6 @@ provisioner "remote-exec" {
 
   #Instance tags -- name the vm in amazon to find easier
   tags {
-    Name = "${var.stackPrefix}-baseAMI-front"
+    Name = "${var.stackPrefix}-baseAMI-active"
   }
 }

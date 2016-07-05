@@ -15,7 +15,7 @@ variable "key_full_path_solr" {}
 
 
 variable "stackPrefix" {}
- 
+
 variable "aws_region" {
   description = "The AWS region to create things in."
   default = "us-east-1"
@@ -38,8 +38,8 @@ variable "frontSHIB"{
 # rehl (x64)
 variable "aws_amirehl" {
   default = {
-    "us-east-1" = "ami-60b6c60a"
-    "us-west-2" = "ami-63b25203"
+    "us-east-1" = "ami-6869aa05"
+    "us-west-2" = "ami-7172b611"
   }
 }
 

@@ -92,9 +92,9 @@ provisioner "remote-exec"{
     }
 
 
-    provisioner "local-exec" {
-          command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_front} ec2-user@${aws_instance.front.public_ip}:/home/ec2-user/frontSanityTest.log ."
-  }
+#    provisioner "local-exec" {
+#          command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_front} ec2-user@${aws_instance.front.public_ip}:/home/ec2-user/frontSanityTest.log ."
+#  }
 
 
 }

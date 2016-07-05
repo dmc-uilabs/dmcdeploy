@@ -32,12 +32,12 @@ mv * ..
 
 sudo echo "admin: $activeMqRootPass, admin" >> /tmp/jetty-realm.properties
 sudo echo "user: $activeMqUserPass, user" >> /tmp/jetty-realm.properties
-
-wget http://mirror.cc.columbia.edu/pub/software/apache/activemq/5.13.2/apache-activemq-5.13.2-bin.tar.gz
-tar zxvf apache-activemq-5.13.2-bin.tar.gz
-
-sudo mv apache-activemq-5.13.2 /opt
-sudo ln -sf /opt/apache-activemq-5.13.2/ /opt/activemq
+# 
+# wget http://mirror.cc.columbia.edu/pub/software/apache/activemq/5.13.2/apache-activemq-5.13.2-bin.tar.gz
+# tar zxvf apache-activemq-5.13.2-bin.tar.gz
+#
+# sudo mv apache-activemq-5.13.2 /opt
+# sudo ln -sf /opt/apache-activemq-5.13.2/ /opt/activemq
 
 
 # Copy our custom startup script to /etc/init.d and set appropriate permissions

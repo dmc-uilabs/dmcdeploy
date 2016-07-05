@@ -1,13 +1,13 @@
 provider "aws" {
   region = "${var.aws_region}"
-  access_key = "${var.access_key}" 
+  access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
 }
 
-/*
+
 ## must only uncomment after the base image compilation process is done
-## when taking a snapshot aws kills the running instance being imaged 
-## therefore wait until the base image creation is done and then create the AMI 
+## when taking a snapshot aws kills the running instance being imaged
+## therefore wait until the base image creation is done and then create the AMI
 ## by uncommenting this block and running terraform apply once more
 resource "aws_ami_from_instance" "frontBaseAmi" {
     depends_on = ["aws_instance.frontAmi"]
@@ -16,8 +16,8 @@ resource "aws_ami_from_instance" "frontBaseAmi" {
 }
 
 ## must only uncomment after the base image compilation process is done
-## when taking a snapshot aws kills the running instance being imaged 
-## therefore wait until the base image creation is done and then create the AMI 
+## when taking a snapshot aws kills the running instance being imaged
+## therefore wait until the base image creation is done and then create the AMI
 ## by uncommenting this block and running terraform apply once more
 resource "aws_ami_from_instance" "restBaseAmi" {
     depends_on = ["aws_instance.restAmi"]
@@ -27,8 +27,8 @@ resource "aws_ami_from_instance" "restBaseAmi" {
 
 
 ## must only uncomment after the base image compilation process is done
-## when taking a snapshot aws kills the running instance being imaged 
-## therefore wait until the base image creation is done and then create the AMI 
+## when taking a snapshot aws kills the running instance being imaged
+## therefore wait until the base image creation is done and then create the AMI
 ## by uncommenting this block and running terraform apply once more
 resource "aws_ami_from_instance" "dbBaseAmi" {
     depends_on = ["aws_instance.dbAmi"]
@@ -38,8 +38,8 @@ resource "aws_ami_from_instance" "dbBaseAmi" {
 
 
 ## must only uncomment after the base image compilation process is done
-## when taking a snapshot aws kills the running instance being imaged 
-## therefore wait until the base image creation is done and then create the AMI 
+## when taking a snapshot aws kills the running instance being imaged
+## therefore wait until the base image creation is done and then create the AMI
 ## by uncommenting this block and running terraform apply once more
 resource "aws_ami_from_instance" "solrBaseAmi" {
     depends_on = ["aws_instance.solrAmi"]
@@ -47,7 +47,18 @@ resource "aws_ami_from_instance" "solrBaseAmi" {
     source_instance_id = "${aws_instance.solrAmi.id}"
 }
 
-*/
+
+## must only uncomment after the base image compilation process is done
+## when taking a snapshot aws kills the running instance being imaged
+## therefore wait until the base image creation is done and then create the AMI
+## by uncommenting this block and running terraform apply once more
+resource "aws_ami_from_instance" "activeBaseAmi" {
+
+    name = "${var.stackPrefix}_activeBase_ami"
+    source_instance_id = "${aws_instance.activeAmi.id}"
+}
+
+
 
 resource "aws_security_group" "sg_wide" {
   name = "${var.stackPrefix}_DMC_sg_wide"
@@ -57,7 +68,7 @@ resource "aws_security_group" "sg_wide" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "tcp"  
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

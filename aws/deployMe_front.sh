@@ -8,7 +8,7 @@
 #anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
-
+# sudo yum update
 
 function configureShibolethApache {
   # edit /etc/sysconfig/httpd
@@ -290,5 +290,3 @@ installWebsite
 sudo /etc/init.d/httpd start
 sudo /opt/shibboleth-sp/sbin/shibd
 sudo /etc/init.d/httpd restart
-
-sanityTest
