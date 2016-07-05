@@ -20,6 +20,17 @@ key_full_path_front = ""
 commit_front = ""
 
 
+#location of temp bucket
+AWS_UPLOAD_BUCKET='';
+
+
+#aws credentials for temp bucket
+AWS_UPLOAD_KEY='';
+AWS_UPLOAD_SEC='';
+
+#aws temp bucket region
+AWS_UPLOAD_REGION='';
+
 # uncomment only if you wish to change the default location
 #sp_cert_location = "/tmp"
 #sp_key_location = "/tmp"
