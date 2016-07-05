@@ -86,9 +86,19 @@ function setLoginUrl {
 
 }
 
+function frontendUpload {
+  cd /tmp/dist/scripts/common/models/
+  sed -i.bak "s|  var creds = {bucket: '', access_key: '',secret_key: ''}|  var creds = {bucket: '$AWS_UPLOAD_BUCKET', access_key: '$AWS_UPLOAD_KEY',secret_key: '$AWS_UPLOAD_SEC'}|" file-upload.js
+  sed -i.bak "s|    AWS.config.region = '';|    AWS.config.region = '$AWS_UPLOAD_REGION';|" file-upload.js
+
+
+}
 
 
 function commonInstallWebsiteConfig {
+
+
+   frontendUpload
 
    cd /tmp/dist/
    echo ">>>>$Restip<<<<"

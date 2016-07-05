@@ -27,8 +27,12 @@ variable "S3SourceBucket" {}
 variable "S3DestBucket" {}
 
 
-
-
+variable "AWS_UPLOAD_SEC" {}
+variable "AWS_UPLOAD_KEY" {}
+variable "AWS_UPLOAD_BUCKET" {}
+variable "AWS_UPLOAD_REGION" {
+  default = "us-east-1"
+}
 
 
 
