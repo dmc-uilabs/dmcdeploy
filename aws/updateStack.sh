@@ -9,7 +9,7 @@ source ./devUtil.sh
 #
 front_ssh_key=$(getFromTfVars key_full_path_front)
 front_user=ec2-user
-front_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.front".primary.attributes.public_ip')
+front_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.front"].primary.attributes.public_ip')
 front_public_ip=$(removeQuotes $front_public_ip)
 # for host comming from your current stack
 front_host=$front_public_ip
@@ -21,7 +21,7 @@ serverURL=$(getFromTfVars serverURL)
 
 rest_ssh_key=$(getFromTfVars key_full_path_rest)
 rest_user=ec2-user
-rest_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.rest".primary.attributes.public_ip')
+rest_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.rest"].primary.attributes.public_ip')
 rest_public_ip=$(removeQuotes $rest_public_ip)
 # for host comming from your current stack
 rest_host=$rest_public_ip
@@ -33,7 +33,7 @@ use_swagger=1
 
 db_ssh_key=$(getFromTfVars key_full_path_db)
 db_user=ec2-user
-db_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.db".primary.attributes.public_ip')
+db_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.db"].primary.attributes.public_ip')
 db_public_ip=$(removeQuotes $db_public_ip)
 PSQLUSER=$(getFromTfVars PSQLUSER)
 PSQLDBNAME=$(getFromTfVars PSQLDBNAME)
@@ -44,7 +44,7 @@ db_host=$db_public_ip
 
 solr_ssh_key=$(getFromTfVars key_full_path_solr)
 solr_user=ec2-user
-solr_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources."aws_instance.solr".primary.attributes.public_ip')
+solr_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.solr"].primary.attributes.public_ip')
 solr_public_ip=$(removeQuotes $solr_public_ip)
 # for host comming from your current stack
 solr_host=$solr_public_ip
