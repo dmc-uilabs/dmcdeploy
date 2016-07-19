@@ -38,7 +38,7 @@ updaterest() {
    sudo rm -rf  /var/lib/tomcat7/webapps/rest*
    #adding the new war deploymnet
    sudo -S cp rest.war /var/lib/tomcat7/webapps
-   sudo -S service tomcat7 restart
+   sudo -S service tomcat7 start
     exit
 
 +
