@@ -32,7 +32,7 @@ updateFront() {
     mkdir rando
     cd rando
 
-    cp -r ~/dist .
+    cp -r ~/dist/ .
 
 
     unzip *.zip
