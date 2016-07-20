@@ -21,15 +21,15 @@ commit_front = ""
 
 
 #location of temp bucket
-AWS_UPLOAD_BUCKET='';
+AWS_UPLOAD_BUCKET = ""
 
 
 #aws credentials for temp bucket
-AWS_UPLOAD_KEY='';
-AWS_UPLOAD_SEC='';
+AWS_UPLOAD_KEY = ""
+AWS_UPLOAD_SEC = ""
 
 #aws temp bucket region
-AWS_UPLOAD_REGION='';
+AWS_UPLOAD_REGION = ""
 
 # uncomment only if you wish to change the default location
 #sp_cert_location = "/tmp"
@@ -72,7 +72,7 @@ dome_server_pw = ""
 # keys to the stackMon machine
 key_name_stackMon = ""
 key_full_path_stackMon = ""
-
+commit_stackMon = ""
 
 # credentials for activeMQ
 key_name_activeMq = ""
@@ -80,6 +80,12 @@ key_full_path_activeMq = ""
 commit_activeMq = ""
 activeMqRootPass = ""
 activeMqUserPass = ""
+
+
+# credentials for validate
+key_name_validate = ""
+key_full_path_validate = ""
+commit_validate = ""
 
 
 stackPrefix = ""

@@ -1,6 +1,11 @@
 variable "access_key" {}
 variable "secret_key" {}
 
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+
 variable "key_name_front" {}
 variable "key_name_rest" {}
 variable "key_name_db" {}
@@ -8,6 +13,7 @@ variable "key_name_solr" {}
 variable "key_name_dome" {}
 variable "key_name_stackMon" {}
 variable "key_name_activeMq" {}
+variable "key_name_validate" {}
 
 variable "key_full_path_front" {}
 variable "key_full_path_rest" {}
@@ -16,12 +22,42 @@ variable "key_full_path_solr" {}
 variable "key_full_path_dome" {}
 variable "key_full_path_stackMon" {}
 variable "key_full_path_activeMq" {}
+variable "key_full_path_validate" {}
+
+
+
+variable "commit_front" {
+  default = "hot"
+}
+variable "commit_rest" {
+  default = "hot"
+}
+variable "commit_db" {
+  default = "hot"
+}
+variable "commit_solr" {
+  default = "hot"
+}
+variable "commit_dome" {
+  default = "hot"
+}
+variable "commit_activeMq" {
+  default = "hot"
+}
+variable "commit_validate" {
+ default = "hot"
+}
+variable "commit_stackMon" {
+  default = "hot"
+}
+
+
+
+
 
 variable "cert-web-bucket" {
   default = "cert-web-bucket"
 }
-
-
 
 variable "S3SourceBucket" {}
 variable "S3DestBucket" {}
@@ -36,12 +72,10 @@ variable "AWS_UPLOAD_REGION" {
 
 
 
-variable "use_swagger" {}
+variable "use_swagger" {
+  default = "0"
+}
 
-variable "commit_rest" {}
-variable "commit_front" {}
-variable "commit_dome" {}
-variable "commit_activeMq" {}
 
 variable "sp_cert_location" {
   default = "/tmp/sp-cert.pem"
@@ -53,6 +87,8 @@ variable "inc-md-cert_location" {
   default = "/tmp/inc-md-cert.pem"
 }
 
+
+
 variable "dome_server_user" {
   default = "ceed"
 }
@@ -61,23 +97,21 @@ variable "dome_server_pw" {
 }
 
 variable "activeMqRootPass" {}
-variable "stackPrefix" {}
 variable "activeMqUserPass" {}
+variable "stackPrefix" {}
 
 
 
 variable "PSQLUSER" {}
 variable "PSQLPASS" {}
 variable "PSQLDBNAME" {}
+
+
 variable "release" {}
 variable "restLb" {}
 variable "serverURL" {}
 variable "loglevel" {}
 
-variable "aws_region" {
-  description = "The AWS region to create things in."
-  default = "us-east-1"
-}
 
 # ubuntu-trusty-14.04 (x64)
 variable "aws_amis" {
