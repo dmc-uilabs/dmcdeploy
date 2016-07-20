@@ -22,7 +22,7 @@ sudo sed -i '5,/Example/s/Example/#Example/' /etc/freshclam.conf
 
 
 #update the antivirus db
-sudo freshclam
+#sudo freshclam
 
 #install git
 sudo yum install -y git
