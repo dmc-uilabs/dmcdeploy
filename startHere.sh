@@ -94,14 +94,10 @@ case $cloud
           if [ $apply == yes ]
             then
               terraform apply
-              echo "Results of Sanity Test Front"
-              cat frontSanityTest.log
-              echo "Results of Sanity Test Rest"
-              cat restSanityTest.log
+
               echo "Link the Stack Machines Together"
               ./linkMachines.sh
-              echo "Tightening the Dev Security groups where apropriate for the Dev Stack."
-              ./tightenSgDev.sh
+            
               echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
 
               echo "Great Job Pal. "

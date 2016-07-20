@@ -26,12 +26,12 @@ stackPrefix=$sec1
 
 
 spacer "Front End machine settings"
-echo -n "serverURL { leaving blank will default to -- dev-web.opendmc.org } [ENTER][q to quit] "
+echo -n "serverURL { leaving blank will default to -- dev-web1.opendmc.org } [ENTER][q to quit] "
 read sec2
 if [ -z "$sec2" ]
   then
-    echo "Setting to default [ dev-web.opendmc.org ]"
-    sec2='dev-web.opendmc.org'
+    echo "Setting to default [ dev-web1.opendmc.org ]"
+    sec2='dev-web1.opendmc.org'
 fi
 case $sec2 in [qQ]) exit;; esac
 serverURL=$sec2
@@ -194,6 +194,43 @@ fi
 case $sec4 in [qQ]) exit;; esac
 final_upload_bucket=$sec4
 
+echo -n "aws_upload_region { leaving blank will default to us-east-1 } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ us-east-1 ]"
+    sec4='us-east-1'
+fi
+case $sec4 in [qQ]) exit;; esac
+AWS_UPLOAD_REGION=$sec4
+
+
+
+
+spacer "Validate machine settings"
+
+echo -n "commit_validate { leaving blank will default to deploying from the latest successful build } [ENTER][q to quit] "
+read sec3
+if [ -z "$sec3" ]
+  then
+    echo "Setting to default [ hot ]"
+    sec3='hot'
+fi
+case $sec3 in [qQ]) exit;; esac
+commit_validate=$sec3
+
+
+spacer "StackMon machine settings"
+
+echo -n "commit_stackMon { leaving blank will default to deploying from the latest successful build } [ENTER][q to quit] "
+read sec3
+if [ -z "$sec3" ]
+  then
+    echo "Setting to default [ hot ]"
+    sec3='hot'
+fi
+case $sec3 in [qQ]) exit;; esac
+commit_stackMon=$sec3
 
 
 
@@ -267,6 +304,8 @@ final_upload_bucket=$sec4
  sed -i.bak "s|dome_server_pw = \"\"|dome_server_pw = \"$dome_server_pw\"|" terraform.tfvars
 
 
+ sed -i.bak "s|key_name_validate = \"\"|key_name_validate = \"$kname\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_validate = \"\"|key_full_path_validate = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
 
 
 
@@ -282,6 +321,8 @@ final_upload_bucket=$sec4
  sed -i.bak "s|commit_front = \"\"|commit_front = \"$commit_front\"|" terraform.tfvars
  sed -i.bak "s|commit_dome = \"\"|commit_dome = \"$commit_dome\"|" terraform.tfvars
  sed -i.bak "s|commit_activeMq = \"\"|commit_activeMq = \"$commit_activeMq\"|" terraform.tfvars
+ sed -i.bak "s|commit_validate = \"\"|commit_validate = \"$commit_validate\"|" terraform.tfvars
+ sed -i.bak "s|commit_stackMon = \"\"|commit_stackMon = \"$commit_stackMon\"|" terraform.tfvars
 
  # sed -i.bak "s|export AWS_ACCESS_KEY_ID=\"\"|export AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\"|" tightenSgDev.sh
  # sed -i.bak "s|export AWS_SECRET_ACCESS_KEY=\"\"|export AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\"|" tightenSgDev.sh
@@ -289,6 +330,11 @@ final_upload_bucket=$sec4
 sed -i.bak "s|S3SourceBucket = \"\"|S3SourceBucket = \"$temp_upload_bucket\"|" terraform.tfvars
 sed -i.bak "s|S3DestBucket = \"\"|S3DestBucket = \"$final_upload_bucket\"|" terraform.tfvars
 
+sed -i.bak "s|AWS_UPLOAD_KEY = \"\"|AWS_UPLOAD_KEY = \"$name\"|" terraform.tfvars
+sed -i.bak "s|AWS_UPLOAD_SEC = \"\"|AWS_UPLOAD_SEC = \"$sec\"|" terraform.tfvars
+
+sed -i.bak "s|AWS_UPLOAD_REGION = \"\"|AWS_UPLOAD_REGION = \"$AWS_UPLOAD_REGION\"|" terraform.tfvars
+sed -i.bak "s|AWS_UPLOAD_BUCKET = \"\"|AWS_UPLOAD_BUCKET = \"$temp_upload_bucket\"|" terraform.tfvars
 
 
 
