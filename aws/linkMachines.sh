@@ -42,6 +42,11 @@ dome_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instan
 dome_private_ip=$(removeQuotes $dome_private_ip)
 echo "dome_private_ip -- $dome_private_ip"
 
+val_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.validate"].primary.attributes.private_ip')
+#removing quotes fom variable
+#rest_private_ip="$(echo "${rest_private_ip}" | sed -e 's/^"//'  -e 's/"$//')"
+val_private_ip=$(removeQuotes $val_private_ip)
+echo "validate_private_ip -- $val_private_ip"
 
 
 
@@ -103,10 +108,6 @@ linkFront () {
 linkRest () {
 	#extract the security group from the stack prefix
 	rest_sg="$(echo "${stackprefix}" | sed -e 's/^"//'  -e 's/"$//')_DMC_sg_rest"
-	#get the sg id from name
-	rest_sg_id=$(getSecGroupIdfromName sg_rest)
-
-
 
 	# allow all traffic from port 8009 only from the front machine for ajp
 	#  set ip cidr ip range to only allow include the front private ip
@@ -212,11 +213,44 @@ linkDome () {
 }
 
 
+linkValidate () {
+    #extract the security group from the stack prefix
+	val_sg="$(echo "${stackprefix}" | sed -e 's/^"//'  -e 's/"$//')_DMC_sg_validate"
+
+
+	# allow all traffic from rest private ip to port 5432
+	# set ip cidr ip range to only allow include the rest private ip
+	cidr_r=$(echo "${rest_private_ip}/32")
+	aws ec2 authorize-security-group-ingress --group-name $val_sg --protocol tcp --port 3000 --cidr $cidr_r
+
+  # # allow all traffic from dome private ip to port 9791
+	# # set ip cidr ip range to only allow include the rest private ip
+  # cidr_r=$(echo "${dome_private_ip}/32")
+  # aws ec2 authorize-security-group-ingress --group-name $db_sg --protocol tcp --port 9791 --cidr $cidr_r
+
+
+	# allow all traffic from port 443
+	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
+
+	# do not allow traffic on port 22
+	#aws ec2 revoke-security-group-ingress --group-name $db_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+
+
+    #show secrutity group details for the sec group with name
+	showSecGroupDetails sg_validate
+}
+
+
+
+
+
 
 #Select which tighening rules you wish to apply
-
+#
 linkFront
 linkRest
 linkDb
 linkSolr
 linkDome
+linkValidate

@@ -13,7 +13,7 @@ resource "aws_instance" "rest" {
   #
 
  key_name = "${var.key_name_rest}"
- 
+
   # Our Security group to allow HTTP and SSH accessing
   security_groups = ["${aws_security_group.sg_rest.name}"]
 
@@ -38,7 +38,7 @@ resource "aws_instance" "rest" {
         "echo 'export S3SourceBucket=${var.S3SourceBucket}' >> /tmp/profile",
         "echo 'export S3DestBucket=${var.S3DestBucket}' >> /tmp/profile",
         "echo 'export S3AccessKey=${var.access_key}' >> /tmp/profile",
-        "echo 'export S3SecretKey=${var.PSQLUSER}' >> /tmp/profile",
+        "echo 'export S3SecretKey=${var.secret_key}' >> /tmp/profile",
         "echo 'export DBuser=${var.PSQLUSER}' >> /tmp/profile",
         "echo 'export DBpass=${var.PSQLPASS}' >> /tmp/profile",
         "echo 'export DBip=${aws_instance.db.private_ip}' >> /tmp/profile",
@@ -47,7 +47,7 @@ resource "aws_instance" "rest" {
         "echo 'export commit_rest=${var.commit_rest}' >> /tmp/profile",
         "echo 'export solrDbDns=http://${aws_instance.solr.public_ip}:8983/solr/' >> /tmp/profile",
         "echo 'export use_swagger=${var.use_swagger}' >> /tmp/profile",
-        "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
+        "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
         "cd /tmp",
@@ -73,5 +73,3 @@ resource "aws_instance" "rest" {
   }
 
 }
-
-
