@@ -26,12 +26,12 @@ stackPrefix=$sec1
 
 
 spacer "Front End machine settings"
-echo -n "serverURL { leaving blank will default to -- dev-web1.opendmc.org } [ENTER][q to quit] "
+echo -n "serverURL { leaving blank will default to -- ben-web.opendmc.org } [ENTER][q to quit] "
 read sec2
 if [ -z "$sec2" ]
   then
-    echo "Setting to default [ dev-web1.opendmc.org ]"
-    sec2='dev-web1.opendmc.org'
+    echo "Setting to default [ ben-web.opendmc.org ]"
+    sec2='ben-web.opendmc.org'
 fi
 case $sec2 in [qQ]) exit;; esac
 serverURL=$sec2
