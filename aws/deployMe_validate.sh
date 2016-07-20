@@ -15,7 +15,7 @@ source /home/ec2-user/.bashrc
 nvm install v5.1.1
 
 #install calmav
-sudo yum install clamav clamav-update
+sudo yum install -y clamav clamav-update
 
 #edit the clamav configuration
 sudo sed -i '5,/Example/s/Example/#Example/' /etc/freshclam.conf
