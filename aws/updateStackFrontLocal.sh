@@ -17,7 +17,7 @@ front_hostC="54.89.127.146"
 scpSend() {
    timestamp=`date --rfc-3339=seconds`
     echo "Version created $timestamp" > "DeployedVersion.txt";
-    mv DeployedVersion.txt $sendFile
+    scp -i $front_ssh_keyC -r DeployedVersion.txt $front_userC@$front_hostC:~
     scp -i $front_ssh_keyC -r $sendFile $front_userC@$front_hostC:~
     updateFront
 }
