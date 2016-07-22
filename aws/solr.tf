@@ -37,6 +37,7 @@ resource "aws_instance" "solr" {
    provisioner "remote-exec" {
         inline = [
         "sudo echo 'export solrDbDns=${aws_instance.db.private_ip}' >> /tmp/profile",
+        "echo 'export solrDbPort=5432' >> /tmp/profile",  
         "echo 'export release=${var.release}' >> /tmp/profile",  
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",   
         "source /etc/profile" ,
