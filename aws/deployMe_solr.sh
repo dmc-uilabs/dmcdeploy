@@ -89,6 +89,13 @@ sudo yum install cronie -y
 
 
 function configureSolr {
+
+# Unpacking solr configuration
+rm -fr /tmp/solr
+mkdir /tmp/solr
+cd /tmp/solr
+tar xvfz /tmp/dmcsolr/files/solr5.tar.gz
+
 # Log in as solr user
 echo chown directories to solr
 sudo chown -R solr /tmp/solr
