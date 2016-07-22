@@ -12,6 +12,7 @@ front_ssh_keyC="/home/t/Desktop/keys/beta.pem"
 front_userC=ec2-user
 #ip of frontend machine
 front_hostC="54.89.127.146"
+serverURL="beta.opendmc.org"
 
 
 scpSend() {
