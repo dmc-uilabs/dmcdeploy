@@ -108,22 +108,22 @@ sudo -u solr mv -f /tmp/solr/LuceneSolrConfig/* /var/solr/data/.
 # Edit components.data-config.xml
 echo "Editing SolR data configurations to use solrDbDns=$solrDbDns"
 cd /tmp/dmcsolr
-sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/components.data-config.xml > /var/solr/data/gforge/components/conf/data-config.xml
+sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/components.data-config.xml > /var/solr/data/gforge/components/conf/data-config.xml
 
 # Edit companies.data-config.xml
-sudo -u solr -E sed "s/SOLR_DB_DNS/localhost/" files/companies.data-config.xml > /var/solr/data/gforge/companies/conf/data-config.xml
+sudo -u solr -E sed -e "s/SOLR_DB_DNS/localhost/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/companies.data-config.xml > /var/solr/data/gforge/companies/conf/data-config.xml
 
 # Edit projects.data-config.xml
-sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/projects.data-config.xml > /var/solr/data/gforge/projects/conf/data-config.xml
+sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/projects.data-config.xml > /var/solr/data/gforge/projects/conf/data-config.xml
 
 # Edit services.data-config.xml
-sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/services.data-config.xml > /var/solr/data/gforge/services/conf/data-config.xml
+sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/services.data-config.xml > /var/solr/data/gforge/services/conf/data-config.xml
 
 # Edit users.data-config.xml
-sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/users.data-config.xml > /var/solr/data/gforge/users/conf/data-config.xml
+sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/users.data-config.xml > /var/solr/data/gforge/users/conf/data-config.xml
 
 # Edit wiki.data-config.xml
-sudo -u solr -E sed "s/SOLR_DB_DNS/$solrDbDns/" files/wiki.data-config.xml > /var/solr/data/gforge/wiki/conf/data-config.xml
+sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/wiki.data-config.xml > /var/solr/data/gforge/wiki/conf/data-config.xml
 
 
 sudo -u solr cp -r files/scripts  /var/solr
