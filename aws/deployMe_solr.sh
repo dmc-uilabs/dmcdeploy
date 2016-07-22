@@ -111,7 +111,7 @@ cd /tmp/dmcsolr
 sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/components.data-config.xml > /var/solr/data/gforge/components/conf/data-config.xml
 
 # Edit companies.data-config.xml
-sudo -u solr -E sed -e "s/SOLR_DB_DNS/localhost/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/companies.data-config.xml > /var/solr/data/gforge/companies/conf/data-config.xml
+sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/companies.data-config.xml > /var/solr/data/gforge/companies/conf/data-config.xml
 
 # Edit projects.data-config.xml
 sudo -u solr -E sed -e "s/SOLR_DB_DNS/$solrDbDns/" -e "s/SOLR_DB_PORT/$solrDbPort/" files/projects.data-config.xml > /var/solr/data/gforge/projects/conf/data-config.xml
