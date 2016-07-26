@@ -80,6 +80,9 @@ key_full_path_activeMq = ""
 commit_activeMq = ""
 activeMqRootPass = ""
 activeMqUserPass = ""
+ActiveMQ_Port = ""
+ActiveMQ_User = ""
+ActiveMQ_Password = ""
 
 
 # credentials for validate

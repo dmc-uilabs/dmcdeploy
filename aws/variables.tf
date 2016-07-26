@@ -98,6 +98,15 @@ variable "dome_server_pw" {
 
 variable "activeMqRootPass" {}
 variable "activeMqUserPass" {}
+variable "ActiveMQ_Port" {
+  default = "61616"
+}
+variable "ActiveMQ_User" {}
+
+variable "ActiveMQ_Password" {}
+
+
+
 variable "stackPrefix" {}
 
 
