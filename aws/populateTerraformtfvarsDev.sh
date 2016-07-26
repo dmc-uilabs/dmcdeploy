@@ -173,6 +173,42 @@ fi
 case $sec4 in [qQ]) exit;; esac
 activeMqRootPass=$sec4
 
+
+
+echo -n "ActiveMQ Port  { leaving blank will default 61616 } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ 61616 ]"
+    sec4='61616'
+fi
+case $sec4 in [qQ]) exit;; esac
+ActiveMQ_Port=$sec4
+
+
+echo -n "ActiveMQ ActiveMQ_User  { leaving blank will default active } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ active ]"
+    sec4='active'
+fi
+case $sec4 in [qQ]) exit;; esac
+ActiveMQ_User=$sec4
+
+
+echo -n "ActiveMQ ActiveMQ_Password  { leaving blank will default active } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ active ]"
+    sec4='active'
+fi
+case $sec4 in [qQ]) exit;; esac
+ActiveMQ_Password=$sec4
+
+
+
 spacer "AWS upload settings"
 echo -n "temp upload bucket { leaving blank will default to default bucket } [ENTER][q to quit] "
 read sec4
@@ -291,9 +327,9 @@ commit_stackMon=$sec3
  sed -i.bak "s|key_full_path_activeMq = \"\"|key_full_path_activeMq = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
  sed -i.bak "s|activeMqUserPass = \"\"|activeMqUserPass = \"$activeMqUserPass\"|" terraform.tfvars
  sed -i.bak "s|activeMqRootPass = \"\"|activeMqRootPass = \"$activeMqRootPass\"|" terraform.tfvars
-
-
-
+ sed -i.bak "s|ActiveMQ_Port = \"\"|ActiveMQ_Port = \"$ActiveMQ_Port\"|" terraform.tfvars
+ sed -i.bak "s|ActiveMQ_User = \"\"|ActiveMQ_User = \"$ActiveMQ_User\"|" terraform.tfvars
+ sed -i.bak "s|ActiveMQ_Password = \"\"|ActiveMQ_Password = \"$ActiveMQ_Password\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_stackMon = \"\"|key_name_stackMon = \"$kname\"|" terraform.tfvars
  sed -i.bak "s|key_full_path_stackMon = \"\"|key_full_path_stackMon = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
