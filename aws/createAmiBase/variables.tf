@@ -5,12 +5,13 @@ variable "key_name_front" {}
 variable "key_name_rest" {}
 variable "key_name_db" {}
 variable "key_name_solr" {}
+variable "key_name_activeMq" {}
 
 variable "key_full_path_front" {}
 variable "key_full_path_rest" {}
 variable "key_full_path_db" {}
 variable "key_full_path_solr" {}
-
+variable "key_name_activeMq" {}
 
 
 
@@ -47,6 +48,6 @@ variable "aws_amirehl" {
 variable "aws_amirehl_tom" {
   default = {
     "us-east-1" = "ami-271c654d"
-    "us-west-2" = "ami-63b25203"
+    "us-west-2" = "ami-7172b611"
   }
 }

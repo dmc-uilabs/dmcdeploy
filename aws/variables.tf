@@ -132,7 +132,7 @@ variable "aws_amis" {
 variable "frontSHIB"{
   default = {
   "us-east-1" = "ami-d86553b2"
-  "us-west-2" = "ami-1220c672"
+  "us-west-2" = "ami-5cf6393c"
   }
 }
 
@@ -140,7 +140,7 @@ variable "frontSHIB"{
 variable "aws_amirehl" {
   default = {
     "us-east-1" = "ami-8fcee4e5"
-    "us-west-2" = "ami-63b25203"
+    "us-west-2" = "ami-38f93658"
   }
 }
 
@@ -148,7 +148,7 @@ variable "aws_amirehl" {
 variable "aws_amirehl_tom" {
   default = {
     "us-east-1" = "ami-d3f048c4"
-    "us-west-2" = "ami-2730d247"
+    "us-west-2" = "ami-38f93658"
   }
 }
 
@@ -156,7 +156,7 @@ variable "aws_amirehl_tom" {
 variable "aws_baseDb" {
   default = {
     "us-east-1" = "ami-fcfd45eb"
-    "us-west-2" = "ami-cb2dcfab"
+    "us-west-2" = "ami-c7f837a7"
   }
 }
 
@@ -172,6 +172,6 @@ variable "aws_baseSolr" {
 variable "aws_baseActive" {
   default = {
     "us-east-1" = "ami-cffb43d8"
-    "us-west-2" = "ami-4230d222"
+    "us-west-2" = "ami-22fb3442"
   }
 }
