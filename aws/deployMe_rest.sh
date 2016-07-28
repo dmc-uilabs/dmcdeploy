@@ -72,4 +72,4 @@ echo "server response from http://localhost:8080/rest/services/2 -- $response" >
 
 }
 
-sanityTest
+# sanityTest

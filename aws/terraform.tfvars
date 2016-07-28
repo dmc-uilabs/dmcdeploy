@@ -60,7 +60,7 @@ PSQLDBNAME = ""
 # keys to the solr machine
 key_name_solr = ""
 key_full_path_solr = ""
-
+solrDbPort = ""
 
 # keys to the dome machine
 key_name_dome = ""
@@ -94,8 +94,17 @@ commit_validate = ""
 stackPrefix = ""
 release = ""
 
+#s3 buckets for uploads
 S3SourceBucket = ""
 S3DestBucket = ""
+AWS_UPLOAD_BUCKET = ""
+AWS_UPLOAD_BUCKET_FINAL = ""
+AWS_UPLOAD_KEY = ""
+AWS_UPLOAD_SEC = ""
+AWS_UPLOAD_REGION = ""
+
+
+
 
 
 # Server load balancers
