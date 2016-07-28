@@ -59,9 +59,4 @@ resource "aws_instance" "dome" {
   }
 
 
-  provisioner "local-exec" {
-        command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_dome} ec2-user@${aws_instance.dome.public_ip}:/home/ec2-user/domeSanityTest.log ."
-}
-
-
 }
