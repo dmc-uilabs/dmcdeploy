@@ -3,7 +3,7 @@
 source ./devUtil.sh
 
 
-# git checkout terraform.tfvars
+git checkout terraform.tfvars
 
 # this will add the Personal Identifiable Information aws
 addPII
@@ -20,6 +20,16 @@ fi
 case $sec1 in [qQ]) exit;; esac
 stackPrefix=$sec1
 
+
+echo -n "Stack Location { leaving blank will default to -- us-west-2 } [ENTER][q to quit] "
+read sec1
+if [ -z "$sec1" ]
+  then
+    echo "Setting to default [ us-west-2 ]"
+    sec1="us-west-2"
+fi
+case $sec1 in [qQ]) exit;; esac
+awsRegion=$sec1
 
 spacer "Development keys for this deployment"
 echo -n "stack Keys { leaving blank will default to -- DMCDriver } [ENTER][q to quit] "
@@ -330,7 +340,7 @@ commit_stackMon=$sec3
  #auto fill in as much as possible
  # sed -i.bak "s|access_key = \"\"|access_key = \"$AWS_ACCESS_KEY_ID\"|" terraform.tfvars
  # sed -i.bak "s|secret_key = \"\"|secret_key = \"$AWS_SECRET_ACCESS_KEY\"|" terraform.tfvars
- sed -i.bak "s|aws_region = \"\"|aws_region = \"us-west-2\"|" terraform.tfvars
+ sed -i.bak "s|aws_region = \"\"|aws_region = \"$awsRegion\"|" terraform.tfvars
 
  sed -i.bak "s|stackPrefix = \"\"|stackPrefix = \"$stackPrefix\"|" terraform.tfvars
  sed -i.bak "s|use_swagger = \"\"|use_swagger= \"0\"|" terraform.tfvars
