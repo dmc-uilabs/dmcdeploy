@@ -62,9 +62,6 @@ resource "aws_instance" "activeMq" {
   }
 
 
-  provisioner "local-exec" {
-        command = "scp -oStrictHostKeyChecking=no -i ${var.key_full_path_activeMq} ec2-user@${aws_instance.activeMq.public_ip}:/home/ec2-user/activeMqSanityTest.log ."
-}
 
 
 }
