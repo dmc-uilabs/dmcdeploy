@@ -2,7 +2,7 @@
 
 resource "aws_instance" "rest" {
   instance_type = "m4.large"
-  depends_on = ["aws_instance.db"]
+  depends_on = ["aws_instance.db", "aws_instance.validate"]
 
   # Lookup the correct AMI based on the region
   # we specified
@@ -51,6 +51,8 @@ resource "aws_instance" "rest" {
         "echo 'export ActiveMQ_Port=${var.ActiveMQ_Port}' >> /tmp/profile",
         "echo 'export ActiveMQ_User=${var.ActiveMQ_User}' >> /tmp/profile",
         "echo 'export ActiveMQ_Password=${var.ActiveMQ_Password}' >> /tmp/profile",
+        "echo 'export verifyURL=${aws_instance.validate.private_ip}' >> /tmp/profile",
+        "echo 'export myIp=${aws_instance.rest.private_ip}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
