@@ -3,7 +3,7 @@
 source ./devUtil.sh
 
 
-git checkout terraform.tfvars
+# git checkout terraform.tfvars
 
 # this will add the Personal Identifiable Information aws
 addPII
@@ -21,9 +21,28 @@ case $sec1 in [qQ]) exit;; esac
 stackPrefix=$sec1
 
 
+spacer "Development keys for this deployment"
+echo -n "stack Keys { leaving blank will default to -- DMCDriver } [ENTER][q to quit] "
+read sec1
+if [ -z "$sec1" ]
+  then
+    echo "Setting to default [ DMCDriver ]"
+    sec1="DMCDriver"
 
+fi
+case $sec1 in [qQ]) exit;; esac
+stackKEY=$sec1
 
+echo -n "stack key location { leaving blank will default to -- /home/ec2-user/keys/ } [ENTER][q to quit] "
+read sec1
+if [ -z "$sec1" ]
+  then
+    echo "Setting to default [ /home/ec2-user/keys ]"
+    sec1="/home/ec2-user/keys"
 
+fi
+case $sec1 in [qQ]) exit;; esac
+keyPath=$sec1
 
 spacer "Front End machine settings"
 echo -n "serverURL { leaving blank will default to -- ben-web.opendmc.org } [ENTER][q to quit] "
@@ -101,7 +120,16 @@ case $sec4 in [qQ]) exit;; esac
 pg_db_name=$sec4
 
 
-
+spacer "SolR machine settings"
+echo -n "solrDbPort { leaving blank will default 5432 } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ 5432 ]"
+    sec4='5432'
+fi
+case $sec4 in [qQ]) exit;; esac
+solrDbPort=$sec4
 
 
 
@@ -210,11 +238,11 @@ ActiveMQ_Password=$sec4
 
 
 spacer "AWS upload settings"
-echo -n "temp upload bucket { leaving blank will default to default bucket } [ENTER][q to quit] "
+echo -n "temp upload bucket { leaving blank will default to -- test-temp-verify } [ENTER][q to quit] "
 read sec4
 if [ -z "$sec4" ]
   then
-    echo "Setting to default [ dmc-uploads2 ]"
+    echo "Setting to default [ test-temp-verify ]"
     sec4='dmc-uploads2'
 fi
 case $sec4 in [qQ]) exit;; esac
@@ -229,6 +257,18 @@ if [ -z "$sec4" ]
 fi
 case $sec4 in [qQ]) exit;; esac
 final_upload_bucket=$sec4
+
+
+echo -n "final upload bucket for testing { leaving blank will default to default bucket } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ test-final-verify ]"
+    sec4='test-final-verify'
+fi
+case $sec4 in [qQ]) exit;; esac
+AWS_UPLOAD_BUCKET_FINAL=$sec4
+
 
 echo -n "aws_upload_region { leaving blank will default to us-east-1 } [ENTER][q to quit] "
 read sec4
@@ -280,7 +320,7 @@ commit_stackMon=$sec3
  # ./keymaker.sh 1 devStack us-west-2 ~/keys/$stackPrefix $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
 
  echo "Will be using the default key pair for this machine"
- kname="DMCDriver"
+ kname=$stackKEY
  echo "Your key name is $kname"
 
  echo "Edit terraform.tfvars as appropriate."
@@ -302,14 +342,14 @@ commit_stackMon=$sec3
 
 
  sed -i.bak "s|key_name_front = \"\"|key_name_front = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_front = \"\"|key_full_path_front = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_front = \"\"|key_full_path_front = \"$keyPath/$kname.pem\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_rest = \"\"|key_name_rest = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_rest = \"\"|key_full_path_rest = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_rest = \"\"|key_full_path_rest = \"$keyPath/$kname.pem\"|" terraform.tfvars
 
 
  sed -i.bak "s|key_name_db = \"\"|key_name_db = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_db = \"\"|key_full_path_db = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_db = \"\"|key_full_path_db = \"$keyPath/$kname.pem\"|" terraform.tfvars
 
 
  sed -i.bak "s|PSQLUSER = \"\"|PSQLUSER = \"$pg_user\"|" terraform.tfvars
@@ -320,11 +360,15 @@ commit_stackMon=$sec3
 
 
  sed -i.bak "s|key_name_solr = \"\"|key_name_solr = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_solr = \"\"|key_full_path_solr = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_solr = \"\"|key_full_path_solr = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|solrDbPort = \"\"|solrDbPort = \"$solrDbPort\"|" terraform.tfvars
+
+
+
 
 
  sed -i.bak "s|key_name_activeMq = \"\"|key_name_activeMq = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_activeMq = \"\"|key_full_path_activeMq = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_activeMq = \"\"|key_full_path_activeMq = \"$keyPath/$kname.pem\"|" terraform.tfvars
  sed -i.bak "s|activeMqUserPass = \"\"|activeMqUserPass = \"$activeMqUserPass\"|" terraform.tfvars
  sed -i.bak "s|activeMqRootPass = \"\"|activeMqRootPass = \"$activeMqRootPass\"|" terraform.tfvars
  sed -i.bak "s|ActiveMQ_Port = \"\"|ActiveMQ_Port = \"$ActiveMQ_Port\"|" terraform.tfvars
@@ -332,16 +376,16 @@ commit_stackMon=$sec3
  sed -i.bak "s|ActiveMQ_Password = \"\"|ActiveMQ_Password = \"$ActiveMQ_Password\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_stackMon = \"\"|key_name_stackMon = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_stackMon = \"\"|key_full_path_stackMon = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_stackMon = \"\"|key_full_path_stackMon = \"$keyPath/$kname.pem\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_dome = \"\"|key_name_dome = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_dome = \"\"|key_full_path_dome = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_dome = \"\"|key_full_path_dome = \"$keyPath/$kname.pem\"|" terraform.tfvars
  sed -i.bak "s|dome_server_user = \"\"|dome_server_user = \"$dome_server_user\"|" terraform.tfvars
  sed -i.bak "s|dome_server_pw = \"\"|dome_server_pw = \"$dome_server_pw\"|" terraform.tfvars
 
 
  sed -i.bak "s|key_name_validate = \"\"|key_name_validate = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_validate = \"\"|key_full_path_validate = \"/home/ec2-user/keys/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_validate = \"\"|key_full_path_validate = \"$keyPath/$kname.pem\"|" terraform.tfvars
 
 
 
@@ -371,12 +415,13 @@ sed -i.bak "s|AWS_UPLOAD_SEC = \"\"|AWS_UPLOAD_SEC = \"$sec\"|" terraform.tfvars
 
 sed -i.bak "s|AWS_UPLOAD_REGION = \"\"|AWS_UPLOAD_REGION = \"$AWS_UPLOAD_REGION\"|" terraform.tfvars
 sed -i.bak "s|AWS_UPLOAD_BUCKET = \"\"|AWS_UPLOAD_BUCKET = \"$temp_upload_bucket\"|" terraform.tfvars
+sed -i.bak "s|AWS_UPLOAD_BUCKET_FINAL = \"\"|AWS_UPLOAD_BUCKET_FINAL = \"$AWS_UPLOAD_BUCKET_FINAL\"|" terraform.tfvars
 
 
 
- myip=$(curl http://ident.me/)
- echo "To download the private key you have just created run the following command to copy it to the local machine of your wish."
- echo " scp  -i \"DMCDriver.pem\" ec2-user@$myip:/home/ec2-user/keys/$kname ~/Desktop/"
+ # myip=$(curl http://ident.me/)
+ # echo "To download the private key you have just created run the following command to copy it to the local machine of your wish."
+ # echo " scp  -i \"DMCDriver.pem\" ec2-user@$myip:$keyPath/$kname ~/Desktop/"
 
 
 echo " The next step is to verify your terraform.tfvars file and execute terraform apply."
