@@ -11,22 +11,7 @@ cd /tmp
 
 rm -rf *
 
-if [[ $release == 'hot' ]]
-	then
-    			echo "pull from master"
-    			git clone https://bitbucket.org/DigitalMfgCommons/dmcdomeserver.git
-	else
-    			echo "pull from >> $release << release"
-    			git clone https://bitbucket.org/DigitalMfgCommons/dmcdomeserver.git
-                cd dmcdomeserver
-				echo "git checkout tags/$release"  | bash -
-
-fi
-
-
-cd /tmp/dmcdomeserver
-
-#mvn package
+wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DOME_WAR/DOMEApiServicesV7.war
 
 sudo cp DOMEApiServicesV7.war /var/lib/tomcat7/webapps
 echo "queue=tcp://$ActiveMQdns:61616" >> config.properties
@@ -63,4 +48,4 @@ echo "The commit we are pulling from >> $commit_dome" >> domeSanityTest.log
 
 }
 
-sanityTest
+# sanityTest

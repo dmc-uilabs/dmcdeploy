@@ -34,7 +34,11 @@ resource "aws_instance" "rest" {
 
    provisioner "remote-exec" {
         inline = [
-
+        "echo 'export AWS_UPLOAD_SEC=${var.AWS_UPLOAD_SEC}' >> /tmp/profile",
+        "echo 'export AWS_UPLOAD_KEY=${var.AWS_UPLOAD_KEY}' >> /tmp/profile",
+        "echo 'export AWS_UPLOAD_BUCKET=${var.AWS_UPLOAD_BUCKET}' >> /tmp/profile",
+        "echo 'export AWS_UPLOAD_BUCKET=${var.AWS_UPLOAD_BUCKET}' >> /tmp/profile",
+        "echo 'export AWS_UPLOAD_ AWS_UPLOAD_BUCKET_FINAL=${var.AWS_UPLOAD_BUCKET_FINAL}' >> /tmp/profile",
         "echo 'export S3SourceBucket=${var.S3SourceBucket}' >> /tmp/profile",
         "echo 'export S3DestBucket=${var.S3DestBucket}' >> /tmp/profile",
         "echo 'export S3AccessKey=${var.access_key}' >> /tmp/profile",
