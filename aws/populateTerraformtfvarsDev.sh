@@ -253,23 +253,23 @@ read sec4
 if [ -z "$sec4" ]
   then
     echo "Setting to default [ test-temp-verify ]"
-    sec4='dmc-uploads2'
+    sec4='test-temp-verify'
 fi
 case $sec4 in [qQ]) exit;; esac
 temp_upload_bucket=$sec4
 
-echo -n "final asset bucket { leaving blank will default to default bucket } [ENTER][q to quit] "
+echo -n "final asset bucket { leaving blank will default to test-final-verify } [ENTER][q to quit] "
 read sec4
 if [ -z "$sec4" ]
   then
-    echo "Setting to default [ dmc-profiletest ]"
-    sec4='dmc-profiletest'
+    echo "Setting to default [ test-final-verify ]"
+    sec4='test-final-verify'
 fi
 case $sec4 in [qQ]) exit;; esac
 final_upload_bucket=$sec4
 
 
-echo -n "final upload bucket for testing { leaving blank will default to default bucket } [ENTER][q to quit] "
+echo -n "final upload bucket for testing { leaving blank will default to test-final-verify } [ENTER][q to quit] "
 read sec4
 if [ -z "$sec4" ]
   then
