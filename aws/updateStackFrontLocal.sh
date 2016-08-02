@@ -7,12 +7,12 @@ source ./devUtil.sh
 #location of the dist folder after created locally with gulp build
 sendFile="/home/t/Desktop/DMC/frontendTest/frontend/dist"
 #key for frontend machine
-front_ssh_keyC="/home/t/Desktop/keys/beta.pem"
+front_ssh_keyC="/home/t/Desktop/keys/elkkey.pem"
 #front machine user do not chnage for aws
 front_userC=ec2-user
 #ip of frontend machine
-front_hostC="54.89.127.146"
-serverURL="beta.opendmc.org"
+front_hostC="107.21.192.11"
+serverURL="sta.opendmc.org"
 
 
 scpSend() {
@@ -43,7 +43,7 @@ updateFront() {
     #update the loginURL
     cd /tmp/rando/dist/templates/common/header
     echo "set loginURL to $serverURL "
-    sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+    sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://dev-web1.opendmc.org/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
 
     #update the serverURL
     cd /tmp/rando/dist/
