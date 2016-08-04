@@ -5,20 +5,23 @@
 source ./devUtil.sh
 
 #location of the dist folder after created locally with gulp build
-sendFile="/home/t/Desktop/DMC/frontendTest/frontend/dist"
+sendFile="/home/t/Desktop/DMC/frontend/dist"
 #key for frontend machine
-front_ssh_keyC="/home/t/Desktop/keys/beta.pem"
+front_ssh_keyC="/home/t/Desktop/keys/elkkey.pem"
 #front machine user do not chnage for aws
 front_userC=ec2-user
 #ip of frontend machine
-front_hostC="54.89.127.146"
+front_hostC="107.21.192.11"
+serverURL="sta.opendmc.org"
 
 
 scpSend() {
    timestamp=`date --rfc-3339=seconds`
     echo "Version created $timestamp" > "DeployedVersion.txt";
-    mv DeployedVersion.txt $sendFile
+    scp -i $front_ssh_keyC -r DeployedVersion.txt $front_userC@$front_hostC:~
     scp -i $front_ssh_keyC -r $sendFile $front_userC@$front_hostC:~
+    scp -i $front_ssh_keyC -r deployME_front_functions.sh $front_userC@$front_hostC:~
+
     updateFront
 }
 
@@ -33,7 +36,9 @@ updateFront() {
     cd rando
 
     cp -r ~/dist/ .
+    cp deployME_front_functions.sh .
 
+    source deployME_front_functions.sh
 
     unzip *.zip
     #code is now in /tmp/rando/dist
@@ -42,12 +47,12 @@ updateFront() {
     #update the loginURL
     cd /tmp/rando/dist/templates/common/header
     echo "set loginURL to $serverURL "
-    sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+    setLoginUrl
+
 
     #update the serverURL
     cd /tmp/rando/dist/
-    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
-
+      setWindowApiUrl
 
     # remove old code from apache
     sudo rm -rf /var/www/html/*

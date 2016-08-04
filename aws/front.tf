@@ -49,12 +49,20 @@ provisioner "remote-exec"{
 }
 
 
+provisioner "file" {
+        source = "deployMe_front_functions.sh"
+        destination = "/tmp/deployMe_front_functions.sh"
 
+       connection {
+        user = "ec2-user"
+        key_file  = "${var.key_full_path_front}"
+    }
+}
 
 
 provisioner "file" {
         source = "deployMe_front.sh"
-        destination = "/tmp/script.sh"
+        destination = "/tmp/deployMe_front.sh"
 
        connection {
         user = "ec2-user"
@@ -77,9 +85,10 @@ provisioner "remote-exec"{
         "echo 'export commit_front=${var.commit_front}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
-        "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "bash -x script.sh 2>&1 | tee out.log"
+        "chmod +x /tmp/deployMe_front.sh",
+        "chmod +x /tmp/deployMe_front_functions.sh",
+        "bash -x deployMe_front.sh 2>&1 | tee out.log"
 
         ]
 

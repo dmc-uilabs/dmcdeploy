@@ -32,19 +32,22 @@ echo "front_private_ip -- $front_private_ip"
 
 rest_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.rest"].primary.attributes.private_ip')
 #removing quotes fom variable
-#rest_private_ip="$(echo "${rest_private_ip}" | sed -e 's/^"//'  -e 's/"$//')"
 rest_private_ip=$(removeQuotes $rest_private_ip)
 echo "rest_private_ip -- $rest_private_ip"
 
 dome_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.dome"].primary.attributes.private_ip')
 #removing quotes fom variable
-#rest_private_ip="$(echo "${rest_private_ip}" | sed -e 's/^"//'  -e 's/"$//')"
 dome_private_ip=$(removeQuotes $dome_private_ip)
 echo "dome_private_ip -- $dome_private_ip"
 
+
+activemq_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.dome"].primary.attributes.private_ip')
+activemq_private_ip=$(removeQuotes $activemq_private_ip)
+echo "activemq_private_ip -- $activemq_private_ip"
+
+
 val_private_ip=$(cat terraform.tfstate | jq '.modules[0].resources ["aws_instance.validate"].primary.attributes.private_ip')
 #removing quotes fom variable
-#rest_private_ip="$(echo "${rest_private_ip}" | sed -e 's/^"//'  -e 's/"$//')"
 val_private_ip=$(removeQuotes $val_private_ip)
 echo "validate_private_ip -- $val_private_ip"
 
@@ -114,6 +117,8 @@ linkRest () {
 	cidr_f=$(echo "${front_private_ip}/32")
 	aws ec2 authorize-security-group-ingress --group-name $rest_sg --protocol tcp --port 8009 --cidr $cidr_f
 
+	cidr_f=$(echo "${activemq_private_ip}/32")
+	aws ec2 authorize-security-group-ingress --group-name $rest_sg --protocol tcp --port 61616 --cidr $cidr_f
 	# allow the rest machine to only talk to front end machine on port 8009
 	#aws ec2 authorize-security-group-egress --group-id $rest_sg_id --ip-permissions "[{\"IpProtocol\": \"tcp\", \"FromPort\": 8009, \"ToPort\": 8009, \"IpRanges\": [{\"CidrIp\": \"$(echo $cidr_f)\"}]}]"
 
@@ -195,8 +200,8 @@ linkDome () {
 
 	# allow all traffic from rest private ip to port 8983
 	# set ip cidr ip range to only allow include the rest private ip
-	#cidr_r=$(echo "${rest_private_ip}/32")
-	# aws ec2 authorize-security-group-ingress --group-name $dome_sg --protocol tcp --port 8080 --cidr 0.0.0.0/0
+	cidr_r=$(echo "${rest_private_ip}/32")
+	aws ec2 authorize-security-group-ingress --group-name $dome_sg --protocol tcp --port 8080 --cidr 0.0.0.0/0
 
 
 	# allow all traffic from port 443
@@ -212,6 +217,30 @@ linkDome () {
 	showSecGroupDetails sg_dome
 }
 
+
+linkActive () {
+	active_sg="$(echo "${stackprefix}" | sed -e 's/^"//'  -e 's/"$//')_DMC_sg_activemq"
+
+	# allow all traffic from rest private ip to port 8983
+	# set ip cidr ip range to only allow include the rest private ip
+	cidr_r=$(echo "${rest_private_ip}/32")
+	aws ec2 authorize-security-group-ingress --group-name $active_sg --protocol tcp --port 61616 --cidr $cidr_r
+
+
+  cidr_d=$(echo "${dome_private_ip}/32")
+	aws ec2 authorize-security-group-ingress --group-name $active_sg --protocol tcp --port 61616 --cidr $cidr_d
+	# allow all traffic from port 443
+	#aws ec2 authorize-security-group-ingress --group-name $front_sg --protocol tcp --port 443 --cidr 0.0.0.0/0
+
+	# do not allow traffic on port 22
+	#aws ec2 revoke-security-group-ingress --group-name $solr_sg --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+
+
+
+    #show secrutity group details for the sec group with name
+	showSecGroupDetails sg_activemq
+}
 
 linkValidate () {
     #extract the security group from the stack prefix
@@ -254,3 +283,4 @@ linkDb
 linkSolr
 linkDome
 linkValidate
+linkActive

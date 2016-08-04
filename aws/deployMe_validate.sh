@@ -3,7 +3,7 @@
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 
-
+cd ~
 ### baseimage stuffs
 
 #install nvm
@@ -24,6 +24,14 @@ sudo sed -i '5,/Example/s/Example/#Example/' /etc/freshclam.conf
 #update the antivirus db
 #sudo freshclam
 
+
+
+
+#install forever to allow for node script to run as a service
+npm install -g forever
+
+
+
 #install git
 sudo yum install -y git
 
@@ -33,3 +41,15 @@ sudo yum install -y git
 git clone https://bitbucket.org/DigitalMfgCommons/validation.git
 
 cd validation
+
+
+#update the antivirus db
+#sudo freshclam
+
+
+npm install
+
+
+
+#will start and maintain the service
+forever start validate.js
