@@ -85,9 +85,10 @@ provisioner "remote-exec"{
         "echo 'export commit_front=${var.commit_front}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
-        "chmod +x /tmp/deployMe_front.sh",
         "cd /tmp",
-        "bash -x script.sh 2>&1 | tee out.log"
+        "chmod +x /tmp/deployMe_front.sh",
+        "chmod +x /tmp/deployMe_front_functions.sh",
+        "bash -x deployMe_front.sh 2>&1 | tee out.log"
 
         ]
 

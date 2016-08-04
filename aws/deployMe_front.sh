@@ -8,9 +8,7 @@
 #anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
-# sudo yum update
-
-source ./deployME_front_functions.sh
+source ./deployMe_front_functions.sh
 
 ##set the appropriate level of logging
 setLogLevel
