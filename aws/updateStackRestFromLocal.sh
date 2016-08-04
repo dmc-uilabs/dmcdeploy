@@ -5,13 +5,13 @@
 source ./devUtil.sh
 
 #location of the dist folder after created locally with gulp build
-sendFile="/home/t/Desktop/DMC/restservicesTest/restservices/target/dmc-site-services-0.1.0-swagger.war"
+sendFile="/home/t/Desktop/DMC/802/restservices/target/dmc-site-services-0.1.0-swagger.war"
 #key for restend machine
-rest_ssh_keyC="/home/t/Desktop/keys/beta.pem"
+rest_ssh_keyC="/home/t/Desktop/keys/elkkey.pem"
 #rest machine user do not chnage for aws
 rest_userC=ec2-user
 #ip of restend machine
-rest_hostC="54.210.20.182"
+rest_hostC="54.209.212.132"
 
 
 scpSend() {
