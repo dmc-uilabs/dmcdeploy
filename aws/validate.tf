@@ -1,8 +1,8 @@
 
 
 resource "aws_instance" "validate" {
-  instance_type = "m4.large"
-  depends_on = ["aws_instance.rest"]
+  instance_type = "t2.large"
+  depends_on = []
 
   # Lookup the correct AMI based on the region
   # we specified
@@ -41,7 +41,6 @@ resource "aws_instance" "validate" {
         "echo 'export AWS_UPLOAD_REGION=${var.AWS_UPLOAD_REGION}' >> /tmp/profile",
         "echo 'export release=${var.release}' >> /tmp/profile",
         "echo 'export commit_validate=${var.commit_validate}' >> /tmp/profile",
-        "echo 'export restIP=${aws_instance.rest.private_ip}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",

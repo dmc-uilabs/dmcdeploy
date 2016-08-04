@@ -13,7 +13,7 @@ read sec1
 if [ -z "$sec1" ]
   then
     NOW=$(date +"%Y_%m_%d_%H_%M_%S")
-    sec1=$1_${NOW}
+    sec1="beta_${NOW}"
     echo "Setting to default -- $sec1"
 
 fi
@@ -26,41 +26,41 @@ read sec1
 if [ -z "$sec1" ]
   then
     echo "Setting to default [ us-west-2 ]"
-    sec1="us-west-2"
+    sec1="us-east-1"
 fi
 case $sec1 in [qQ]) exit;; esac
 awsRegion=$sec1
 
 spacer "Development keys for this deployment"
-echo -n "stack Keys { leaving blank will default to -- DMCDriver } [ENTER][q to quit] "
+echo -n "stack Keys { leaving blank will default to -- beta } [ENTER][q to quit] "
 read sec1
 if [ -z "$sec1" ]
   then
-    echo "Setting to default [ DMCDriver ]"
-    sec1="DMCDriver"
+    echo "Setting to default [ beta ]"
+    sec1="beta"
 
 fi
 case $sec1 in [qQ]) exit;; esac
 stackKEY=$sec1
 
-echo -n "stack key location { leaving blank will default to -- /home/ec2-user/keys/ } [ENTER][q to quit] "
+echo -n "stack key location { leaving blank will default to -- /home/t/Desktop/keys/ } [ENTER][q to quit] "
 read sec1
 if [ -z "$sec1" ]
   then
-    echo "Setting to default [ /home/ec2-user/keys ]"
-    sec1="/home/ec2-user/keys"
+    echo "Setting to default [ /home/t/Desktop/keys ]"
+    sec1="/home/t/Desktop/keys"
 
 fi
 case $sec1 in [qQ]) exit;; esac
 keyPath=$sec1
 
 spacer "Front End machine settings"
-echo -n "serverURL { leaving blank will default to -- ben-web.opendmc.org } [ENTER][q to quit] "
+echo -n "serverURL { leaving blank will default to -- qa.opendmc.org } [ENTER][q to quit] "
 read sec2
 if [ -z "$sec2" ]
   then
-    echo "Setting to default [ ben-web.opendmc.org ]"
-    sec2='ben-web.opendmc.org'
+    echo "Setting to default [ qa.opendmc.org ]"
+    sec2='qa.opendmc.org'
 fi
 case $sec2 in [qQ]) exit;; esac
 serverURL=$sec2

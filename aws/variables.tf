@@ -7,18 +7,45 @@ variable "aws_region" {
 
 
 variable "key_name_front" {}
+variable "key_full_path_front" {}
+variable "commit_front" {
+  default = "hot"
+}
+
+
+
 variable "key_name_rest" {}
+
+
 variable "key_name_db" {}
+
+
 variable "key_name_solr" {}
+variable "key_full_path_solr" {}
+variable "commit_solr" {
+  default = "hot"
+}
+variable "solrDbPort" {
+  default = "5432"
+}
+
+
+
 variable "key_name_dome" {}
+
+
 variable "key_name_stackMon" {}
+
+
 variable "key_name_activeMq" {}
+
+
 variable "key_name_validate" {}
 
-variable "key_full_path_front" {}
+
 variable "key_full_path_rest" {}
 variable "key_full_path_db" {}
-variable "key_full_path_solr" {}
+
 variable "key_full_path_dome" {}
 variable "key_full_path_stackMon" {}
 variable "key_full_path_activeMq" {}
@@ -26,18 +53,14 @@ variable "key_full_path_validate" {}
 
 
 
-variable "commit_front" {
-  default = "hot"
-}
+
 variable "commit_rest" {
   default = "hot"
 }
 variable "commit_db" {
   default = "hot"
 }
-variable "commit_solr" {
-  default = "hot"
-}
+
 variable "commit_dome" {
   default = "hot"
 }
@@ -59,22 +82,35 @@ variable "cert-web-bucket" {
   default = "cert-web-bucket"
 }
 
+
+
+
+
 variable "S3SourceBucket" {}
 variable "S3DestBucket" {}
-
-
 variable "AWS_UPLOAD_SEC" {}
 variable "AWS_UPLOAD_KEY" {}
 variable "AWS_UPLOAD_BUCKET" {}
 variable "AWS_UPLOAD_REGION" {
   default = "us-east-1"
 }
+variable "AWS_UPLOAD_BUCKET_FINAL" {}
+
+
+
+
+
+
+
 
 
 
 variable "use_swagger" {
   default = "0"
 }
+
+
+
 
 
 variable "sp_cert_location" {
@@ -96,8 +132,18 @@ variable "dome_server_pw" {
   default = "ceed"
 }
 
+
+
 variable "activeMqRootPass" {}
 variable "activeMqUserPass" {}
+variable "ActiveMQ_Port" {
+  default = "61616"
+}
+variable "ActiveMQ_User" {}
+variable "ActiveMQ_Password" {}
+
+
+
 variable "stackPrefix" {}
 
 
@@ -131,7 +177,7 @@ variable "frontSHIB"{
 variable "aws_amirehl" {
   default = {
     "us-east-1" = "ami-8fcee4e5"
-    "us-west-2" = "ami-63b25203"
+    "us-west-2" = "ami-38f93658"
   }
 }
 
@@ -139,7 +185,7 @@ variable "aws_amirehl" {
 variable "aws_amirehl_tom" {
   default = {
     "us-east-1" = "ami-d3f048c4"
-    "us-west-2" = "ami-2730d247"
+    "us-west-2" = "ami-38f93658"
   }
 }
 
@@ -147,7 +193,7 @@ variable "aws_amirehl_tom" {
 variable "aws_baseDb" {
   default = {
     "us-east-1" = "ami-fcfd45eb"
-    "us-west-2" = "ami-cb2dcfab"
+    "us-west-2" = "ami-c7f837a7"
   }
 }
 
@@ -163,6 +209,6 @@ variable "aws_baseSolr" {
 variable "aws_baseActive" {
   default = {
     "us-east-1" = "ami-cffb43d8"
-    "us-west-2" = "ami-4230d222"
+    "us-west-2" = "ami-22fb3442"
   }
 }
