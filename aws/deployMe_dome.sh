@@ -18,11 +18,13 @@ do
     sleep 1
 done
 sudo cp /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties .
+sudo chown ec2-user config.properties
+
 echo "queue=tcp://$ActiveMQdns:61616" >> config.properties
 echo "dome.server.user=$dome_server_user" >> config.properties
 echo "dome.server.pw=$dome_server_pw" >> config.properties
+sudo chown root config.properties
 sudo mv config.properties /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties
-
 
 sudo service tomcat7 restart
 
