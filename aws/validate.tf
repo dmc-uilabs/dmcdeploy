@@ -1,7 +1,7 @@
 
 
 resource "aws_instance" "validate" {
-  instance_type = "m4.large"
+  instance_type = "t2.large"
   depends_on = []
 
   # Lookup the correct AMI based on the region

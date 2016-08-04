@@ -5,13 +5,13 @@
 source ./devUtil.sh
 
 #location of the dist folder after created locally with gulp build
-sendFile="/home/t/Desktop/DMC/dbTest/dbservices/target/gaga.war"
+sendFile="/home/t/Desktop/DMC/dmcdb"
 #key for dbend machine
 db_ssh_keyC="/home/t/Desktop/keys/elkkey.pem"
 #db machine user do not chnage for aws
 db_userC=ec2-user
 #ip of dbend machine
-db_hostC="54.209.212.132"
+db_hostC="54.226.135.178"
 PSQLDBNAME="gforge"
 PSQLUSER="gforge"
 

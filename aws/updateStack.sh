@@ -3,26 +3,24 @@
 
 #importing devUtil
 source ./devUtil.sh
-
+source ./deployME_front_functions.sh
 # Use this script to update your existing stack
 # Make sure that ssh 22 is enabled in the security groups
 #
-front_ssh_key=$(getFromTfVars key_full_path_front)
+front_ssh_key=$(terraform output key_full_path_front)
 front_user=ec2-user
-front_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.front"].primary.attributes.public_ip')
-front_public_ip=$(removeQuotes $front_public_ip)
+front_public_ip=$(terraform output front_public_ip)
 # for host comming from your current stack
 front_host=$front_public_ip
 # for any host
 #export front_host=54.174.108.18
 front_deploy_commit=hot
-serverURL=$(getFromTfVars serverURL)
+serverURL=$(terraform output serverURL)
 
 
-rest_ssh_key=$(getFromTfVars key_full_path_rest)
+rest_ssh_key=$(terraform output key_full_path_rest)
 rest_user=ec2-user
-rest_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.rest"].primary.attributes.public_ip')
-rest_public_ip=$(removeQuotes $rest_public_ip)
+rest_public_ip=$(terraform output rest_public_ip)
 # for host comming from your current stack
 rest_host=$rest_public_ip
 # for any host
@@ -31,21 +29,19 @@ rest_deploy_commit=hot
 use_swagger=1
 
 
-db_ssh_key=$(getFromTfVars key_full_path_db)
+db_ssh_key=$(terraform output key_full_path_db)
 db_user=ec2-user
-db_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.db"].primary.attributes.public_ip')
-db_public_ip=$(removeQuotes $db_public_ip)
-PSQLUSER=$(getFromTfVars PSQLUSER)
-PSQLDBNAME=$(getFromTfVars PSQLDBNAME)
+db_public_ip=$(terraform output db_public_ip)
+PSQLUSER=$(terraform output PSQLUSER)
+PSQLDBNAME=$(terraform output PSQLDBNAME)
 # for host comming from your current stack
 db_host=$db_public_ip
 # for any host
 #export db_host=54.175.165.3
 
-solr_ssh_key=$(getFromTfVars key_full_path_solr)
+solr_ssh_key=$(terraform output key_full_path_solr)
 solr_user=ec2-user
-solr_public_ip=$(cat terraform.tfstate | jq '.modules[0].resources["aws_instance.solr"].primary.attributes.public_ip')
-solr_public_ip=$(removeQuotes $solr_public_ip)
+solr_public_ip=$(terraform output solr_public_ip)
 # for host comming from your current stack
 solr_host=$solr_public_ip
 # for any host
@@ -94,19 +90,12 @@ updateFront() {
     cd /tmp/dist/templates/common/header
 
     echo "set loginURL to $serverURL "
-    sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+    setLoginUrl
 
-    cd /tmp/dist/
-    sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
-    sudo mkdir -p /var/www/
-    sudo mkdir -p /var/www/html
-    sudo mv /tmp/dist/* /var/www/html/.
-    cd /var/www/html
-    sudo chown -R apache:apache *
+    commonInstallWebsiteConfig
 
     sudo /etc/init.d/httpd restart
     exit
-
 +
 }
 
