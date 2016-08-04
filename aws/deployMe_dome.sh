@@ -3,15 +3,13 @@
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 
-sudo /etc/init.d/tomcat7 start
+sudo service tomcat7 start
 cd /tmp
 rm -rf *
 wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DOME_WAR/DOMEApiServicesV7.war
 
 sudo cp DOMEApiServicesV7.war /var/lib/tomcat7/webapps
-echo "queue=tcp://$ActiveMQdns:61616" >> config.properties
-echo "dome.server.user=$dome_server_user" >> config.properties
-echo "dome.server.pw=$dome_server_pw" >> config.properties
+
 
 
 while [ ! -f /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties ]
@@ -19,9 +17,14 @@ do
     echo "waiting"
     sleep 1
 done
+sudo cp /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties .
+echo "queue=tcp://$ActiveMQdns:61616" >> config.properties
+echo "dome.server.user=$dome_server_user" >> config.properties
+echo "dome.server.pw=$dome_server_pw" >> config.properties
+sudo mv config.properties /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties
 
-sudo cp config.properties /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties
-sudo /etc/init.d/tomcat7 restart
+
+sudo service tomcat7 restart
 
 
 function sanityTest {
