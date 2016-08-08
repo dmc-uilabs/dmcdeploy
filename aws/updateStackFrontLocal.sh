@@ -36,9 +36,9 @@ updateFront() {
     cd rando
 
     cp -r ~/dist/ .
-    cp deployME_front_functions.sh .
+    cp ~/deployMe_front_functions.sh .
 
-    source deployME_front_functions.sh
+    source deployMe_front_functions.sh
 
     unzip *.zip
     #code is now in /tmp/rando/dist
