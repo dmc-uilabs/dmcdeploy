@@ -20,7 +20,7 @@ scpSend() {
     echo "Version created $timestamp" > "DeployedVersion.txt";
     scp -i $front_ssh_keyC -r DeployedVersion.txt $front_userC@$front_hostC:~
     scp -i $front_ssh_keyC -r $sendFile $front_userC@$front_hostC:~
-    scp -i $front_ssh_keyC -r deployME_front_functions.sh $front_userC@$front_hostC:~
+    scp -i $front_ssh_keyC -r deployMe_front_functions.sh $front_userC@$front_hostC:~
 
     updateFront
 }
