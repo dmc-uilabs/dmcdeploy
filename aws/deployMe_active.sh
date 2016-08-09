@@ -27,18 +27,6 @@ fi
 
 cd /tmp/dmcactivemq
 mv * ..
-# /etc/init.d/sendmail stop
-
-
-sudo echo "admin: $activeMqRootPass, admin" >> /tmp/jetty-realm.properties
-sudo echo "user: $activeMqUserPass, user" >> /tmp/jetty-realm.properties
-# 
-# wget http://mirror.cc.columbia.edu/pub/software/apache/activemq/5.13.2/apache-activemq-5.13.2-bin.tar.gz
-# tar zxvf apache-activemq-5.13.2-bin.tar.gz
-#
-# sudo mv apache-activemq-5.13.2 /opt
-# sudo ln -sf /opt/apache-activemq-5.13.2/ /opt/activemq
-
 
 # Copy our custom startup script to /etc/init.d and set appropriate permissions
 # this makes the command "service activemq start|stop|restart" possible
@@ -49,32 +37,7 @@ sudo chkconfig activemq on
 
 
 sudo cp -v  /tmp/jetty-realm.properties /opt/activemq/conf/jetty-realm.properties
-
+sudo echo "admin: $activeMqRootPass, admin" >> /opt/activemq/conf/jetty-realm.properties
+sudo echo "user: $activeMqUserPass, user" >> /opt/activemq/conf/jetty-realm.properties
 #start ActiveMQ
-cd /opt/activemq/bin
-./activemq start
-
-function sanityTest {
-
-
-cd ~
-
-
-
-response=$(netstat -an|grep 61616)
-echo "Attemting to see if server is bound to port 61616 " >> activeMqSanityTest.log
-echo "server response -- $response" >> activeMqSanityTest.log
-
-echo "Attemting to see if admin console can be reached for ActiveMQ" >> activeMqSanityTest.log
-res=$(curl --user admin:$activeMqRootPass -o /dev/null --silent --head --write-out '%{http_code}' localhost:8161/admin/index.jsp)
-echo "Server response $res" >> activeMqSanityTest.log
-
-
-echo "The commit we are pulling from >> $commit_activeMq" >> activeMqSanityTest.log
-
-
-
-
-}
-
-sanityTest
+service activemq start
