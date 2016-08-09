@@ -12,6 +12,7 @@ function buildAMIBase {
 
     sudo mv apache-activemq-5.13.2 /opt
     sudo ln -sf /opt/apache-activemq-5.13.2/ /opt/activemq
+    sudo yum install git -y
 
 }
 
