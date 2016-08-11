@@ -21,7 +21,7 @@ case $sec1 in [qQ]) exit;; esac
 stackPrefix=$sec1
 
 
-echo -n "Stack Location { leaving blank will default to -- us-west-2 } [ENTER][q to quit] "
+echo -n "Stack Location { leaving blank will default to -- us-east-1 } [ENTER][q to quit] "
 read sec1
 if [ -z "$sec1" ]
   then
@@ -55,12 +55,12 @@ case $sec1 in [qQ]) exit;; esac
 keyPath=$sec1
 
 spacer "Front End machine settings"
-echo -n "serverURL { leaving blank will default to -- qa.opendmc.org } [ENTER][q to quit] "
+echo -n "serverURL { leaving blank will default to -- beta.opendmc.org } [ENTER][q to quit] "
 read sec2
 if [ -z "$sec2" ]
   then
-    echo "Setting to default [ qa.opendmc.org ]"
-    sec2='qa.opendmc.org'
+    echo "Setting to default [ beta.opendmc.org ]"
+    sec2='beta.opendmc.org'
 fi
 case $sec2 in [qQ]) exit;; esac
 serverURL=$sec2
