@@ -28,7 +28,7 @@ sudo sed -i '5,/Example/s/Example/#Example/' /etc/freshclam.conf
 
 
 #install forever to allow for node script to run as a service
-npm install -g forever
+npm install -g pm2
 
 
 
@@ -52,4 +52,7 @@ npm install
 
 
 #will start and maintain the service
-forever start validate.js
+pm2 start validate.js -i max
+
+#to see running procesess
+#pm2 list
