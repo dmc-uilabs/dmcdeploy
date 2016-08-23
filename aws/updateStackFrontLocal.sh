@@ -7,12 +7,12 @@ source ./devUtil.sh
 #location of the dist folder after created locally with gulp build
 sendFile="/home/t/Desktop/DMC/frontend/dist"
 #key for frontend machine
-front_ssh_keyC="/home/t/Desktop/keys/elkkey.pem"
+front_ssh_keyC="/home/t/Desktop/keys/beta.pem"
 #front machine user do not chnage for aws
 front_userC=ec2-user
 #ip of frontend machine
-front_hostC="107.21.192.11"
-serverURL="sta.opendmc.org"
+front_hostC="52.91.37.214"
+serverURL="beta.opendmc.org"
 
 
 scpSend() {
@@ -50,7 +50,7 @@ updateFront() {
     setLoginUrl
 
     #update the keys
-    cd /tmp/dist/scripts/common/models/
+    cd /tmp/rando/dist/scripts/common/models/
     frontendUpload
 
     #update the serverURL
