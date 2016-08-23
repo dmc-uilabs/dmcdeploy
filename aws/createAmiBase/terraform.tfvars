@@ -1,5 +1,5 @@
-access_key = "AKIAIKN27CW5YGEPBOWQ"
-secret_key = "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"
+access_key = ""
+secret_key = ""
 
 key_name_front = "baseWest"
 key_name_rest = "baseWest"

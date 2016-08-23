@@ -49,6 +49,9 @@ updateFront() {
     echo "set loginURL to $serverURL "
     setLoginUrl
 
+    #update the keys
+    cd /tmp/dist/scripts/common/models/
+    frontendUpload
 
     #update the serverURL
     cd /tmp/rando/dist/

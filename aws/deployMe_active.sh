@@ -8,7 +8,7 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 # yum erase -y java-1.7.0-openjdk
 # yum install -y git
 # yum install -y tomcat7
-# yum install git -y
+sudo yum install git -y
 
 
 cd /tmp
