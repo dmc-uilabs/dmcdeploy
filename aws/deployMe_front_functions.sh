@@ -58,11 +58,18 @@ function ajpProxy {
 
 
 function setLoginUrl {
+  echo "setting the login url -- serverURL is =$serverURL"
   if [ $serverURL == "beta.opendmc.org" ]
   then
     sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://$serverURL/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
   else
-    sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://dev-web1.opendmc.org/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+    if [[ $serverURL == "dev-web.opendmc.org" ]]
+      then
+        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://dev-web.opendmc.org/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+
+      else
+        sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://dev-web1.opendmc.org/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+    fi
   fi
 }
 
@@ -72,7 +79,7 @@ function frontendUpload {
 }
 
 function setWindowApiUrl {
-  echo ">>>>$Restip<<<<"
+  echo "setting the window apiurl -- serverURL is =$serverURL"
   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
 
 }
