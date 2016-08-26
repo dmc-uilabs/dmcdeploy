@@ -1,13 +1,13 @@
 #!/bin/bash -v
 
-export db_ssh_key=/home/ti/Desktop/keys/2016_02_15_10_22_15_alpha-2-15_3
-export db_user=ec2-user
-export db_host=54.152.136.255
+db_ssh_key="/home/t/Desktop/keys/beta.pem"
+db_user=ec2-user
+db_host=52.87.225.110
 
-export AWS_ACCESS_KEY_ID=""
-export AWS_SECRET_ACCESS_KEY=""
-export s3_bucket=db-web-bucket
-export dump=gforge.psql
+AWS_ACCESS_KEY_ID=""
+AWS_SECRET_ACCESS_KEY=""
+s3_bucket=db-web-bucket
+dump="2016-08-26-06-35/archivesgforge.sql"
 
 
 
@@ -21,16 +21,23 @@ ssh -tti $db_ssh_key $db_user@$db_host <<+
 	sudo bash -c 'cat /tmp/profile >> /etc/profile'
 	source /etc/profile
 
-   
+
     cd ~
     mkdir stuff
-    cd stuff 
+    cd stuff
 
-	echo "pull in the dump"
+	echo "pull in the dump $s3_bucket/$dump"
 	aws s3 cp s3://$s3_bucket/$dump .
+	echo "dropping the Db"
+  sudo -u postgres psql -c "DROP DATABASE $DB"
+	echo "Create new DB "
+	psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
+	echo "Inserting sample data"
+	psql -U postgres -d "$PSQLDBNAME" < archivesgforge.sql
+
+
 
 
 
 	exit
-
 +
