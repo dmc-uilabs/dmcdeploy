@@ -1,7 +1,7 @@
 
 resource "aws_instance" "stackMon" {
   instance_type = "m4.large"
-  
+
 
   # Lookup the correct AMI based on the region
   # we specified
@@ -30,10 +30,15 @@ resource "aws_instance" "stackMon" {
     }
     }
 
-  
+
    provisioner "remote-exec" {
         inline = [
-        "echo 'export commit_front=${var.commit_front}' >> /tmp/profile",   
+        "echo 'export FrontIp=${aws_instance.front.private_ip}' >> /tmp/profile",
+        "echo 'export RestIp=${aws_instance.rest.private_ip}' >> /tmp/profile",
+        "echo 'export DbIp=${aws_instance.db.private_ip}' >> /tmp/profile",
+        "echo 'export ActiveMqIp=${aws_instance.activeMq.private_ip}' >> /tmp/profile",
+        "echo 'export SolrIp=${aws_instance.solr.private_ip}' >> /tmp/profile",
+        "echo 'export ValidateIp=${aws_instance.validate.private_ip}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
