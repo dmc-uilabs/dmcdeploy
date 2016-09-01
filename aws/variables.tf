@@ -98,7 +98,9 @@ variable "AWS_UPLOAD_BUCKET_FINAL" {}
 
 
 
-
+variable "s3_db_backups" {
+  default = "db-web-bucket"
+}
 
 
 
