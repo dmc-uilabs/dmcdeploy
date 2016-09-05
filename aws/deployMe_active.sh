@@ -40,4 +40,4 @@ sudo cp -v  /tmp/jetty-realm.properties /opt/activemq/conf/jetty-realm.propertie
 sudo echo "admin: $activeMqRootPass, admin" >> /opt/activemq/conf/jetty-realm.properties
 sudo echo "user: $activeMqUserPass, user" >> /opt/activemq/conf/jetty-realm.properties
 #start ActiveMQ
-service activemq start
+sudo service activemq start
