@@ -38,8 +38,8 @@ updatedb() {
     echo "Create new DB "
     psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
     echo "Inserting sample data"
-    psql -U postgres -d gforge < gforge.psql
-    psql -U postgres -d gforge < insert_sample_data.psql
+    ./flyway clean migrate info -configFile=conf/core/flyway.conf
+    ./flyway migrate info -configFile=conf/data/flyway.conf
     rm -rf /tmp/dmcdb
     exit
 +

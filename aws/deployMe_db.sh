@@ -64,17 +64,16 @@ fi
 
 
 cd ~/dmcdb
-# git pull from master DB to get latest version of gforge.psql
-#mv gforge.psql /var/lib/pgsql/.
+# git pull from master DB to get latest version
 
 psql -U postgres -c "CREATE ROLE $PSQLUSER NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN PASSWORD '$PSQLPASS';"
 
 psql -U postgres -c "CREATE DATABASE $DB WITH OWNER $PSQLUSER;"
 
-psql -U postgres -d gforge < gforge.psql
+./flyway clean migrate info -configFile=conf/core/flyway.conf
 
 # load sample data, including DMDII member organizations
-psql -U postgres -d gforge < insert_sample_data.psql
+./flyway migrate info -configFile=conf/data/flyway.conf
 
 # Install cron and scripts
 sudo yum install cronie -y

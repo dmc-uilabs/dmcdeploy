@@ -180,8 +180,8 @@ updateDb() {
      fi
 
   psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
-  psql -U postgres -d gforge < gforge.psql
-  psql -U postgres -d gforge < insert_sample_data.psql
+  ./flyway clean migrate info -configFile=conf/core/flyway.conf
+  ./flyway migrate info -configFile=conf/data/flyway.conf
   exit
 +
 }
