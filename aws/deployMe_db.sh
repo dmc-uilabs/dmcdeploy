@@ -1,5 +1,5 @@
 #!/bin/bash -v
-#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
+#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell�s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 #sudo yum update -y
 sudo yum install git -y
@@ -64,17 +64,35 @@ fi
 
 
 cd ~/dmcdb
-# git pull from master DB to get latest version of gforge.psql
-#mv gforge.psql /var/lib/pgsql/.
+# git pull from master DB to get latest version
 
-psql -U postgres -c "CREATE ROLE $PSQLUSER NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN PASSWORD '$PSQLPASS';"
 
-psql -U postgres -c "CREATE DATABASE $DB WITH OWNER $PSQLUSER;"
 
-psql -U postgres -d gforge < gforge.psql
 
-# load sample data, including DMDII member organizations
-psql -U postgres -d gforge < insert_sample_data.psql
+
+   
+   
+
+if [ "$deploymentEnv" = "production" ]; then
+    echo expression evaluated as true
+ # ./flyway migrate info -configFile=conf/core/flyway.conf
+ else
+    echo "Dropping $PSQLDBNAME -- db"
+    sudo -u postgres psql -c "DROP DATABASE $PSQLDBNAME"
+    echo "Create new DB "
+    psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
+    echo "Inserting sample data"
+
+ ./flyway clean migrate info -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
+ # load sample data, including DMDII member organizations
+ ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
+    rm -rf /tmp/dmcdb
+fi
+
+
+
+
+
 
 # Install cron and scripts
 sudo yum install cronie -y
