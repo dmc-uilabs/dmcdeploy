@@ -179,9 +179,21 @@ updateDb() {
 
      fi
 
-  psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
-  psql -U postgres -d gforge < gforge.psql
-  psql -U postgres -d gforge < insert_sample_data.psql
+  if [ "$deploymentEnv" = "production" ]; then
+    echo expression evaluated as true
+ # ./flyway migrate info -configFile=conf/core/flyway.conf
+ else
+    echo "Dropping $PSQLDBNAME -- db"
+    sudo -u postgres psql -c "DROP DATABASE $PSQLDBNAME"
+    echo "Create new DB "
+    psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
+    echo "Inserting sample data"
+
+ ./flyway clean migrate info -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
+ # load sample data, including DMDII member organizations
+ ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
+    rm -rf /tmp/dmcdb
+fi
   exit
 +
 }
