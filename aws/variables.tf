@@ -5,6 +5,9 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
+variable "deploymentEnv"{
+  default = "development"
+}
 
 variable "key_name_front" {}
 variable "key_full_path_front" {}
