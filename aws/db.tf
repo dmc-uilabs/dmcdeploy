@@ -37,10 +37,7 @@ resource "aws_instance" "db" {
         "echo 'export s3_bucket=${var.s3_db_backups}' >> /tmp/profile",
         "echo 'export PSQLPASS=${var.PSQLPASS}' >> /tmp/profile",
         "echo 'export DB=${var.PSQLDBNAME}' >> /tmp/profile",
-<<<<<<< HEAD
         "echo 'export deploymentEnv=${var.deploymentEnv}' >> /tmp/profile",
-=======
->>>>>>> 69045423486b34a5922f8b68a322fcad2d095397
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
         "chmod +x /tmp/script.sh",
