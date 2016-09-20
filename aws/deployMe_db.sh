@@ -70,18 +70,16 @@ cd ~/dmcdb
 
 
 
-
+   
+   
 
 if [[ $deploymentEnv == 'production' ]]
 
 then
  
-  #db user password db (location and Port) 
-   flyway.url=jdbc:postgresql://localhost:5432/$DB
-   flyway.user=$PSQLUSER
-   flyway.password=$PSQLPASS
   
-  ./flyway migrate info -configFile=conf/core/flyway.conf
+  
+ # ./flyway migrate info -configFile=conf/core/flyway.conf
  
  
  
@@ -93,9 +91,9 @@ then
  
  
  
- ./flyway clean migrate info -configFile=conf/core/flyway.conf
+ ./flyway clean migrate info -configFile=conf/core/flyway.conf -flyway.url=jdbc:postgresql://localhost:5432/$DB  -flyway.user=$PSQLUSER -flyway.password=$PSQLPASS
  # load sample data, including DMDII member organizations
- ./flyway migrate info -configFile=conf/data/flyway.conf
+ ./flyway migrate info -configFile=conf/data/flyway.conf -flyway.url=jdbc:postgresql://localhost:5432/$DB  -flyway.user=$PSQLUSER -flyway.password=$PSQLPASS
  
  
  
