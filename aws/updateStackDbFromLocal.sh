@@ -14,6 +14,7 @@ db_userC=ec2-user
 db_hostC="54.226.135.178"
 PSQLDBNAME="gforge"
 PSQLUSER="gforge"
+deploymentEnv="development"
 
 
 scpSend() {
@@ -33,15 +34,31 @@ updatedb() {
     sudo service postgresql94 stop
     sudo service postgresql94 start
 
+
+if [[ $deploymentEnv == 'production' ]]
+
+then
+ 
+  
+  
+ # ./flyway migrate info -configFile=conf/core/flyway.conf
+ 
+ 
+ 
+ else
     echo "Dropping $PSQLDBNAME -- db"
     sudo -u postgres psql -c "DROP DATABASE $PSQLDBNAME"
     echo "Create new DB "
     psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
     echo "Inserting sample data"
-    ./flyway clean migrate info -configFile=conf/core/flyway.conf
-    ./flyway migrate info -configFile=conf/data/flyway.conf
+     
+ ./flyway clean migrate info -configFile=conf/core/flyway.conf -flyway.url=jdbc:postgresql://localhost:5432/$DB  -flyway.user=$PSQLUSER -flyway.password=$PSQLPASS
+ # load sample data, including DMDII member organizations
+ ./flyway migrate info -configFile=conf/data/flyway.conf -flyway.url=jdbc:postgresql://localhost:5432/$DB  -flyway.user=$PSQLUSER -flyway.password=$PSQLPASS
     rm -rf /tmp/dmcdb
-    exit
+  
+ fi
+
 +
 }
 
