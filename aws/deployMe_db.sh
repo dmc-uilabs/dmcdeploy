@@ -75,3 +75,14 @@ psql -U postgres -d gforge < gforge.psql
 
 # load sample data, including DMDII member organizations
 psql -U postgres -d gforge < insert_sample_data.psql
+
+# Install cron and scripts
+sudo yum install cronie -y
+
+# sudo -u solr chmod +x dbBackup.sh
+# sudo -u solr crontab dbBackupCron
+# sudo -u solr crontab -l
+#
+# # Ensure cron is running
+# sudo service crond start
+# sudo service crond status
