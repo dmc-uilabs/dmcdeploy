@@ -1,5 +1,5 @@
 #!/bin/bash -v
-#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shellâ€™s stderr.
+#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 #sudo yum update -y
 sudo yum install git -y
@@ -66,14 +66,45 @@ fi
 cd ~/dmcdb
 # git pull from master DB to get latest version
 
-psql -U postgres -c "CREATE ROLE $PSQLUSER NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN PASSWORD '$PSQLPASS';"
 
-psql -U postgres -c "CREATE DATABASE $DB WITH OWNER $PSQLUSER;"
 
-./flyway clean migrate info -configFile=conf/core/flyway.conf
 
-# load sample data, including DMDII member organizations
-./flyway migrate info -configFile=conf/data/flyway.conf
+
+
+
+if [[ $deploymentEnv == 'production' ]]
+
+then
+ 
+  #db user password db (location and Port) 
+   flyway.url=jdbc:postgresql://localhost:5432/$DB
+   flyway.user=$PSQLUSER
+   flyway.password=$PSQLPASS
+  
+  ./flyway migrate info -configFile=conf/core/flyway.conf
+ 
+ 
+ 
+ else
+ 
+ #create new DB and role 
+ psql -U postgres -c "CREATE ROLE $PSQLUSER NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN PASSWORD '$PSQLPASS';"
+ psql -U postgres -c "CREATE DATABASE $DB WITH OWNER $PSQLUSER;"
+ 
+ 
+ 
+ ./flyway clean migrate info -configFile=conf/core/flyway.conf
+ # load sample data, including DMDII member organizations
+ ./flyway migrate info -configFile=conf/data/flyway.conf
+ 
+ 
+ 
+ fi
+
+
+
+
+
 
 # Install cron and scripts
 sudo yum install cronie -y
