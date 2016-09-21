@@ -186,6 +186,7 @@ updateDb() {
     echo "Dropping $PSQLDBNAME -- db"
     sudo -u postgres psql -c "DROP DATABASE $PSQLDBNAME"
     echo "Create new DB "
+    psql -U postgres -c "CREATE ROLE $PSQLUSER NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN PASSWORD '$PSQLPASS';"
     psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
     echo "Inserting sample data"
 
