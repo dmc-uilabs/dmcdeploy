@@ -38,7 +38,8 @@ updatedb() {
 
 if [ "$deploymentEnv" = "production" ]; then
     echo expression evaluated as true
- # ./flyway migrate info -configFile=conf/core/flyway.conf
+    ./flyway migrate info -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
+    ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/prod
  else
     echo "Dropping $PSQLDBNAME -- db"
     sudo -u postgres psql -c "DROP DATABASE $PSQLDBNAME"
@@ -49,7 +50,7 @@ if [ "$deploymentEnv" = "production" ]; then
 
  ./flyway clean migrate info -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
  # load sample data, including DMDII member organizations
- ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
+ ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev
     rm -rf /tmp/dmcdb
 fi
 exit
