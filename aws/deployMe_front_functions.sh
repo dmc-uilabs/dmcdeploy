@@ -79,7 +79,7 @@ function frontendUpload {
 }
 
 function setWindowApiUrl {
-  echo "setting the window apiurl -- serverURL is =$serverURL"
+  
   sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
 
 }
