@@ -32,12 +32,12 @@ case $sec1 in [qQ]) exit;; esac
 awsRegion=$sec1
 
 spacer "Development keys for this deployment"
-echo -n "stack Keys { leaving blank will default to -- DMCDriver } [ENTER][q to quit] "
+echo -n "stack Keys { leaving blank will default to -- DMCDriver2 } [ENTER][q to quit] "
 read sec1
 if [ -z "$sec1" ]
   then
-    echo "Setting to default [ DMCDriver ]"
-    sec1="DMCDriver"
+    echo "Setting to default [ DMCDriver2 ]"
+    sec1="DMCDriver2"
 
 fi
 case $sec1 in [qQ]) exit;; esac
@@ -324,7 +324,7 @@ commit_stackMon=$sec3
 
 
  # echo "Will now create a new key pair an place in the ~/keys folder and upload it to aws"
- # # create a new key pair or use DMCDriver
+ # # create a new key pair or use DMCDriver2
  # cd /home/ec2-user/dmcdeploy/devtools
  # mkdir ~/keys/$stackPrefix
  # ./keymaker.sh 1 devStack us-west-2 ~/keys/$stackPrefix $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
@@ -431,7 +431,7 @@ sed -i.bak "s|AWS_UPLOAD_BUCKET_FINAL = \"\"|AWS_UPLOAD_BUCKET_FINAL = \"$AWS_UP
 
  # myip=$(curl http://ident.me/)
  # echo "To download the private key you have just created run the following command to copy it to the local machine of your wish."
- # echo " scp  -i \"DMCDriver.pem\" ec2-user@$myip:$keyPath/$kname ~/Desktop/"
+ # echo " scp  -i \"DMCDriver2.pem\" ec2-user@$myip:$keyPath/$kname ~/Desktop/"
 
 
 echo " The next step is to verify your terraform.tfvars file and execute terraform apply."
