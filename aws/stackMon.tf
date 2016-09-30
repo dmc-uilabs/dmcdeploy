@@ -1,6 +1,6 @@
 
 resource "aws_instance" "stackMon" {
-  instance_type = "m4.large"
+  instance_type = "t2.medium"
 
 
   # Lookup the correct AMI based on the region
@@ -14,7 +14,7 @@ resource "aws_instance" "stackMon" {
  key_name = "${var.key_name_stackMon}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_stackmon.name}"]
+  security_groups = ["${aws_security_group.sg_wide.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables

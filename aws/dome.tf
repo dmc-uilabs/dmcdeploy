@@ -1,6 +1,6 @@
 
 resource "aws_instance" "dome" {
-  instance_type = "m4.large"
+  instance_type = "t2.medium"
   #depends_on = ["aws_instance.activeMq"]
 
   # Lookup the correct AMI based on the region
@@ -14,7 +14,7 @@ resource "aws_instance" "dome" {
  key_name = "${var.key_name_dome}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = ["${aws_security_group.sg_dome.name}"]
+  security_groups = [${aws_security_group.sg_wide.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables

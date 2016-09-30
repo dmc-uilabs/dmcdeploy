@@ -1,7 +1,7 @@
 
 /*
 resource "aws_instance" "git" {
-  instance_type = "m4.large"
+  instance_type = "t2.medium"
   #depends_on = ["aws_instance.rest"]
 
   # Lookup the correct AMI based on the region

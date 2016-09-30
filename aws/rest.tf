@@ -1,7 +1,7 @@
 
 
 resource "aws_instance" "rest" {
-  instance_type = "m4.large"
+  instance_type = "t2.medium"
   depends_on = ["aws_instance.db", "aws_instance.validate"]
 
   # Lookup the correct AMI based on the region
@@ -15,7 +15,7 @@ resource "aws_instance" "rest" {
  key_name = "${var.key_name_rest}"
 
   # Our Security group to allow HTTP and SSH accessing
-  security_groups = ["${aws_security_group.sg_rest.name}"]
+  security_groups = ["${aws_security_group.sg_wide.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   #this is where we set the env variables

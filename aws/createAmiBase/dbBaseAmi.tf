@@ -1,6 +1,6 @@
 
 resource "aws_instance" "dbAmi" {
-  instance_type = "m4.large"
+  instance_type = "t2.medium"
   
   # Lookup the correct AMI based on the region
   # define what aim to launch 
