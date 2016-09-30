@@ -13,7 +13,7 @@ resource "aws_instance" "front" {
  key_name = "${var.key_name_front}"
 
   # Our Security group to allow HTTP and SSH access
-  security_groups = [${aws_security_group.sg_wide.name}"]
+  security_groups = ["${aws_security_group.sg_wide.name}"]
 
   # We run a remote provisioner on the instance after creating it.
   # in this case will be a shell but can be chef
