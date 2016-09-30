@@ -24,11 +24,13 @@ resource "aws_instance" "dome" {
         source = "deployMe_dome.sh"
         destination = "/tmp/script.sh"
 
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_dome}"
-    }
-    }
+
+    connection {
+       host = "${aws_instance.dome.public_ip}"
+       user = "ec2-user"
+       key_file  = "${file("${var.key_full_path_dome}")}"
+       }
+  }
 
 
    provisioner "remote-exec" {
@@ -45,10 +47,11 @@ resource "aws_instance" "dome" {
         "bash -x script.sh 2>&1 | tee out.log"
         ]
 
-      connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_dome}"
-    }
+        connection {
+           host = "${aws_instance.dome.public_ip}"
+           user = "ec2-user"
+           key_file  = "${file("${var.key_full_path_dome}")}"
+        }
 }
 
 

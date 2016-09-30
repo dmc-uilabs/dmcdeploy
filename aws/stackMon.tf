@@ -24,10 +24,11 @@ resource "aws_instance" "stackMon" {
         source = "deployMe_stackMon.sh"
         destination = "/tmp/script.sh"
 
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_stackMon}"
-    }
+        connection {
+          host = "${aws_instance.stackMon.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_stackMon}")}"
+       }
     }
 
 
@@ -46,10 +47,11 @@ resource "aws_instance" "stackMon" {
         "bash -x script.sh 2>&1 | tee out.log"
         ]
 
-      connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_stackMon}"
-    }
+        connection {
+          host = "${aws_instance.stackMon.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_stackMon}")}"
+       }
 }
 
 

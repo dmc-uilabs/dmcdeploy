@@ -28,10 +28,12 @@ resource "aws_instance" "activeMq" {
         source = "deployMe_active.sh"
         destination = "/tmp/script.sh"
 
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_activeMq}"
-    }
+
+          connection {
+             host = "${aws_instance.activeMq.public_ip}"
+             user = "ec2-user"
+             key_file  = "${file("${var.key_full_path_activeMq}")}"
+       }
     }
 
 
@@ -48,10 +50,11 @@ resource "aws_instance" "activeMq" {
         "bash -x script.sh 2>&1 | tee out.log"
         ]
 
-      connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_activeMq}"
-    }
+        connection {
+           host = "${aws_instance.activeMq.public_ip}"
+           user = "ec2-user"
+           key_file  = "${file("${var.key_full_path_activeMq}")}"
+     }
 }
 
 

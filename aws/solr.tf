@@ -27,10 +27,11 @@ resource "aws_instance" "solr" {
         source = "deployMe_solr.sh"
         destination = "/tmp/script.sh"
 
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_solr}"
-    }
+        connection {
+          host = "${aws_instance.solr.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_solr}")}"
+       }
     }
 
 
@@ -46,10 +47,11 @@ resource "aws_instance" "solr" {
         "bash -x script.sh 2>&1 | tee out.log"
         ]
 
-      connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_solr}"
-    }
+        connection {
+          host = "${aws_instance.solr.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_solr}")}"
+       }
 }
 
 

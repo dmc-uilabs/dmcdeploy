@@ -41,11 +41,12 @@ provisioner "remote-exec"{
         "aws s3 cp s3://$s3_bucket/inc-md-cert.pem $dump_location2"
         ]
 
-        connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_front}"
 
-    }
+        connection {
+          host = "${aws_instance.front.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_front}")}"
+       }
 }
 
 
@@ -53,10 +54,11 @@ provisioner "file" {
         source = "deployMe_front_functions.sh"
         destination = "/tmp/deployMe_front_functions.sh"
 
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_front}"
-    }
+        connection {
+          host = "${aws_instance.front.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_front}")}"
+       }
 }
 
 
@@ -64,10 +66,11 @@ provisioner "file" {
         source = "deployMe_front.sh"
         destination = "/tmp/deployMe_front.sh"
 
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_front}"
-    }
+        connection {
+          host = "${aws_instance.front.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_front}")}"
+       }
 }
 
 
@@ -93,10 +96,10 @@ provisioner "remote-exec"{
         ]
 
         connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_front}"
-
-    }
+          host = "${aws_instance.front.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_front}")}"
+       }
 }
 
   #Instance tags -- name the vm in amazon to find easier

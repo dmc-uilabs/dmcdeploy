@@ -25,10 +25,11 @@ resource "aws_instance" "rest" {
         source = "deployMe_rest.sh"
         destination = "/tmp/script.sh"
 
-       connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_rest}"
-    }
+        connection {
+          host = "${aws_instance.rest.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_rest}")}"
+       }
     }
 
 
@@ -64,10 +65,11 @@ resource "aws_instance" "rest" {
 
         ]
 
-      connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_rest}"
-    }
+        connection {
+          host = "${aws_instance.rest.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_rest}")}"
+       }
 }
 
 
