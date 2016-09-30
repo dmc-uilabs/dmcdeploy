@@ -24,8 +24,9 @@ resource "aws_instance" "db" {
         destination = "/tmp/script.sh"
 
        connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_db}"
+          host = "${aws_instance.db.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_db}")}"
     }
     }
 
@@ -46,10 +47,11 @@ resource "aws_instance" "db" {
 
         ]
 
-      connection {
-        user = "ec2-user"
-        key_file  = "${var.key_full_path_db}"
-    }
+        connection {
+           host = "${aws_instance.db.public_ip}"
+           user = "ec2-user"
+           key_file  = "${file("${var.key_full_path_db}")}"
+     }
 }
 
 
