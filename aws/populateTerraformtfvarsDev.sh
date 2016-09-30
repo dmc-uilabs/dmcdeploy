@@ -352,14 +352,14 @@ commit_stackMon=$sec3
 
 
  sed -i.bak "s|key_name_front = \"\"|key_name_front = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_front = \"\"|key_full_path_front = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_front = \"\"|key_full_path_front = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_rest = \"\"|key_name_rest = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_rest = \"\"|key_full_path_rest = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_rest = \"\"|key_full_path_rest = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
 
 
  sed -i.bak "s|key_name_db = \"\"|key_name_db = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_db = \"\"|key_full_path_db = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_db = \"\"|key_full_path_db = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
 
 
  sed -i.bak "s|PSQLUSER = \"\"|PSQLUSER = \"$pg_user\"|" terraform.tfvars
@@ -370,7 +370,7 @@ commit_stackMon=$sec3
 
 
  sed -i.bak "s|key_name_solr = \"\"|key_name_solr = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_solr = \"\"|key_full_path_solr = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_solr = \"\"|key_full_path_solr = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
  sed -i.bak "s|solrDbPort = \"\"|solrDbPort = \"$solrDbPort\"|" terraform.tfvars
 
 
@@ -378,7 +378,7 @@ commit_stackMon=$sec3
 
 
  sed -i.bak "s|key_name_activeMq = \"\"|key_name_activeMq = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_activeMq = \"\"|key_full_path_activeMq = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_activeMq = \"\"|key_full_path_activeMq = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
  sed -i.bak "s|activeMqUserPass = \"\"|activeMqUserPass = \"$activeMqUserPass\"|" terraform.tfvars
  sed -i.bak "s|activeMqRootPass = \"\"|activeMqRootPass = \"$activeMqRootPass\"|" terraform.tfvars
  sed -i.bak "s|ActiveMQ_Port = \"\"|ActiveMQ_Port = \"$ActiveMQ_Port\"|" terraform.tfvars
@@ -386,16 +386,16 @@ commit_stackMon=$sec3
  sed -i.bak "s|ActiveMQ_Password = \"\"|ActiveMQ_Password = \"$ActiveMQ_Password\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_stackMon = \"\"|key_name_stackMon = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_stackMon = \"\"|key_full_path_stackMon = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_stackMon = \"\"|key_full_path_stackMon = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
 
  sed -i.bak "s|key_name_dome = \"\"|key_name_dome = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_dome = \"\"|key_full_path_dome = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_dome = \"\"|key_full_path_dome = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
  sed -i.bak "s|dome_server_user = \"\"|dome_server_user = \"$dome_server_user\"|" terraform.tfvars
  sed -i.bak "s|dome_server_pw = \"\"|dome_server_pw = \"$dome_server_pw\"|" terraform.tfvars
 
 
  sed -i.bak "s|key_name_validate = \"\"|key_name_validate = \"$kname\"|" terraform.tfvars
- sed -i.bak "s|key_full_path_validate = \"\"|key_full_path_validate = \"$keyPath/$kname.pem\"|" terraform.tfvars
+ sed -i.bak "s|key_full_path_validate = \"\"|key_full_path_validate = \"\${file(\"$keyPath/$kname.pem\")\"|" terraform.tfvars
 
 
 
