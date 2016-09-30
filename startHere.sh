@@ -96,8 +96,8 @@ case $cloud
               terraform apply
 
               echo "Link the Stack Machines Together"
-              ./linkMachines.sh
-            
+              # ./linkMachines.sh
+
               echo "Lastly you must add your infrastructure to the appropriate LOAD BALANCER -- ex. ben-web in aws-west-2"
 
               echo "Great Job Pal. "
