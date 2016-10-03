@@ -1,7 +1,7 @@
 #!/bin/bash
 #importing devUtil
 source ./devUtil.sh
-
+git pull
 echo "The following script will help you dmcdeploy and manage your development stack."
 echo "###############################################################################################"
 
