@@ -29,7 +29,8 @@ cd /tmp/dmcactivemq
 mv * ..
 
 sudo useradd -m activemq -d /opt/activemq
-sudo chown -R activemq:ec2-user /opt/activemq
+sudo chown -R activemq:ec2-user /opt/apache-activemq-5.13.2/
+
 
 sudo cp /opt/activemq/bin/env /etc/default/activemq
 sudo sed -i '~s/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /etc/default/activemq
