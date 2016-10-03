@@ -2,7 +2,7 @@
 
 resource "aws_instance" "rest" {
   instance_type = "t2.medium"
-  depends_on = ["aws_instance.db", "aws_instance.validate"]
+  depends_on = ["aws_instance.db", "aws_instance.validate","aws_instance.activeMq"]
 
   # Lookup the correct AMI based on the region
   # we specified
