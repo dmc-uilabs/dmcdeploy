@@ -28,7 +28,9 @@ fi
 cd /tmp/dmcactivemq
 mv * ..
 
-sudo useradd -m activemq -d /srv/activemq
+sudo useradd -m activemq -d /opt/activemq
+sudo chown -R activemq:users /opt/activemq
+
 sudo cp /opt/activemq/bin/env /etc/default/activemq
 sudo sed -i '~s/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /etc/default/activemq
 sudo chmod 644 /etc/default/activemq
