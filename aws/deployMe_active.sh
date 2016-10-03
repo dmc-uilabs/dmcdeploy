@@ -30,7 +30,7 @@ mv * ..
 
 sudo useradd -m activemq -d /srv/activemq
 sudo cp /opt/activemq/bin/env /etc/default/activemq
-suod sed -i '~s/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /etc/default/activemq
+sudo sed -i '~s/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /etc/default/activemq
 sudo chmod 644 /etc/default/activemq
 
 sudo ln -snf  /opt/activemq/bin/activemq /etc/init.d/activemq
@@ -53,3 +53,4 @@ sudo service activemq start
 echo "started activeMq"
 sudo service --status-all | grep activemq
 echo "----listed-------"
+sudo yum install cronie -y
