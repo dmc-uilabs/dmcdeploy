@@ -71,7 +71,10 @@ read sec3
 if [ -z "$sec3" ]
   then
     echo "Setting to default [ hot ]"
-    sec3='hot'
+    cd ~/dmc/frontend
+    git pull
+    sec3=$(git log --pretty=format:'%H' -n 1)
+    cd -
 fi
 case $sec3 in [qQ]) exit;; esac
 commit_front=$sec3
@@ -86,7 +89,11 @@ read sec4
 if [ -z "$sec4" ]
   then
     echo "Setting to default [ hot ]"
-    sec4='hot'
+    cd ~/dmc/restservices
+    git pull
+    sec4=$(git log --pretty=format:'%H' -n 1)
+    cd -
+ 
 fi
 case $sec4 in [qQ]) exit;; esac
 commit_rest=$sec4
@@ -97,6 +104,24 @@ commit_rest=$sec4
 
 
 spacer "DB machine settings"
+
+echo -n "commit_db { leaving blank will default to deploying from the latest successful build } [ENTER][q to quit] "
+read sec4
+if [ -z "$sec4" ]
+  then
+    echo "Setting to default [ hot ]"
+    cd ~/dmc/dmcdb
+    git pull
+    sec4=$(git log --pretty=format:'%H' -n 1)
+    cd -
+ 
+fi
+case $sec4 in [qQ]) exit;; esac
+commit_db=$sec4
+
+
+
+
 echo -n "Postgress User { leaving blank will default gforge } [ENTER][q to quit] "
 read sec4
 if [ -z "$sec4" ]
@@ -186,7 +211,11 @@ read sec4
 if [ -z "$sec4" ]
   then
     echo "Setting to default [ hot ]"
-    sec4='hot'
+    cd ~/dmc/dmcactivemq
+    git pull
+    sec4=$(git log --pretty=format:'%H' -n 1)
+    cd -
+
 fi
 case $sec4 in [qQ]) exit;; esac
 commit_activeMq=$sec4
@@ -300,7 +329,11 @@ read sec3
 if [ -z "$sec3" ]
   then
     echo "Setting to default [ hot ]"
-    sec3='hot'
+    cd ~/dmc/validation
+    git pull
+    sec3=$(git log --pretty=format:'%H' -n 1)
+    cd -
+
 fi
 case $sec3 in [qQ]) exit;; esac
 commit_validate=$sec3
@@ -407,8 +440,12 @@ commit_stackMon=$sec3
 
  sed -i.bak "s|serverURL = \"\"|serverURL = \"$serverURL\"|" terraform.tfvars
 
+
+
  sed -i.bak "s|commit_rest = \"\"|commit_rest = \"$commit_rest\"|" terraform.tfvars
  sed -i.bak "s|commit_front = \"\"|commit_front = \"$commit_front\"|" terraform.tfvars
+ sed -i.bak "s|commit_db = \"\"|commit_db = \"$commit_db\"|" terraform.tfvars
+
  sed -i.bak "s|commit_dome = \"\"|commit_dome = \"$commit_dome\"|" terraform.tfvars
  sed -i.bak "s|commit_activeMq = \"\"|commit_activeMq = \"$commit_activeMq\"|" terraform.tfvars
  sed -i.bak "s|commit_validate = \"\"|commit_validate = \"$commit_validate\"|" terraform.tfvars
