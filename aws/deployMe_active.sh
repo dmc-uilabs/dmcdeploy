@@ -28,10 +28,18 @@ fi
 cd /tmp/dmcactivemq
 mv * ..
 
+sudo useradd -m activemq -d /srv/activemq
+sudo cp /opt/activemq/bin/env /etc/default/activemq
+suod sed -i '~s/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /etc/default/activemq
+sudo chmod 644 /etc/default/activemq
+
+sudo ln -snf  /opt/activemq/bin/activemq /etc/init.d/activemq
+sudo chkconfig --add activemq
+
 # Copy our custom startup script to /etc/init.d and set appropriate permissions
 # this makes the command "service activemq start|stop|restart" possible
-sudo cp /tmp/activemq /etc/init.d/.
-sudo chmod 755 /etc/init.d/activemq
+# sudo cp /tmp/activemq /etc/init.d/.
+# sudo chmod 755 /etc/init.d/activemq
 # Configure system to start the activemq service automatically
 sudo chkconfig activemq on
 
@@ -43,5 +51,5 @@ sudo echo "user: $activeMqUserPass, user" >> /opt/activemq/conf/jetty-realm.prop
 sudo service activemq start
 /opt/apache-activemq-5.13.2/bin/activemq start
 echo "started activeMq"
-sudo service list | grep activemq
+sudo --status-all | grep activemq
 echo "----listed-------"
