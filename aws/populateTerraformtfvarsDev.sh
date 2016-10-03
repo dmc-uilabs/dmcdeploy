@@ -210,10 +210,7 @@ read sec4
 if [ -z "$sec4" ]
   then
     echo "Setting to default [ hot ]"
-    cd ~/dmc/dmcactivemq
-    git pull
-    sec4=$(git log --pretty=format:'%H' -n 1)
-    cd -
+    sec4='hot'
 
 fi
 case $sec4 in [qQ]) exit;; esac
@@ -328,10 +325,7 @@ read sec3
 if [ -z "$sec3" ]
   then
     echo "Setting to default [ hot ]"
-    cd ~/dmc/validation
-    git pull
-    sec3=$(git log --pretty=format:'%H' -n 1)
-    cd -
+    sec4='hot'
 
 fi
 case $sec3 in [qQ]) exit;; esac
