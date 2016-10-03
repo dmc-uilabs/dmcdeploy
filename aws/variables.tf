@@ -19,8 +19,15 @@ variable "commit_front" {
 
 variable "key_name_rest" {}
 
+variable "commit_front" {
+  default = "hot"
+}
+
 
 variable "key_name_db" {}
+variable "commit_db" {
+  default = "hot"
+}
 
 
 variable "key_name_solr" {}
@@ -57,12 +64,6 @@ variable "key_full_path_validate" {}
 
 
 
-variable "commit_rest" {
-  default = "hot"
-}
-variable "commit_db" {
-  default = "hot"
-}
 
 variable "commit_dome" {
   default = "hot"
