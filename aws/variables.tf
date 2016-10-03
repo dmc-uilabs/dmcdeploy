@@ -9,6 +9,11 @@ variable "deploymentEnv"{
   default = "development"
 }
 
+
+
+
+
+
 variable "key_name_front" {}
 variable "key_full_path_front" {}
 variable "commit_front" {
@@ -18,16 +23,26 @@ variable "commit_front" {
 
 
 variable "key_name_rest" {}
+variable "key_full_path_rest" {}
 
-variable "commit_front" {
-  default = "hot"
-}
+
 
 
 variable "key_name_db" {}
+
+variable "key_full_path_db" {}
+
 variable "commit_db" {
   default = "hot"
 }
+variable "PSQLUSER" {}
+variable "PSQLPASS" {}
+variable "PSQLDBNAME" {}
+
+
+
+
+
 
 
 variable "key_name_solr" {}
@@ -53,8 +68,8 @@ variable "key_name_activeMq" {}
 variable "key_name_validate" {}
 
 
-variable "key_full_path_rest" {}
-variable "key_full_path_db" {}
+
+
 
 variable "key_full_path_dome" {}
 variable "key_full_path_stackMon" {}
@@ -154,9 +169,7 @@ variable "stackPrefix" {}
 
 
 
-variable "PSQLUSER" {}
-variable "PSQLPASS" {}
-variable "PSQLDBNAME" {}
+
 
 
 variable "release" {}
