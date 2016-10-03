@@ -102,6 +102,43 @@ provisioner "remote-exec"{
        }
 }
 
+
+provisioner "remote-exec"{
+
+        inline = [
+        "echo 'entering activemq'",
+        "sudo service activemq start",
+        "netstat -an|grep 61616",
+        "echo 'leaving activemq'"
+        ]
+
+        connection {
+          host = "${aws_instance.activeMq.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_activeMq}")}"
+       }
+}
+
+provisioner "remote-exec"{
+
+        inline = [
+        "echo 'entering rest'",
+        "sudo service tomcat7 restart",
+        "echo 'leaving rest'"
+        ]
+
+        connection {
+          host = "${aws_instance.rest.public_ip}"
+          user = "ec2-user"
+          key_file  = "${file("${var.key_full_path_rest}")}"
+       }
+}
+
+
+
+
+
+
   #Instance tags -- name the vm in amazon to find easier
   tags {
     Name = "${var.stackPrefix}DMC-front"

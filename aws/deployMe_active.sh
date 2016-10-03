@@ -51,5 +51,5 @@ sudo echo "user: $activeMqUserPass, user" >> /opt/activemq/conf/jetty-realm.prop
 sudo service activemq start
 /opt/apache-activemq-5.13.2/bin/activemq start
 echo "started activeMq"
-sudo --status-all | grep activemq
+sudo service --status-all | grep activemq
 echo "----listed-------"
