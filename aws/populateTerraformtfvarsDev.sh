@@ -93,7 +93,7 @@ if [ -z "$sec4" ]
     git pull
     sec4=$(git log --pretty=format:'%H' -n 1)
     cd -
- 
+
 fi
 case $sec4 in [qQ]) exit;; esac
 commit_rest=$sec4
@@ -110,11 +110,8 @@ read sec4
 if [ -z "$sec4" ]
   then
     echo "Setting to default [ hot ]"
-    cd ~/dmc/dmcdb
-    git pull
-    sec4=$(git log --pretty=format:'%H' -n 1)
-    cd -
- 
+  sec4="hot"
+
 fi
 case $sec4 in [qQ]) exit;; esac
 commit_db=$sec4
@@ -153,6 +150,8 @@ if [ -z "$sec4" ]
 fi
 case $sec4 in [qQ]) exit;; esac
 pg_db_name=$sec4
+
+
 
 
 spacer "SolR machine settings"
