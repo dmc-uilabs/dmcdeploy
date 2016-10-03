@@ -24,9 +24,9 @@ sudo chown tomcat /etc/tomcat7/tomcat7.conf
   			echo "pull from S3 build from commit -- $commit_rest "
   			if [[ $use_swagger == '0' ]]
 					then
-					    wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$commit_rest-dmc-site-services-0.1.0.war
+					    wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/no-$commit_rest-dmc-site-services-0.1.0.war
 					else
-						wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/$commit_rest-dmc-site-services-0.1.0-swagger.war
+						wget https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DMC_SITE_SERVICES_WAR/no-$commit_rest-dmc-site-services-0.1.0.war
 			  fi
 		fi
 cp *.war rest.war
