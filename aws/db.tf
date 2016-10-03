@@ -37,7 +37,7 @@ resource "aws_instance" "db" {
         "echo 'export PSQLUSER=${var.PSQLUSER}' >> /tmp/profile",
         "echo 'export s3_bucket=${var.s3_db_backups}' >> /tmp/profile",
         "echo 'export PSQLPASS=${var.PSQLPASS}' >> /tmp/profile",
-        "echo 'export DB=${var.PSQLDBNAME}' >> /tmp/profile",
+        "echo 'export PSQLDBNAME=${var.PSQLDBNAME}' >> /tmp/profile",
         "echo 'export deploymentEnv=${var.deploymentEnv}' >> /tmp/profile",
         "sudo bash -c 'cat /tmp/profile >> /etc/profile' ",
         "source /etc/profile" ,
