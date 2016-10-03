@@ -39,9 +39,6 @@ AWS_UPLOAD_REGION = ""
 # keys for the rest machine
 key_name_rest = ""
 key_full_path_rest = ""
-
-# which comit to deploy on the rest machine
-# if commit_rest = '' -- the latest available build will be selected
 commit_rest = ""
 
 
@@ -49,6 +46,7 @@ commit_rest = ""
 # keys to the db machine
 key_name_db = ""
 key_full_path_db = ""
+commit_db = ""
 
 # Postgress credentials
 PSQLUSER = ""
