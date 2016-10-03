@@ -24,6 +24,9 @@ variable "commit_front" {
 
 variable "key_name_rest" {}
 variable "key_full_path_rest" {}
+variable "commit_rest" {
+  default = "hot"
+}
 
 
 
