@@ -41,3 +41,4 @@ sudo echo "admin: $activeMqRootPass, admin" >> /opt/activemq/conf/jetty-realm.pr
 sudo echo "user: $activeMqUserPass, user" >> /opt/activemq/conf/jetty-realm.properties
 #start ActiveMQ
 sudo service activemq start
+/opt/apache-activemq-5.13.2/bin/activemq start
