@@ -1,5 +1,5 @@
 #!/bin/bash
-#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shellâ€™s stderr.
+#anything printed on stdout and stderr to be sent to the syslog1, as well as being echoed back to the original shell’s stderr.
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 
@@ -17,6 +17,7 @@ do
     echo "waiting"
     sleep 1
 done
+sudo service tomcat7 stop
 sudo cp /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties .
 sudo chown ec2-user config.properties
 
@@ -26,7 +27,7 @@ echo "dome.server.pw=$dome_server_pw" >> config.properties
 sudo chown root config.properties
 sudo mv config.properties /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties
 
-sudo service tomcat7 restart
+sudo service tomcat7 start
 
 
 function sanityTest {
