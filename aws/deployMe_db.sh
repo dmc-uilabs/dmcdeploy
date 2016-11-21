@@ -68,11 +68,6 @@ cd ~/dmcdb
 
 
 
-
-
-
-
-
 if [ "$deploymentEnv" = "production" ]; then
     echo expression evaluated as true
     ./flyway migrate info -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
@@ -85,10 +80,9 @@ if [ "$deploymentEnv" = "production" ]; then
     psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
     echo "Inserting sample data"
 
- ./flyway clean migrate info -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
- # load sample data, including DMDII member organizations
- ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev
-    rm -rf /tmp/dmcdb
+		./flyway  info migrate -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/gforge  -user=gforge -password=gforge
+	  ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev2
+
 fi
 
 
