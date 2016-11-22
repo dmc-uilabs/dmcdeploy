@@ -80,8 +80,8 @@ if [ "$deploymentEnv" = "production" ]; then
     psql -U postgres -c "CREATE DATABASE $PSQLDBNAME WITH OWNER $PSQLUSER;"
     echo "Inserting sample data"
 
-		./flyway  info migrate -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/gforge  -user=gforge -password=gforge
-	  ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev2
+	./flyway  info migrate -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS
+	./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$PSQLDBNAME  -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev2
 
 fi
 
