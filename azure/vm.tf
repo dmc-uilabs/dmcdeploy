@@ -1,3 +1,6 @@
+/*
+
+
 resource "azurerm_resource_group" "tfResourceGroup" {
     name = "acctestrg"
     location = "West US"
@@ -60,3 +63,4 @@ resource "azurerm_storage_container" "tfStor1Cont" {
     storage_account_name = "${azurerm_storage_account.tfStor1.name}"
     container_access_type = "private"
 }
+*/
