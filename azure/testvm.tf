@@ -1,3 +1,5 @@
+/*
+
 resource "azurerm_virtual_machine" "test" {
     name = "acctvm"
     location = "West US"
@@ -33,3 +35,4 @@ resource "azurerm_virtual_machine" "test" {
         environment = "staging"
     }
 }
+*/
