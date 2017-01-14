@@ -1,19 +1,17 @@
-/*
-
 resource "azurerm_public_ip" "solrPubIp" {
-    name = "${var.stackPrefix}ip"
+    name = "${var.stackPrefix}solrpubip"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
     public_ip_address_allocation = "static"
 }
 
 resource "azurerm_network_interface" "solrInt" {
-    name = "${var.stackPrefix}ni"
+    name = "${var.stackPrefix}solrni"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
 
     ip_configuration {
-        name = "${var.stackPrefix}IntNetIntIp"
+        name = "${var.stackPrefix}SolrIntNetIntIp"
         subnet_id = "${azurerm_subnet.resource.id}"
         private_ip_address_allocation = "dynamic"
         public_ip_address_id = "${azurerm_public_ip.solrPubIp.id}"
@@ -60,5 +58,3 @@ resource "azurerm_virtual_machine" "solrvm" {
     }
 
 }
-
-*/
