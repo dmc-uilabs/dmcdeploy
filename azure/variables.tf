@@ -41,6 +41,8 @@ variable "psqlPort" {}
 
 variable "activeMqRootPass" {}
 variable "activeMqUserPass" {}
+variable "activeMqPort" {}
+
 
 
 variable "mode" {}
