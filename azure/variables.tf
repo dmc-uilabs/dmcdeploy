@@ -56,6 +56,17 @@ variable redHat {
   }
 }
 
+
+variable ubuntu {
+  type = "map"
+  default = {
+    osvendor = "Canonical"
+    osname = "UbuntuServer"
+    osrelease = "16.04.0-LTS"
+    osversion = "latest"
+  }
+}
+
 variable "networkRange" {
   default = "10.0.0.0/16"
 }
