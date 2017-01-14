@@ -5,9 +5,7 @@ variable "tenantId" {}
 
 
 
-variable "azureRegion" {
-  default = "West US 2"
-}
+variable "azureRegion" {}
 
 
 
@@ -16,15 +14,13 @@ variable "azureRegion" {
 variable "stackPrefix" {
   default = "alex"
 }
-variable "vmSize" {
-  default = "Standard_DS2_V2"
-}
+variable "vmSize" {}
 
 
 
-variable "dmcUser" {
-  default = "dmcAdmin"
-}
+
+variable "dmcUser" {}
+
 variable "dmcPass" {
   default = "Password1234!"
 }
@@ -32,6 +28,19 @@ variable "dmcPass" {
 variable "sshKeyPath" {}
 variable "sshKeyFilePri" {}
 variable "sshKeyFilePub" {}
+
+
+
+
+variable "psqlUser" {}
+variable "psqlPass" {}
+variable "psqlDb" {}
+variable "psqlPort" {}
+
+
+
+variable "mode" {}
+
 
 
 
