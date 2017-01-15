@@ -49,6 +49,14 @@ variable "mode" {}
 
 
 
+variable "awsUploadSec" {}
+variable "awsUploadKey" {}
+variable "awsUploadBucket" {}
+
+
+variable "awsUploadVerBucket" {}
+
+variable "solrPort" {}
 
 
 
