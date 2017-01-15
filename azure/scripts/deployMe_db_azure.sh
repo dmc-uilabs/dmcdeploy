@@ -1,4 +1,4 @@
-
+#!/bin/bash -v
 
 source /etc/profile.d/dmc.sh
 
