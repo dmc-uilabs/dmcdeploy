@@ -8,13 +8,14 @@ variable "tenantId" {}
 variable "azureRegion" {}
 
 
-
+variable "serverURL" {}
 
 
 variable "stackPrefix" {
   default = "alex"
 }
 variable "vmSize" {}
+variable "staticAssets" {}
 
 
 
@@ -46,12 +47,17 @@ variable "activeMqPort" {}
 
 
 variable "mode" {}
+#available versions 0.1.1
+variable "release" {}
 
 
 
 variable "awsUploadSec" {}
 variable "awsUploadKey" {}
 variable "awsUploadBucket" {}
+
+variable "awsRestKey" {}
+variable "awsRestSecret" {}
 
 
 variable "awsUploadVerBucket" {}
