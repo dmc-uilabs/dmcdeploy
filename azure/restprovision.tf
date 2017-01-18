@@ -36,6 +36,7 @@ resource "null_resource" "restProvision" {
         "echo S3DestBucket=${var.awsUploadVerBucket} | sudo sudo tee -a /etc/tomcat/tomcat.conf",
         "echo S3AccessKey=${var.awsUploadKey} | sudo sudo tee -a /etc/tomcat/tomcat.conf",
         "echo S3SecretKey=${var.awsUploadSec} | sudo sudo tee -a /etc/tomcat/tomcat.conf",
+        "echo release=${var.release} | sudo sudo tee -a /etc/profile.d/dmc.sh",
 	      "echo solrDbDns=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
 	      "echo SOLR_BASE_URL=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
         "chmod +x /tmp/script.sh",
