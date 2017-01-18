@@ -42,7 +42,7 @@ echo "Inserting sample data"
 # load sample data, including DMDII member organizations
 ./flyway migrate info -configFile=conf/core/flyway.conf -url=jdbc:postgresql://localhost:5432/$DB  -user=$PSQLUSER -password=$PSQLPASS
 #Load sample database
- ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$DB -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev2
+./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$DB -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev2
 cd /tmp
 rm -rf /tmp/dmcdb
 sudo systemctl stop firewalld
