@@ -1,15 +1,14 @@
 resource "null_resource" "domeProvision" {
-  depends_on = ["null_resource.activemqProvision"]
+  depends_on = ["azurerm_virtual_machine.dome","null_resource.activemqProvision"]
   provisioner "remote-exec" {
        inline = [
-        "sudo apt-get update -y && sudo apt-get upgrade -y",
-        "sudo apt-get -y install wget tomcat7 openjdk-8-jdk",
-        "cd /tmp",
+        "sudo apt-get update",
+        "sudo apt-get -y install wget default-jdk tomcat7",
+        "sudo service tomcat7 stop",
         "sudo rm *.war",
-        "echo one",
+        "cd /var/lib/tomcat7/webapps/",
         "sudo wget --quiet https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DOME_WAR/DOMEApiServicesV7.war",
         "echo two",
-        "sudo cp /tmp/DOMEApiServicesV7.war /var/lib/tomcat7/webapps",
         "sudo service tomcat7 start",
         "sleep 10",
         "echo end",
