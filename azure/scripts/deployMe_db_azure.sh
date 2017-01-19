@@ -44,7 +44,7 @@ echo "Inserting sample data"
 #Load sample database
 ./flyway migrate info -configFile=conf/data/flyway.conf -url=jdbc:postgresql://localhost:5432/$DB -user=$PSQLUSER -password=$PSQLPASS -locations=filesystem:./sql/data/dev2
 cd /tmp
-rm -rf /tmp/dmcdb
+# rm -rf /tmp/dmcdb
 sudo systemctl stop firewalld
 sudo systemctl disable firewalld
 sudo systemctl restart postgresql-9.4.service
