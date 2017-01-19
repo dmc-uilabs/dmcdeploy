@@ -1,28 +1,28 @@
-resource "azurerm_public_ip" "dbPubIp" {
-    name = "${var.stackPrefix}dbpubip"
+resource "azurerm_public_ip" "activePubIp" {
+    name = "${var.stackPrefix}activepubip"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
     public_ip_address_allocation = "static"
 }
 
-resource "azurerm_network_interface" "dbInt" {
-    name = "${var.stackPrefix}dbni"
+resource "azurerm_network_interface" "activeInt" {
+    name = "${var.stackPrefix}activeni"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
 
     ip_configuration {
-        name = "${var.stackPrefix}DbIntNetIntIp"
+        name = "${var.stackPrefix}ActiveIntNetIntIp"
         subnet_id = "${azurerm_subnet.resource.id}"
         private_ip_address_allocation = "dynamic"
-        public_ip_address_id = "${azurerm_public_ip.dbPubIp.id}"
+        public_ip_address_id = "${azurerm_public_ip.activePubIp.id}"
     }
 }
 
-resource "azurerm_virtual_machine" "db" {
-    name = "dbVm"
+resource "azurerm_virtual_machine" "active" {
+    name = "activeVm"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
-    network_interface_ids = ["${azurerm_network_interface.dbInt.id}"]
+    network_interface_ids = ["${azurerm_network_interface.activeInt.id}"]
     vm_size = "${var.vmSize}"
     delete_data_disks_on_termination = "true"
     delete_os_disk_on_termination = "true"
@@ -34,10 +34,9 @@ resource "azurerm_virtual_machine" "db" {
         version = "${var.redHat["osversion"]}"
     }
 
-
     storage_os_disk {
-        name = "dbOsDisk"
-        vhd_uri = "${azurerm_storage_account.resource.primary_blob_endpoint}${azurerm_storage_container.resource.name}/dbOsDisk.vhd"
+        name = "activeOsDisk"
+        vhd_uri = "${azurerm_storage_account.resource.primary_blob_endpoint}${azurerm_storage_container.resource.name}/activeOsDisk.vhd"
         caching = "ReadWrite"
         create_option = "FromImage"
     }
