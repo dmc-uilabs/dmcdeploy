@@ -3,20 +3,16 @@ resource "null_resource" "domeProvision" {
   provisioner "remote-exec" {
        inline = [
         "sudo apt-get update",
-        "sudo apt-get -y install wget default-jdk tomcat7",
+        "sudo apt-get -y install wget default-jdk tomcat7 unzip zip",
         "sudo service tomcat7 stop",
         "sudo rm *.war",
         "cd /var/lib/tomcat7/webapps/",
         "sudo wget --quiet https://s3-us-west-2.amazonaws.com/dmc-dev-deploy/DOME_WAR/DOMEApiServicesV7.war",
-        "echo two",
-        "sudo service tomcat7 start",
-        "sleep 10",
-        "echo end",
-        "sudo service tomcat7 stop",
-        "echo queue=tcp://${azurerm_network_interface.activeInt.private_ip_address}:61616 | sudo tee -a /var/lib/tomcat7/webapps/DOMEApiServicesV7/WEB-INF/classes/config/config.properties",
-        "sudo mv /var/lib/tomcat7/webapps/DOMEApiServicesV7.war /tmp",
+	"sudo unzip DOMEApiServicesV7.war WEB-INF/classes/config/config.properties",
+        "sudo echo queue=tcp://${azurerm_network_interface.activeInt.private_ip_address}:61616 | sudo tee -a /var/lib/tomcat7/webapps/WEB-INF/classes/config/config.properties",
+	"sudo zip --update DOMEApiServicesV7.war WEB-INF/classes/config/config.properties",
+	"sudo rm -rf WEB-INF",
         "sudo service tomcat7 start"
-
        ]
 
        connection {

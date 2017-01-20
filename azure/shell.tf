@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "resource" {
-    name = "${var.stackPrefix}rg"
+    name = "${var.stackPrefix}v${var.release}_rg"
     location = "${var.azureRegion}"
 }
 
@@ -18,7 +18,6 @@ resource "azurerm_storage_account" "resource" {
     lifecycle {
         create_before_destroy = true
     }
-
 }
 
 resource "azurerm_storage_container" "resource" {
@@ -35,5 +34,5 @@ resource "azurerm_subnet" "resource" {
     name = "${var.stackPrefix}sn"
     resource_group_name = "${azurerm_resource_group.resource.name}"
     virtual_network_name = "${azurerm_virtual_network.resource.name}"
-    address_prefix = "10.0.2.0/24"
+    address_prefix = "${var.subnetRange}"
 }
