@@ -26,6 +26,13 @@ sudo su -c "echo \"ProxyPass /rest/verify "\!" \" >>  /etc/httpd/conf/httpd.conf
 
 #this section allows explicit mappings for endpoints
 sudo su -c "echo \"ProxyPass /rest/companies ajp://$restIp:8009/rest/companies \" >>  /etc/httpd/conf/httpd.conf"
+sudo su -c "echo \"ProxyPass /rest/accountNotificationCategories ajp://$restIp:8009/rest/accountNotificationCategories \" >>  /etc/httpd/conf/httpd.conf"
+sudo su -c "echo \"ProxyPass /rest/account-notification-settings/ ajp://$restIp:8009/rest/account-notification-settings/ \" >>  /etc/httpd/conf/httpd.conf"
+sudo su -c "echo \"ProxyPass /rest/account_servers ajp://$restIp:8009/rest/account_servers \" >>  /etc/httpd/conf/httpd.conf"
+sudo su -c "echo \"ProxyPass /rest/accounts/ ajp://$restIp:8009/rest/accounts/ \" >>  /etc/httpd/conf/httpd.conf"
+sudo su -c "echo \"ProxyPass /rest/companies ajp://$restIp:8009/rest/companies \" >>  /etc/httpd/conf/httpd.conf"
+sudo su -c "echo \"ProxyPass /rest/companies ajp://$restIp:8009/rest/companies \" >>  /etc/httpd/conf/httpd.conf"
+
 
 
 #TODO this will blanket redirect should be removed when all the explicit routes are mapped
