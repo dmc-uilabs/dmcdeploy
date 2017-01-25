@@ -18,6 +18,17 @@ sudo -u root -E sed -i "s@#ServerName www.example.com:80@ServerName https://$ser
 sudo -u root -E sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
 sudo su -c "echo \"ProxyIOBufferSize 65536\" >>  /etc/httpd/conf/httpd.conf"
 #ensure it outputs corectly
+
+
+#this section blocks specific endpoints
+sudo su -c "echo \"ProxyPass /rest/verify "\!" \" >>  /etc/httpd/conf/httpd.conf"
+
+
+#this section allows explicit mappings for endpoints
+sudo su -c "echo \"ProxyPass /rest/companies ajp://$restIp:8009/rest/companies \" >>  /etc/httpd/conf/httpd.conf"
+
+
+#TODO this will blanket redirect should be removed when all the explicit routes are mapped
 sudo su -c "echo \"ProxyPass /rest ajp://$restIp:8009/rest\" >>  /etc/httpd/conf/httpd.conf"
 
 
