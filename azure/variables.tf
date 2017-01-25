@@ -11,9 +11,7 @@ variable "azureRegion" {}
 variable "serverURL" {}
 
 
-variable "stackPrefix" {
-  default = "alex"
-}
+variable "stackPrefix" {}
 variable "vmSize" {}
 variable "staticAssets" {}
 
@@ -63,6 +61,8 @@ variable "awsRestSecret" {}
 variable "awsUploadVerBucket" {}
 
 variable "solrPort" {}
+
+variable "subnetRange" {}
 
 
 
