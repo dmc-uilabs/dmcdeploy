@@ -45,7 +45,6 @@ variable "activeMqPort" {}
 
 
 variable "mode" {}
-#available versions 0.1.1
 variable "release" {}
 
 
@@ -76,6 +75,15 @@ variable redHat {
   }
 }
 
+variable centOS {
+  type = "map"
+  default = {
+    osvendor = "OpenLogic"
+    osname = "CentOS"
+    osrelease = "7.2"
+    osversion = "latest"
+  }
+}
 
 variable ubuntu {
   type = "map"
@@ -88,5 +96,5 @@ variable ubuntu {
 }
 
 variable "networkRange" {
-  default = "10.0.0.0/16"
+  default = "10.0.0.0/8"
 }

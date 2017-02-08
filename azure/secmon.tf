@@ -1,43 +1,42 @@
-resource "azurerm_public_ip" "validatePubIp" {
-    name = "${var.stackPrefix}validatepubip"
+resource "azurerm_public_ip" "secmonPubIp" {
+    name = "${var.stackPrefix}secmonpubip"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
     public_ip_address_allocation = "static"
 }
 
-resource "azurerm_network_interface" "validateInt" {
-    name = "${var.stackPrefix}validateni"
+resource "azurerm_network_interface" "secmonInt" {
+    name = "${var.stackPrefix}secmonni"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
 
     ip_configuration {
-        name = "${var.stackPrefix}ValidateIntNetIntIp"
+        name = "${var.stackPrefix}ActiveIntNetIntIp"
         subnet_id = "${azurerm_subnet.resource.id}"
         private_ip_address_allocation = "dynamic"
-        public_ip_address_id = "${azurerm_public_ip.validatePubIp.id}"
+        public_ip_address_id = "${azurerm_public_ip.secmonPubIp.id}"
     }
 }
 
-resource "azurerm_virtual_machine" "validate" {
-    name = "validateVm"
+resource "azurerm_virtual_machine" "secmon" {
+    name = "secmonVm"
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
-    network_interface_ids = ["${azurerm_network_interface.validateInt.id}"]
+    network_interface_ids = ["${azurerm_network_interface.secmonInt.id}"]
     vm_size = "${var.vmSize}"
     delete_data_disks_on_termination = "true"
     delete_os_disk_on_termination = "true"
 
     storage_image_reference {
-    publisher = "${var.centOS["osvendor"]}"
-    offer = "${var.centOS["osname"]}"
-    sku = "${var.centOS["osrelease"]}"
-    version = "${var.centOS["osversion"]}"
+        publisher = "${var.centOS["osvendor"]}"
+        offer = "${var.centOS["osname"]}"
+        sku = "${var.centOS["osrelease"]}"
+        version = "${var.centOS["osversion"]}"
     }
 
-
     storage_os_disk {
-        name = "validateOsDisk"
-        vhd_uri = "${azurerm_storage_account.resource.primary_blob_endpoint}${azurerm_storage_container.resource.name}/validateOsDisk.vhd"
+        name = "secmonOsDisk"
+        vhd_uri = "${azurerm_storage_account.resource.primary_blob_endpoint}${azurerm_storage_container.resource.name}/secmonOsDisk.vhd"
         caching = "ReadWrite"
         create_option = "FromImage"
     }
@@ -49,7 +48,7 @@ resource "azurerm_virtual_machine" "validate" {
     }
 
     os_profile_linux_config {
-        disable_password_authentication = true
+        disable_password_authentication = "true"
         ssh_keys {
           path = "/home/${var.dmcUser}/.ssh/authorized_keys"
           key_data ="${file("${var.sshKeyPath}/${var.sshKeyFilePub}")}"

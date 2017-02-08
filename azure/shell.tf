@@ -14,6 +14,7 @@ resource "azurerm_storage_account" "resource" {
     name = "${var.stackPrefix}stacc"
     resource_group_name = "${azurerm_resource_group.resource.name}"
     location = "${var.azureRegion}"
+    enable_blob_encryption = true
     account_type = "Standard_LRS"
     lifecycle {
         create_before_destroy = true
