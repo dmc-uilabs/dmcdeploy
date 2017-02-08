@@ -14,9 +14,10 @@ provisioner "file" {
 
 provisioner "remote-exec" {
        inline = [
+        "sudo sed -i 's|#mirror|mirror|' /etc/yum.repos.d/CentOS-Base.repo",
         "sudo systemctl stop firewalld",
         "sudo systemctl disable firewalld",
-        "sudo yum install -y git java-1.8.0-openjdk",
+        "sudo yum install -y git-all java-1.8.0-openjdk",
         "sudo yum install -y http://ftp.postgresql.org/pub/repos/yum/9.4/redhat/rhel-6.7-x86_64/pgdg-redhat94-9.4-3.noarch.rpm",
         "sudo yum install -y postgresql94-server postgresql94-contrib",
         "sudo rm -rf /var/lib/pgsql/9.4/*",

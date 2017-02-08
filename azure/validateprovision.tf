@@ -15,7 +15,8 @@ resource "null_resource" "validateProvision" {
 
 provisioner "remote-exec" {
        inline = [
-        "sudo yum install git -y",
+        "sudo sed -i 's|#mirror|mirror|' /etc/yum.repos.d/CentOS-Base.repo",
+        "sudo yum install git-all -y",
         "sudo rm -rf /usr/local/nvm",
         "sudo rm -rf /opt/validation",
         "echo export NVM_DIR=/usr/local/nvm | sudo tee /etc/profile.d/dmc.sh",

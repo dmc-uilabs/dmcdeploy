@@ -1,6 +1,6 @@
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
-sudo yum install -y git java-1.8.0-openjdk
+sudo yum install -y git-all java-1.8.0-openjdk
 
 source /etc/profile.d/dmc.sh
 

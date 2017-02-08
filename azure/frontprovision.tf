@@ -29,10 +29,11 @@ provisioner "file" {
 
 provisioner "remote-exec" {
        inline = [
+        "sudo sed -i 's|#mirror|mirror|' /etc/yum.repos.d/CentOS-Base.repo",
         "sudo systemctl stop firewalld",
         "sudo systemctl disable firewalld",
-        "sudo yum -y install wget git java-1.8.0-openjdk httpd",
-	      "echo export AWS_UPLOAD_SEC=${var.awsUploadSec} | sudo tee /etc/profile.d/dmc.sh",
+        "sudo yum -y install wget git-all java-1.8.0-openjdk httpd",
+	"echo export AWS_UPLOAD_SEC=${var.awsUploadSec} | sudo tee /etc/profile.d/dmc.sh",
         "echo export AWS_UPLOAD_KEY=${var.awsUploadKey} | sudo tee -a /etc/profile.d/dmc.sh ",
         "echo export AWS_UPLOAD_BUCKET=${var.awsUploadBucket} | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export release=hot  | sudo tee -a /etc/profile.d/dmc.sh",

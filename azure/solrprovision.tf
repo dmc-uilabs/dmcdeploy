@@ -14,6 +14,7 @@ resource "null_resource" "solrProvision" {
 
   provisioner "remote-exec" {
     inline = [
+      "sudo sed -i 's|#mirror|mirror|' /etc/yum.repos.d/CentOS-Base.repo",
       "sudo systemctl stop firewalld",
       "sudo systemctl disable firewalld",
       "sudo yum install -y java-1.8.0-openjdk",

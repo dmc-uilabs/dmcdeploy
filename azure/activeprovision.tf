@@ -14,6 +14,7 @@ provisioner "file" {
 
   provisioner "remote-exec" {
          inline = [
+          "sudo sed -i 's|#mirror|mirror|' /etc/yum.repos.d/CentOS-Base.repo",
           "wget https://archive.apache.org/dist/activemq/5.13.4/apache-activemq-5.13.4-bin.tar.gz",
           "tar zxvf apache-activemq-5.13.4-bin.tar.gz",
           "sudo mv apache-activemq-5.13.4 /opt",

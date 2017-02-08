@@ -24,6 +24,9 @@ variable "dmcPass" {
   default = "Password1234!"
 }
 
+variable "stackmonwebuser" {}
+variable "stackmonwebpass" {}
+
 variable "sshKeyPath" {}
 variable "sshKeyFilePri" {}
 variable "sshKeyFilePub" {}

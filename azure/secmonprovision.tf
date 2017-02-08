@@ -4,6 +4,7 @@ resource "null_resource" "secmonProvision" {
 
   provisioner "remote-exec" {
        inline = [
+        "sudo sed -i 's|#mirror|mirror|' /etc/yum.repos.d/CentOS-Base.repo",
         "sudo yum -y install epel-release, java-1.8.0-openjdk",
         "sudo yum -y install https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/2.4.4/elasticsearch-2.4.4.rpm",
         "sudo yum -y install https://download.elastic.co/kibana/kibana/kibana-4.6.4-x86_64.rpm",

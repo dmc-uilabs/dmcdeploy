@@ -17,9 +17,10 @@ resource "null_resource" "restProvision" {
 
   provisioner "remote-exec" {
        inline = [
+        "sudo sed -i 's|#mirror|mirror|' /etc/yum.repos.d/CentOS-Base.repo",
         "sudo systemctl stop firewalld",
         "sudo systemctl disable firewalld",
-        "sudo yum install -y git java-1.8.0-openjdk tomcat",
+        "sudo yum install -y git-all java-1.8.0-openjdk tomcat",
         "echo DBip=${azurerm_network_interface.dbInt.private_ip_address} | sudo tee -a /etc/tomcat/tomcat.conf",
         "echo DBport=${var.psqlPort} | sudo tee -a /etc/tomcat/tomcat.conf",
         "echo DBpass=${var.psqlPass} | sudo tee -a /etc/tomcat/tomcat.conf",

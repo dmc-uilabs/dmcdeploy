@@ -1,7 +1,7 @@
 #!/bin/bash -v
 
 
-sudo yum install -y git
+sudo yum install -y git-all
 
 
 
