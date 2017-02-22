@@ -48,6 +48,11 @@ rm -fr dist
 mkdir dist
 tar -xvzf dist0117.tar.gz -C dist
 
+  ## update the version
+  cd dist/templates/common/footer
+  timestamp=`date --rfc-3339=seconds`
+  sudo sed -i.bak "s|2015 Digital Manufacturing Commons|2015 Digital Manufacturing Commons version: $timestamp  |" footer-tpl.html
+
 sudo cp -r /tmp/dist/dist/* /var/www/html
 cd /var/www/html/templates/common/header
 if [ $mode == development ] ; then
