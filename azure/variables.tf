@@ -90,3 +90,11 @@ variable ubuntu {
 variable "networkRange" {
   default = "10.0.0.0/16"
 }
+
+
+variable "appgwprivnet" {}
+variable "appgwprivsubnet" {}
+variable "appgwclass" {}
+variable "appgwsize" {}
+variable "certbase64" {}
+variable "certpass" {}
