@@ -55,3 +55,7 @@ output "solrPubIp.ip" {
 output "solrSSH" {
   value = "cd ${var.sshKeyPath} && ssh -i '${var.sshKeyFilePri}' ${var.dmcUser}@${azurerm_public_ip.solrPubIp.ip_address}"
 }
+
+output "appGWPubIp.ip" {
+  value = "${azurerm_public_ip.appGWPubIp.ip_address}"
+}

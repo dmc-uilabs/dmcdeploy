@@ -99,3 +99,9 @@ variable "appgwclass" {}
 variable "appgwsize" { default = 0}
 variable "certbase64" {}
 variable "certpass" {}
+
+variable "cloudflare_domain" {}
+variable "cloudflare_email" {}
+variable "cloudflare_token" {}
+
+
