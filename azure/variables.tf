@@ -92,9 +92,10 @@ variable "networkRange" {
 }
 
 
+variable "appgwname" {}
 variable "appgwprivnet" {}
 variable "appgwprivsubnet" {}
 variable "appgwclass" {}
-variable "appgwsize" {}
+variable "appgwsize" { default = 0}
 variable "certbase64" {}
 variable "certpass" {}

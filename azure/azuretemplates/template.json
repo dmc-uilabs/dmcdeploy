@@ -28,23 +28,10 @@
                 "description": "Sku Name"
             }
         },
-        "capacity": {
-            "type": "int",
-            "defaultValue": 2,
-            "metadata": {
-                "description": "Number of instances"
-            }
-        },
         "backendIpAddress1": {
             "type": "string",
             "metadata": {
                 "description": "IP Address for Backend Server 1"
-            }
-        },
-        "backendIpAddress2": {
-            "type": "string",
-            "metadata": {
-                "description": "IP Address for Backend Server 2"
             }
         },
         "certData": {
@@ -115,7 +102,7 @@
         "sku": {
           "name": "[parameters('skuName')]",
           "tier": "Standard",
-          "capacity": "[parameters('capacity')]"
+          "capacity": 2
         },
         "sslCertificates": [
           {
@@ -161,9 +148,6 @@
               "BackendAddresses": [
                 {
                   "IpAddress": "[parameters('backendIpAddress1')]"
-                },
-                {
-                  "IpAddress": "[parameters('backendIpAddress2')]"
                 }
               ]
             }
