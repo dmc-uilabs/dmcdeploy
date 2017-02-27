@@ -59,3 +59,6 @@ output "solrSSH" {
 output "appGWPubIp.ip" {
   value = "${azurerm_public_ip.appGWPubIp.ip_address}"
 }
+output "dmcWEB" {
+  value = "Website IP is ${azurerm_public_ip.appGWPubIp.ip_address} and cloudflare resolves to ${var.serverURL}"
+}

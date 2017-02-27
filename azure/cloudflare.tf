@@ -6,7 +6,7 @@ provider "cloudflare" {
 
 resource "cloudflare_record" "main" {
     domain = "${var.cloudflare_domain}"
-    name = "dev-web7"
+    name = "${var.appgwname}"
     value = "${azurerm_public_ip.appGWPubIp.ip_address}"
     type = "A"
     ttl = 360
