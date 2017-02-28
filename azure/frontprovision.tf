@@ -26,13 +26,34 @@ provisioner "file" {
         }
     }
 
+  provisioner "file" {
+      source = "scripts/deployMe_oscheck.sh"
+      destination = "/tmp/oscheck.sh"
+
+      connection {
+          host = "${azurerm_public_ip.frontPubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+  provisioner "remote-exec" {
+    inline = ["bash -x /tmp/oscheck.sh 2>&1 | tee /tmp/out2.log"]
+    connection {
+      host = "${azurerm_public_ip.frontPubIp.ip_address}"
+      user = "${var.dmcUser}"
+      private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+    }
+  }
+
+
 
 provisioner "remote-exec" {
        inline = [
         "sudo systemctl stop firewalld",
         "sudo systemctl disable firewalld",
-        "sudo yum -y install wget git java-1.8.0-openjdk httpd",
-	      "echo export AWS_UPLOAD_SEC=${var.awsUploadSec} | sudo tee /etc/profile.d/dmc.sh",
+        "sudo yum -y install wget java-1.8.0-openjdk httpd",
+	"echo export AWS_UPLOAD_SEC=${var.awsUploadSec} | sudo tee /etc/profile.d/dmc.sh",
         "echo export AWS_UPLOAD_KEY=${var.awsUploadKey} | sudo tee -a /etc/profile.d/dmc.sh ",
         "echo export AWS_UPLOAD_BUCKET=${var.awsUploadBucket} | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export release=hot  | sudo tee -a /etc/profile.d/dmc.sh",

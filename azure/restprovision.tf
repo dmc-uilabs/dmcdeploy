@@ -14,12 +14,33 @@ resource "null_resource" "restProvision" {
         }
     }
 
+   provisioner "file" {
+      source = "scripts/deployMe_oscheck.sh"
+      destination = "/tmp/oscheck.sh"
+
+      connection {
+          host = "${azurerm_public_ip.restPubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+  provisioner "remote-exec" {
+    inline = ["bash -x /tmp/oscheck.sh 2>&1 | tee /tmp/out2.log"]
+    connection {
+       host = "${azurerm_public_ip.restPubIp.ip_address}"
+       user = "${var.dmcUser}"
+       private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+    }
+ }
+
+
 
   provisioner "remote-exec" {
        inline = [
         "sudo systemctl stop firewalld",
         "sudo systemctl disable firewalld",
-        "sudo yum install -y git java-1.8.0-openjdk tomcat",
+        "sudo yum install -y java-1.8.0-openjdk tomcat",
         "echo DBip=${azurerm_network_interface.dbInt.private_ip_address} | sudo tee -a /etc/tomcat/tomcat.conf",
         "echo DBport=${var.psqlPort} | sudo tee -a /etc/tomcat/tomcat.conf",
         "echo DBpass=${var.psqlPass} | sudo tee -a /etc/tomcat/tomcat.conf",
@@ -35,8 +56,8 @@ resource "null_resource" "restProvision" {
         "echo AWS_UPLOAD_BUCKET_FINAL=${var.awsUploadVerBucket} | sudo sudo tee -a /etc/tomcat/tomcat.conf",
         "echo AWS_UPLOAD_BUCKET=${var.awsUploadBucket} | sudo sudo tee -a /etc/tomcat/tomcat.conf",
         "echo release=${var.release} | sudo sudo tee -a /etc/profile.d/dmc.sh",
-	      "echo solrDbDns=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
-	      "echo SOLR_BASE_URL=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
+	"echo solrDbDns=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
+	"echo SOLR_BASE_URL=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
         "bash -x script.sh 2>&1 | tee out.log"

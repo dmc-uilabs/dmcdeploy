@@ -66,11 +66,32 @@ variable "subnetRange" {}
 
 
 
+variable defaultOS {
+  type = "map"
+  default = {
+    osvendor = "RedHat"
+    osname = "RHEL"
+    osrelease = "7.2"
+    osversion = "latest"
+  }
+}
+
 variable redHat {
   type = "map"
   default = {
     osvendor = "RedHat"
     osname = "RHEL"
+    osrelease = "7.2"
+    osversion = "latest"
+  }
+}
+
+
+variable centOS {
+  type = "map"
+  default = {
+    osvendor = "OpenLogic"
+    osname = "CentOS"
     osrelease = "7.2"
     osversion = "latest"
   }

@@ -12,6 +12,27 @@ resource "null_resource" "validateProvision" {
         }
     }
 
+   provisioner "file" {
+      source = "scripts/deployMe_oscheck.sh"
+      destination = "/tmp/oscheck.sh"
+
+      connection {
+          host = "${azurerm_public_ip.validatePubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+  provisioner "remote-exec" {
+    inline = ["bash -x /tmp/oscheck.sh 2>&1 | tee /tmp/out2.log"]
+    connection {
+       host = "${azurerm_public_ip.validatePubIp.ip_address}"
+       user = "${var.dmcUser}"
+       private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+    }
+ }
+
+
 
 provisioner "remote-exec" {
        inline = [

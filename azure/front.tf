@@ -28,10 +28,10 @@ resource "azurerm_virtual_machine" "front" {
     delete_os_disk_on_termination = "true"
 
     storage_image_reference {
-        publisher = "${var.redHat["osvendor"]}"
-        offer = "${var.redHat["osname"]}"
-        sku = "${var.redHat["osrelease"]}"
-        version = "${var.redHat["osversion"]}"
+        publisher = "${var.defaultOS["osvendor"]}"
+        offer = "${var.defaultOS["osname"]}"
+        sku = "${var.defaultOS["osrelease"]}"
+        version = "${var.defaultOS["osversion"]}"
     }
 
     storage_os_disk {
