@@ -69,8 +69,8 @@ variable "subnetRange" {}
 variable defaultOS {
   type = "map"
   default = {
-    osvendor = "RedHat"
-    osname = "RHEL"
+    osvendor = "OpenLogic"
+    osname = "CentOS"
     osrelease = "7.2"
     osversion = "latest"
   }
