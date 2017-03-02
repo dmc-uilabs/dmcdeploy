@@ -6,16 +6,28 @@ resource "null_resource" "domeProvision" {
       destination = "/tmp/oscheck.sh"
 
       connection {
-          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          host = "${azurerm_public_ip.domePubIp.ip_address}"
           user = "${var.dmcUser}"
           private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
       }
   }
 
+ provisioner "file" {
+      source = "configs/secmon/filebeat.zip"
+      destination = "/tmp/filebeat.zip"
+
+      connection {
+          host = "${azurerm_public_ip.domePubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+
   provisioner "remote-exec" {
     inline = ["bash -x /tmp/oscheck.sh 2>&1 | tee /tmp/out2.log"]
     connection {
-      host = "${azurerm_public_ip.activePubIp.ip_address}"
+      host = "${azurerm_public_ip.domePubIp.ip_address}"
       user = "${var.dmcUser}"
       private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
     }

@@ -64,6 +64,10 @@ variable "solrPort" {}
 
 variable "subnetRange" {}
 
+variable "stackmonwebuser" {}
+variable "stackmonwebpass" {}
+variable "nessusapikey" {}
+
 
 
 variable defaultOS {

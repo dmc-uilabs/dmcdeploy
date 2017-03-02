@@ -43,7 +43,7 @@ resource "azurerm_virtual_machine" "dome" {
     }
 
     os_profile {
-        computer_name = "hostname"
+        computer_name = "dome.${var.appgwname}"
         admin_username = "${var.dmcUser}"
         admin_password = "${var.dmcPass}"
     }

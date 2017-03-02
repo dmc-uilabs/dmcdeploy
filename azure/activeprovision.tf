@@ -32,8 +32,45 @@ provisioner "file" {
       }
   }
 
+provisioner "file" {
+      source = "configs/secmon/filebeat.zip"
+      destination = "/tmp/filebeat.zip"
+
+      connection {
+          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+provisioner "file" {
+      source = "scripts/deployMe_nessus.sh"
+      destination = "/tmp/deployMe_nessus.sh"
+
+      connection {
+          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+provisioner "remote-exec" {
+  inline = ["bash -x /tmp/deployMe_nessus.sh ${var.nessusapikey} 2>&1 | tee /tmp/out3.log"]
+  connection {
+     host = "${azurerm_public_ip.activePubIp.ip_address}"
+     user = "${var.dmcUser}"
+     private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+  }
+}
+
+
   provisioner "remote-exec" {
          inline = [
+          "cd /tmp",
+          "unzip /tmp/filebeat.zip",
+          "cd /tmp/filebeat",
+          "sudo yum -y install https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.2.2-x86_64.rpm",
+          "sudo cp * /etc/filebeat",
           "wget https://archive.apache.org/dist/activemq/5.13.4/apache-activemq-5.13.4-bin.tar.gz",
           "tar zxvf apache-activemq-5.13.4-bin.tar.gz",
           "sudo mv apache-activemq-5.13.4 /opt",
