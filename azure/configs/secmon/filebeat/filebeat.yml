@@ -1,0 +1,25 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /var/log/*.log
+    - /var/log/syslog
+  document_type: syslog
+
+
+- input_type: log
+  paths:
+    - /var/log/vault/vault_audit.log
+
+  document_type: vault
+
+- input_type: log
+  paths:
+    - /var/log/suricata.eve.json
+  document_type: json
+
+
+
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+  bulk_max_size: 1024
+  ssl.certificate_authorities: ["/etc/filebeat/logstash-forwarder.crt"]
