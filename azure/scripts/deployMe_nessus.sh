@@ -7,9 +7,9 @@ nessus () {
   TOKEN=`curl -s https://www.tenable.com/products/nessus/agent-download | pup 'div#timecheck text{}'`
   curl -L -s "http://downloads.nessus.org/nessus3dl.php?file=Nessus-6.10.2-es7.x86_64.rpm&licence_accept=yes&t=$TOKEN" -o /tmp/nessus.rpm
   sudo rpm -i /tmp/nessus.rpm
-  sudo /opt/nessus/sbin/nessuscli agent link --key=$1 --host=cloud.tenable.com --port=443
+  sudo /opt/nessus/sbin/nessuscli managed link --key=$1 --groups=$2 --host=cloud.tenable.com --port=443
   sudo systemctl enable nessusd
   sudo systemctl start nessusd
 }
 
-nessus $1
+nessus $1 $2

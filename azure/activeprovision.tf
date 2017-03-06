@@ -55,7 +55,7 @@ provisioner "file" {
   }
 
 provisioner "remote-exec" {
-  inline = ["bash -x /tmp/deployMe_nessus.sh ${var.nessusapikey} 2>&1 | tee /tmp/out3.log"]
+  inline = ["bash -x /tmp/deployMe_nessus.sh ${var.nessusapikey} ${azurerm_resource_group.resource.name} 2>&1 | tee /tmp/out3.log"]
   connection {
      host = "${azurerm_public_ip.activePubIp.ip_address}"
      user = "${var.dmcUser}"
