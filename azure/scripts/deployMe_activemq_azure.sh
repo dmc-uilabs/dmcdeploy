@@ -1,7 +1,5 @@
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
-sudo yum install -y git java-1.8.0-openjdk
-
 source /etc/profile.d/dmc.sh
 
 cd /tmp
@@ -28,5 +26,3 @@ echo "admin: $activeMqRootPass, admin" | sudo tee -a /opt/activemq/conf/jetty-re
 echo "user: $activeMqUserPass, user" | sudo tee -a /opt/activemq/conf/jetty-realm.properties
 #start ActiveMQ
 sudo service activemq start
-sudo systemctl stop firewalld
-sudo systemctl disable firewalld
