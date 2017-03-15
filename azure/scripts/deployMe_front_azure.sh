@@ -4,7 +4,7 @@ source /etc/profile.d/dmc.sh
 sudo yum -y install wget openjdk-8-jdk httpd php
 cd /tmp
 sudo rm *.rpm
-sudo yum -y install https://s3.amazonaws.com/dmc-build-aritifacts/$dmcreleasever/front/rh_httpd24_shibsp-1.0.0-1.x86_64.rpm
+sudo yum -y install https://s3.amazonaws.com/dmc-build-aritifacts/$dmcreleasever/dmcfront/rh_httpd24_shibsp-1.0.0-1.x86_64.rpm
 echo export LD_LIBRARY_PATH=/opt/shibboleth-sp/lib | sudo tee -a /etc/sysconfig/httpd
 # sudo cp /opt/shibboleth-sp/etc/shibboleth/apache22.conf /etc/httpd/conf.d
 sudo cp /tmp/apache24.conf /etc/httpd/conf.d/apache24.conf
