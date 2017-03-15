@@ -2,6 +2,18 @@ resource "null_resource" "validateProvision" {
   depends_on = ["azurerm_virtual_machine.validate"]
 
   provisioner "file" {
+      source = "scripts/deployMe_oscheck.sh"
+      destination = "/tmp/os_script.sh"
+
+      connection {
+          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+
+  provisioner "file" {
         source = "scripts/deployMe_validate_azure.sh"
         destination = "/tmp/script.sh"
 

@@ -3,6 +3,19 @@ resource "null_resource" "restProvision" {
     depends_on = ["azurerm_virtual_machine.rest","null_resource.activemqProvision","null_resource.dbProvision"]
 
 
+  provisioner "file" {
+      source = "scripts/deployMe_oscheck.sh"
+      destination = "/tmp/os_script.sh"
+
+      connection {
+          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          user = "${var.dmcUser}"
+          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+      }
+  }
+
+
+
     provisioner "file" {
         source = "scripts/deployMe_rest_azure.sh"
         destination = "/tmp/script.sh"
