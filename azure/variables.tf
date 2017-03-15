@@ -11,6 +11,8 @@ variable "vmSize" {}
 #variable "serverURL" {}
 variable "dmcURL" {}
 variable "stackPrefix" {}
+variable "dmcvenvmode" {}
+variable "dmcreleasever" {}
 
 
 
@@ -31,12 +33,6 @@ variable "psqlPort" {}
 variable "activeMqRootPass" {}
 variable "activeMqUserPass" {}
 variable "activeMqPort" {}
-
-
-
-variable "dmcvenvmode" {}
-variable "dmcreleasever" {}
-
 
 
 variable "awsUploadSec" {}
