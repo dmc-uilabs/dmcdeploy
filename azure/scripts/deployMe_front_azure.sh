@@ -14,7 +14,7 @@ sudo cp /tmp/apache24.conf /etc/httpd/conf.d/apache24.conf
 sudo su -c "echo \"RewriteEngine on\" >>  /etc/httpd/conf/httpd.conf"
 sudo su -c "echo \"RewriteCond %{HTTP:X-Forwarded-Proto} ^http$\" >>  /etc/httpd/conf/httpd.conf"
 sudo su -c "echo \"RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\" >>  /etc/httpd/conf/httpd.conf"
-sudo -u root -E sed -i "s@#ServerName www.example.com:80@ServerName https://$serverURL@" /etc/httpd/conf/httpd.conf
+sudo -u root -E sed -i "s@#ServerName www.example.com:80@ServerName https://$dmcURL@" /etc/httpd/conf/httpd.conf
 sudo -u root -E sed -i "s/UseCanonicalName Off/UseCanonicalName On/" /etc/httpd/conf/httpd.conf
 sudo su -c "echo \"ProxyIOBufferSize 65536\" >>  /etc/httpd/conf/httpd.conf"
 #ensure it outputs corectly
@@ -57,9 +57,9 @@ sudo cp -r /tmp/dist/dist/* /var/www/html
 cd /var/www/html/templates/common/header
 if [ $mode == development ] ; then
   echo "System is set up for Develpment Mode."
-  sudo sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://dev-web1.opendmc.org/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+  sudo sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://dev-web1.opendmc.org/shibboleth\&return=https://$dmcURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$dmcURL|" header-tpl.html
 else
-  sudo sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://beta.opendmc.org/shibboleth\&return=https://$serverURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$serverURL|" header-tpl.html
+  sudo sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://beta.opendmc.org/shibboleth\&return=https://$dmcURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$dmcURL|" header-tpl.html
   sudo sed -i.bak "s|dev-web1|beta|" /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
 
 fi
@@ -69,7 +69,7 @@ cd /var/www/html/scripts/common/models/
 sudo sed -i.bak "s|  var creds = {bucket: '', access_key: '',secret_key: ''}|  var creds = {bucket: '$AWS_UPLOAD_BUCKET', access_key: '$AWS_UPLOAD_KEY',secret_key: '$AWS_UPLOAD_SEC'}|" file-upload.js
 sudo sed -i.bak "s|    AWS.config.region = '';|    AWS.config.region = '$AWS_UPLOAD_REGION';|" file-upload.js
 cd /var/www/html
-sudo sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$serverURL/rest'|" *.php
+sudo sed -i.bak "s|window.apiUrl = '';|window.apiUrl='https://$dmcURL/rest'|" *.php
 sudo chown -R apache:apache /var/www/html
  # sudo bash /opt/shibboleth-sp/etc/shibboleth/shibd-redhat start
  # sudo systemctl start httpd

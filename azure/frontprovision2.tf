@@ -2,22 +2,8 @@ resource "null_resource" "frontProvision2" {
   depends_on = ["null_resource.frontProvision"]
 
 
-provisioner "file" {
-      source = "${var.staticAssets}"
-      destination = "/tmp"
-
-      connection {
-          host = "${azurerm_public_ip.frontPubIp.ip_address}"
-          user = "${var.dmcUser}"
-          private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
-      }
-  }
-
-
   provisioner "remote-exec" {
          inline = [
-          "/tmp/dmcstatic",
-          "ls /tmp/dmcstatic",
           "sudo cp /tmp/apache24.conf /etc/httpd/conf.d/apache24.conf",
           "sudo  mv sp-cert.pem /opt/shibboleth-sp/etc/shibboleth/sp-cert.pem",
           "sudo  chown root:root /opt/shibboleth-sp/etc/shibboleth/sp-cert.pem",
