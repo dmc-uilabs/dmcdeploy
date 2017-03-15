@@ -55,7 +55,7 @@ tar -xvzf dist0117.tar.gz -C dist
 
 sudo cp -r /tmp/dist/dist/* /var/www/html
 cd /var/www/html/templates/common/header
-if [ $mode == development ] ; then
+if [ $dmcenvmode == development ] ; then
   echo "System is set up for Develpment Mode."
   sudo sed -i.bak "s|loginURL|https://apps.cirrusidentity.com/console/ds/index?entityID=https://dev-web1.opendmc.org/shibboleth\&return=https://$dmcURL/Shibboleth.sso/Login%3Ftarget%3Dhttps%3A%2F%2F$dmcURL|" header-tpl.html
 else

@@ -8,7 +8,7 @@ variable "azureRegion" {}
 variable "vmSize" {}
 
 
-variable "serverURL" {}
+#variable "serverURL" {}
 variable "dmcURL" {}
 variable "stackPrefix" {}
 variable "staticAssets" {}
@@ -35,7 +35,7 @@ variable "activeMqPort" {}
 
 
 
-variable "mode" {}
+variable "dmcvenvmode" {}
 variable "release" {}
 
 

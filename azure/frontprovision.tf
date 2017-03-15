@@ -39,7 +39,7 @@ provisioner "remote-exec" {
         "echo export solrDbDns= | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export use_swagger=0  | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export dmcURL=${var.dmcURL} | sudo tee -a /etc/profile.d/dmc.sh",
-        "echo export mode=${var.mode} | sudo tee -a /etc/profile.d/dmc.sh",
+        "echo export dmcenvmode=${var.dmcenvmode} | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export release=${var.release} | sudo sudo tee -a /etc/profile.d/dmc.sh",
         "echo export restIp=${azurerm_network_interface.restInt.private_ip_address} | sudo tee -a /etc/profile.d/dmc.sh",
         "source /etc/profile.d/dmc.sh",

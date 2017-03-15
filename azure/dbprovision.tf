@@ -25,7 +25,7 @@ provisioner "remote-exec" {
         "echo export PSQLUSER=${var.psqlUser} | sudo tee  /etc/profile.d/dmc.sh",
         "echo export PSQLPASS=${var.psqlPass} | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export DB=${var.psqlDb} | sudo tee -a /etc/profile.d/dmc.sh",
-        "echo export mode=${var.mode} | sudo tee -a /etc/profile.d/dmc.sh",
+        "echo export dmcmode=${var.dmcmode} | sudo tee -a /etc/profile.d/dmc.sh",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
         "bash -x script.sh 2>&1 | tee out.log"
