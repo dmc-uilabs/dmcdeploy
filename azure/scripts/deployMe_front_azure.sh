@@ -43,7 +43,7 @@ sudo mkdir -p /var/www/html
 cd /tmp
 
 
-wget https://s3.amazonaws.com/dmc-build-aritifacts/$dmcreleasever/front/dist0117.tar.gz
+wget https://s3.amazonaws.com/dmc-build-aritifacts/$dmcreleasever/dmcfront/dist$dmcfrontdistver.tar.gz
 rm -fr dist
 mkdir dist
 tar -xvzf dist0117.tar.gz -C dist

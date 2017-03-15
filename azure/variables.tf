@@ -13,6 +13,7 @@ variable "dmcURL" {}
 variable "stackPrefix" {}
 variable "dmcvenvmode" {}
 variable "dmcreleasever" {}
+variable "dmcfrontdistver" {}
 
 
 
@@ -35,15 +36,14 @@ variable "activeMqUserPass" {}
 variable "activeMqPort" {}
 
 
-variable "awsUploadSec" {}
-variable "awsUploadKey" {}
-variable "awsUploadBucket" {}
+variable "awsFrontUploadSec" {}
+variable "awsFrontUploadKey" {}
+variable "awsFrontUploadBucket" {}
+variable "awsFrontUploadVerBucket" {}
 
 variable "awsRestKey" {}
 variable "awsRestSecret" {}
 
-
-variable "awsUploadVerBucket" {}
 
 variable "solrPort" {}
 

@@ -42,6 +42,7 @@ provisioner "remote-exec" {
         "echo export dmcenvmode=${var.dmcenvmode} | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export dmcreleasever=${var.dmcreleasever} | sudo sudo tee -a /etc/profile.d/dmc.sh",
         "echo export restIp=${azurerm_network_interface.restInt.private_ip_address} | sudo tee -a /etc/profile.d/dmc.sh",
+        "echo export dmcfrontdistver=${var.dmcfrontdistver} | sudo tee -a /etc/profile.d/dmc.sh",
         "source /etc/profile.d/dmc.sh",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
