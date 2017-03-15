@@ -34,7 +34,7 @@ resource "null_resource" "restProvision" {
         "echo AWS_UPLOAD_KEY=${var.awsRestKey} | sudo sudo tee -a  /etc/tomcat/tomcat.conf",
         "echo AWS_UPLOAD_BUCKET_FINAL=${var.awsUploadVerBucket} | sudo sudo tee -a /etc/tomcat/tomcat.conf",
         "echo AWS_UPLOAD_BUCKET=${var.awsUploadBucket} | sudo sudo tee -a /etc/tomcat/tomcat.conf",
-        "echo release=${var.release} | sudo sudo tee -a /etc/profile.d/dmc.sh",
+        "echo dmcreleasever=${var.dmcreleasever} | sudo sudo tee -a /etc/profile.d/dmc.sh",
 	      "echo solrDbDns=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
 	      "echo SOLR_BASE_URL=http://${azurerm_network_interface.solrInt.private_ip_address}:${var.solrPort}/solr | sudo tee -a /etc/tomcat/tomcat.conf",
         "chmod +x /tmp/script.sh",

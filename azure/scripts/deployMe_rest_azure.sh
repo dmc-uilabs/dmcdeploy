@@ -23,7 +23,7 @@ sudo chown tomcat /etc/tomcat/tomcat.conf
 cd /tmp
 
 
-wget https://s3.amazonaws.com/dmc-build-aritifacts/$release/rest/dmc-site-services-0.1.0-swagger.war
+wget https://s3.amazonaws.com/dmc-build-aritifacts/$dmcreleasever/rest/dmc-site-services-0.1.0-swagger.war
 sudo chown tomcat:tomcat /tmp/dmc-site-services-0.1.0.war
 sudo  mv dmc-site-services-0.1.0-swagger.war /var/lib/tomcat/webapps/rest.war
 sudo systemctl restart tomcat

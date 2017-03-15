@@ -11,7 +11,6 @@ variable "vmSize" {}
 #variable "serverURL" {}
 variable "dmcURL" {}
 variable "stackPrefix" {}
-variable "staticAssets" {}
 
 
 
@@ -36,7 +35,7 @@ variable "activeMqPort" {}
 
 
 variable "dmcvenvmode" {}
-variable "release" {}
+variable "dmcreleasever" {}
 
 
 

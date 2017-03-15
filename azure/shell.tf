@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "resource" {
-    name = "${var.stackPrefix}v${var.release}_rg"
+    name = "${var.stackPrefix}v${var.dmcreleasever}_rg"
     location = "${var.azureRegion}"
 }
 
