@@ -11,7 +11,7 @@ variable "vmSize" {}
 #variable "serverURL" {}
 variable "dmcURL" {}
 variable "stackPrefix" {}
-variable "dmcvenvmode" {}
+variable "dmcenvmode" {}
 variable "dmcreleasever" {}
 variable "dmcfrontdistver" {}
 
@@ -36,10 +36,10 @@ variable "activeMqUserPass" {}
 variable "activeMqPort" {}
 
 
-variable "awsFrontUploadSec" {}
-variable "awsFrontUploadKey" {}
-variable "awsFrontUploadBucket" {}
-variable "awsFrontUploadVerBucket" {}
+variable "awsUploadSec" {}
+variable "awsUploadKey" {}
+variable "awsUploadBucket" {}
+variable "awsUploadVerBucket" {}
 
 variable "awsRestKey" {}
 variable "awsRestSecret" {}
