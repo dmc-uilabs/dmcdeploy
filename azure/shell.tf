@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "resource" {
 
 resource "azurerm_virtual_network" "resource" {
     name = "${var.stackPrefix}vn"
-    address_space = ["${var.networkRange}"]
+    address_space = ["${lookup(var.netmaps, var.stackPrefix)}"]
     location = "${var.azureRegion}"
     resource_group_name = "${azurerm_resource_group.resource.name}"
 }
