@@ -26,16 +26,14 @@ resource "null_resource" "solrProvision" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo systemctl stop firewalld",
-      "sudo systemctl disable firewalld",
-      "sudo yum install -y java-1.8.0-openjdk",
-      "sudo echo export solrDbDns=${azurerm_network_interface.dbInt.private_ip_address} | sudo tee /etc/profile.d/dmc.sh",
+      "sudo bash -x /tmp/os_script.sh 2>&1 | sudo tee -a /tmp/out.log",
+      "echo export solrDbDns=${azurerm_network_interface.dbInt.private_ip_address} | sudo tee /etc/profile.d/dmc.sh",
       "echo export solrDbPort=5432 | sudo tee -a /etc/profile.d/dmc.sh",
       "echo export dmcreleasever=${var.dmcreleasever} | sudo tee -a /etc/profile.d/dmc.sh",
-      "source /etc/profile.d/dmc.sh" ,
+      "source /etc/profile.d/dmc.sh",
       "chmod +x /tmp/script.sh",
       "cd /tmp",
-      "bash -x script.sh 2>&1 | tee out.log",
+      "bash -x /tmp/script.sh 2>&1 | tee -a out.log",
 
     ]
 

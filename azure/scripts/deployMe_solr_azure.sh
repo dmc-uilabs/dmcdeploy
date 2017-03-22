@@ -3,7 +3,6 @@
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 sudo yum remove sendmail -y
-sudo yum install git -y
 
 function getRepo {
 
@@ -14,17 +13,6 @@ function getRepo {
   cd /tmp
   rm -fr /tmp/dmcsolr
 
-  # if [[ $release == 'hot' ]]
-  # then
-  #   echo "pull from master"
-  #   git clone https://bitbucket.org/DigitalMfgCommons/dmcsolr.git
-  # else
-  #   echo "pull from >> $release << release"
-  #   git clone https://bitbucket.org/DigitalMfgCommons/dmcsolr.git
-  #   cd dmcsolr
-  #   echo "git checkout tags/$release"  | bash -
-  #
-  # fi
   git clone https://bitbucket.org/DigitalMfgCommons/dmcsolr.git
 
   cd /tmp/dmcsolr
@@ -130,6 +118,3 @@ installSolr
 
 # configure solr and the cron jobs
 configureSolr
-
-sudo systemctl stop firewalld
-sudo systemctl disable firewalld

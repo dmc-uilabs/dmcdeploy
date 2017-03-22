@@ -26,7 +26,7 @@ provisioner "file" {
   provisioner "remote-exec" {
          inline = [
           "chmod +x /tmp/*.sh",
-          "bash -x /tmp/os_script.sh 2>&1 | tee out.log",
+          "bash -x /tmp/os_script.sh 2>&1 | tee /tmp/out.log",
           "axel -n 10 https://archive.apache.org/dist/activemq/5.14.4/apache-activemq-5.14.4-bin.tar.gz",
           "tar zxvf apache-activemq-5.14.4-bin.tar.gz",
           "sudo mv apache-activemq-5.14.4 /opt",

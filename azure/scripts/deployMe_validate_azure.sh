@@ -1,10 +1,6 @@
 #!/bin/bash -v
 
 
-sudo yum install -y git
-
-
-
 cd /opt
 
 git clone https://github.com/dmc-uilabs/dmcvalidation.git

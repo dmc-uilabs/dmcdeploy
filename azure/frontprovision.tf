@@ -7,7 +7,7 @@ provisioner "file" {
       destination = "/tmp/os_script.sh"
 
       connection {
-          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          host = "${azurerm_public_ip.frontPubIp.ip_address}"
           user = "${var.dmcUser}"
           private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
       }
@@ -45,7 +45,7 @@ provisioner "remote-exec" {
         "sudo systemctl stop firewalld",
         "sudo systemctl disable firewalld",
         "sudo yum -y install wget git java-1.8.0-openjdk httpd",
-	      "echo export AWS_UPLOAD_SEC=${var.awsUploadSec} | sudo tee /etc/profile.d/dmc.sh",
+	"echo export AWS_UPLOAD_SEC=${var.awsUploadSec} | sudo tee /etc/profile.d/dmc.sh",
         "echo export AWS_UPLOAD_KEY=${var.awsUploadKey} | sudo tee -a /etc/profile.d/dmc.sh ",
         "echo export AWS_UPLOAD_BUCKET=${var.awsUploadBucket} | sudo tee -a /etc/profile.d/dmc.sh",
         "echo export dmcreleasever=${var.dmcreleasever} | sudo tee -a /etc/profile.d/dmc.sh",

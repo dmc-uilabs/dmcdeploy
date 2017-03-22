@@ -27,7 +27,7 @@ resource "null_resource" "validateProvision" {
 
 provisioner "remote-exec" {
        inline = [
-        "sudo yum install git -y",
+        "sudo bash -x /tmp/os_check.sh 2>&1 | tee -a /tmp/out.log",
         "sudo rm -rf /usr/local/nvm",
         "sudo rm -rf /opt/validation",
         "echo export NVM_DIR=/usr/local/nvm | sudo tee /etc/profile.d/dmc.sh",
@@ -43,9 +43,7 @@ provisioner "remote-exec" {
       	"sudo chmod 777 /opt",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "bash -x script.sh 2>&1 | tee out.log",
-        "sudo systemctl stop firewalld",
-        "sudo systemctl disable firewalld",
+        "bash -x script.sh 2>&1 | tee -a /tmp/out.log",
        ]
 
 

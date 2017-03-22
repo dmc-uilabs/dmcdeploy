@@ -10,7 +10,7 @@ cd /tmp/dmcactive
 mv * ..
 
 sudo useradd -m activemq -d /opt/activemq
-sudo chown -R activemq:dmcAdmin /opt/apache-activemq-5.13.4/
+sudo chown -R activemq:dmcAdmin /opt/apache-activemq-5.14.4/
 
 sudo cp /opt/activemq/bin/env /etc/default/activemq
 sudo sed -i '~s/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="activemq"/' /etc/default/activemq
