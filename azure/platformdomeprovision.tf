@@ -16,7 +16,7 @@ resource "null_resource" "domeProvision" {
        ]
 
        connection {
-           host = "${azurerm_public_ip.domePubIp.ip_address}"
+           host = "${azurerm_public_ip.platformdomePubIp.ip_address}"
            user = "${var.dmcUser}"
            private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
 

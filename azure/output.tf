@@ -22,11 +22,11 @@ output "restSSH" {
 
 
 
-output "domeplatformPubIp.ip" {
-  value = "${azurerm_public_ip.domeplatformPubIp.ip_address}"
+output "domePubIp.ip" {
+  value = "${azurerm_public_ip.platformdomePubIp.ip_address}"
 }
 output "domeplatformSSH" {
-  value = "cd ${var.sshKeyPath} && ssh -i '${var.sshKeyFilePri}' ${var.dmcUser}@${azurerm_public_ip.domeplatformPubIp.ip_address}"
+  value = "cd ${var.sshKeyPath} && ssh -i '${var.sshKeyFilePri}' ${var.dmcUser}@${azurerm_public_ip.platformdomePubIp.ip_address}"
 }
 
 output "docentdomePubIp.ip" {

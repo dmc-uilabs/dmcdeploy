@@ -70,6 +70,8 @@ variable "cloudflare_token" {}
 
 variable "secmon_status" {}
 variable "docent_status" {}
+variable "nessus_status" {}
+variable "nessusapikey" {}
 
 
 variable defaultOS {

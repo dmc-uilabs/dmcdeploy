@@ -30,7 +30,7 @@ provisioner "file" {
 
 provisioner "remote-exec" {
        inline = [
-        "sudo bash -x /tmp/os_script.sh 2>&1 | tee -a /tmp/out.log",
+        "sudo bash -x /tmp/os_script.sh 2>&1 | sudo tee -a /tmp/out.log",
 	"echo export AWS_UPLOAD_SEC=${var.awsUploadSec} | sudo tee /etc/profile.d/dmc.sh",
         "echo export AWS_UPLOAD_KEY=${var.awsUploadKey} | sudo tee -a /etc/profile.d/dmc.sh ",
         "echo export AWS_UPLOAD_BUCKET=${var.awsUploadBucket} | sudo tee -a /etc/profile.d/dmc.sh",
@@ -43,7 +43,7 @@ provisioner "remote-exec" {
         "source /etc/profile.d/dmc.sh",
         "chmod +x /tmp/script.sh",
         "cd /tmp",
-        "sudo bash -x /tmp/script.sh 2>&1 | tee -a /tmp/out.log"
+        "sudo bash -x /tmp/script.sh 2>&1 | sudo tee -a /tmp/out.log"
        ]
 
        connection {
