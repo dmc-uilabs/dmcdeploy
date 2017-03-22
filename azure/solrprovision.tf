@@ -6,7 +6,7 @@ resource "null_resource" "solrProvision" {
       destination = "/tmp/os_script.sh"
 
       connection {
-          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          host = "${azurerm_public_ip.solrPubIp.ip_address}"
           user = "${var.dmcUser}"
           private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
       }
@@ -14,7 +14,7 @@ resource "null_resource" "solrProvision" {
 
 
   provisioner "file" {
-    source = "./scripts/deployMe_solr_azure.sh"
+    source = "scripts/deployMe_solr_azure.sh"
     destination = "/tmp/script.sh"
 
     connection {
@@ -33,7 +33,7 @@ resource "null_resource" "solrProvision" {
       "source /etc/profile.d/dmc.sh",
       "chmod +x /tmp/script.sh",
       "cd /tmp",
-      "bash -x /tmp/script.sh 2>&1 | tee -a out.log",
+      "bash -x /tmp/script.sh 2>&1 | sudo tee -a out.log",
 
     ]
 

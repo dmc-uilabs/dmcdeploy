@@ -27,17 +27,6 @@ resource "null_resource" "restProvision" {
         }
     }
 
-    provisioner "file" {
-        source = "scripts/deployMe_oscheck_azure.sh"
-        destination = "/tmp/os_script.sh"
-
-        connection {
-            host = "${azurerm_public_ip.restPubIp.ip_address}"
-            user = "${var.dmcUser}"
-            private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
-        }
-   }
-
 
   provisioner "remote-exec" {
        inline = [

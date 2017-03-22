@@ -6,7 +6,7 @@ resource "null_resource" "validateProvision" {
       destination = "/tmp/os_script.sh"
 
       connection {
-          host = "${azurerm_public_ip.activePubIp.ip_address}"
+          host = "${azurerm_public_ip.validatePubIp.ip_address}"
           user = "${var.dmcUser}"
           private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
       }
