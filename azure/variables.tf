@@ -85,6 +85,16 @@ variable defaultOS {
   }
 }
 
+variable centOs {
+  type = "map"
+  default = {
+    osvendor = "OpenLogic"
+    osname = "CentOS"
+    osrelease = "7.2"
+    osversion = "latest"
+  }
+}
+
 
 variable redHat {
   type = "map"
