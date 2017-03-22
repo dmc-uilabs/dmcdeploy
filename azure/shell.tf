@@ -34,5 +34,5 @@ resource "azurerm_subnet" "resource" {
     name = "${var.stackPrefix}sn"
     resource_group_name = "${azurerm_resource_group.resource.name}"
     virtual_network_name = "${azurerm_virtual_network.resource.name}"
-    address_prefix = "${var.netmaps[${var.stackPrefix}]}"
+    address_prefix = "${var.subnetRange}"
 }
