@@ -67,6 +67,7 @@ variable "certpass" {}
 variable "cloudflare_domain" {}
 variable "cloudflare_email" {}
 variable "cloudflare_token" {}
+variable "register_dns" {}
 
 variable "secmon_status" {}
 variable "docent_status" {}
@@ -104,4 +105,19 @@ variable ubuntu {
     osrelease = "16.04.0-LTS"
     osversion = "latest"
   }
+}
+
+variable "netmaps" {
+  type = "map"
+  default = {
+    web1 = "10.0.1.0/24"
+    web2 = "10.0.2.0/24"
+    web3 = "10.0.3.0/24"
+    web4 = "10.0.4.0/24"
+    web5 = "10.0.5.0/24"
+    web6 = "10.0.6.0/24"
+    web7 = "10.0.7.0/24"
+    web8= "10.0.8.0/24"
+    web8= "10.0.8.0/24"
+    portal = "10.0.9.0/24"
 }
