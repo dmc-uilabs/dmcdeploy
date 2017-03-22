@@ -2,7 +2,11 @@
 
 source /etc/profile.d/dmc.sh
 
-echo include_dir = 'dmcconf.d' | sudo tee -a /var/lib/pgsql/9.4/data/postgresql.conf
+echo "include_dir = 'dmcconf.d'" | sudo tee -a /var/lib/pgsql/9.4/data/postgresql.conf
+sudo mkdir /var/lib/pgsql/9.4/data/dmcconf.d
+sudo chmod 777 /var/lib/pgsql/9.4/data/dmcconf.d
+
+j
 
 #I hate this I hate I hate I hate I hate
 echo -e "local\tall\tall\t\t\ttrust" | sudo tee /var/lib/pgsql/9.4/data/pg_hba.conf
@@ -17,8 +21,19 @@ else
 fi
 #
 
+sed -i 's/^\#log_destination/log_destination/' /var/lib/pgsql/9.4/data/postgresql.conf
+
 echo "listen_addresses = '*'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/network.conf
 echo "log_destination = 'csvlog'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+echo "log_statement = 'all'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_statement = 'none'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_min_duration_statement = 0" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_checkpoints = 'on'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_connections = 'on'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_disconnections = 'on'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_lock_waits = 'on'" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_temp_files = 0" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
+#echo "log_autovacuum_min_duration = 0" | sudo tee -a /var/lib/pgsql/9.4/data/dmcconf.d/logging.conf
 
 sudo systemctl start postgresql-9.4.service
 sudo systemctl enable postgresql-9.4.service

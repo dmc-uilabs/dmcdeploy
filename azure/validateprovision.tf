@@ -27,7 +27,7 @@ resource "null_resource" "validateProvision" {
 
 provisioner "remote-exec" {
        inline = [
-        "sudo bash -x /tmp/os_check.sh 2>&1 | tee -a /tmp/out.log",
+        "sudo bash -x /tmp/os_script.sh 2>&1 | tee -a /tmp/out.log",
         "sudo rm -rf /usr/local/nvm",
         "sudo rm -rf /opt/validation",
         "echo export NVM_DIR=/usr/local/nvm | sudo tee /etc/profile.d/dmc.sh",
