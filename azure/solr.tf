@@ -44,7 +44,7 @@ resource "azurerm_virtual_machine" "solrvm" {
     }
 
     os_profile {
-        computer_name = "hostname"
+        computer_name = "solrVm..${var.appgwname}"
         admin_username = "${var.dmcUser}"
         admin_password = "${var.dmcPass}"
     }

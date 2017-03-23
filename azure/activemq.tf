@@ -42,7 +42,7 @@ resource "azurerm_virtual_machine" "active" {
     }
 
     os_profile {
-        computer_name = "hostname"
+        computer_name = "activeVm..${var.appgwname}"
         admin_username = "${var.dmcUser}"
         admin_password = "${var.dmcPass}"
     }
