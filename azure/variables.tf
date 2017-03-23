@@ -47,7 +47,7 @@ variable "awsRestSecret" {}
 
 variable "solrPort" {}
 
-variable "subnetRange" {}
+#variable "subnetRange" {}
 
 
 variable "networkRange" {
