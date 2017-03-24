@@ -43,7 +43,7 @@ resource "azurerm_virtual_machine" "db" {
     }
 
     os_profile {
-        computer_name = "dbVm..${var.appgwname}"
+        computer_name = "dbVm.${var.appgwname}"
         admin_username = "${var.dmcUser}"
         admin_password = "${var.dmcPass}"
     }

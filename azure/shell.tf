@@ -1,3 +1,8 @@
+terraform {
+  required_version = "~> 0.9.1"
+}
+
+
 resource "azurerm_resource_group" "resource" {
     name = "${var.stackPrefix}v${var.dmcreleasever}_rg"
     location = "${var.azureRegion}"

@@ -43,7 +43,7 @@ resource "azurerm_virtual_machine" "platformdome" {
     }
 
     os_profile {
-        computer_name = "platformdome..${var.appgwname}"
+        computer_name = "platdome.${var.appgwname}"
         admin_username = "${var.dmcUser}"
         admin_password = "${var.dmcPass}"
     }
