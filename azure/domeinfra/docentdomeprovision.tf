@@ -31,7 +31,7 @@ resource "null_resource" "docentdomeProvision" {
        connection {
             host = "${azurerm_public_ip.docentdomePubIp.ip_address}"
            user = "${var.dmcUser}"
-           private_key  = "${file("${var.sshKeyPath}/docentv03242017")}"
+           private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
 
        }
   }

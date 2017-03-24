@@ -55,7 +55,7 @@ resource "azurerm_virtual_machine" "ncstatedome" {
         disable_password_authentication = true
         ssh_keys {
           path = "/home/${var.dmcUser}/.ssh/authorized_keys"
-          key_data ="${file("${var.sshKeyPath}/ncstatev03242017.pub")}"
+          key_data ="${file("${var.sshKeyPath}/${var.sshKeyFilePub}")}"
         }
     }
 

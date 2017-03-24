@@ -1,6 +1,6 @@
 resource "null_resource" "docentdomeProvision" {
   count = "${var.docent_status}"
-  depends_on = ["azurerm_virtual_machine.docentdome"]
+  depends_on = ["azurerm_virtual_machine.docentdome","null_resource.activemqProvision"]
 
 
   provisioner "remote-exec" {
@@ -31,7 +31,7 @@ resource "null_resource" "docentdomeProvision" {
        connection {
             host = "${azurerm_public_ip.docentdomePubIp.ip_address}"
            user = "${var.dmcUser}"
-           private_key  = "${file("${var.sshKeyPath}/docentv03242017")}"
+           private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
 
        }
   }

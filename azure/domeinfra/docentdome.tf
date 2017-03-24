@@ -55,7 +55,7 @@ resource "azurerm_virtual_machine" "docentdome" {
         disable_password_authentication = true
         ssh_keys {
           path = "/home/${var.dmcUser}/.ssh/authorized_keys"
-          key_data ="${file("${var.sshKeyPath}/docentv03242017.pub")}"
+          key_data ="${file("${var.sshKeyPath}/${var.sshKeyFilePub}")}"
         }
     }
 
