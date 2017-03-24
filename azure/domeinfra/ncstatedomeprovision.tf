@@ -21,7 +21,7 @@ resource "null_resource" "ncstatedomeProvision" {
        connection {
            host = "${azurerm_public_ip.ncstatedomePubIp.ip_address}"
            user = "${var.dmcUser}"
-           private_key  = "${file("${var.sshKeyPath}/${var.sshKeyFilePri}")}"
+           private_key  = "${file("${var.sshKeyPath}/ncstatev03242017")}"
 
        }
   }
