@@ -26,8 +26,10 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 #     - suricata.yaml
 # + naming convention in S3 bucket for metricbeat and filebeat: (metric|file)beat.servername.yml
 #
-# Env variables
-# NESSUS_KEY: key to connect to nessus web client # ALEX: this needs to be set by terra/whatever is calling this script
+# Env variables; ALEX: these need to be set by terra/whatever is calling this script
+# NESSUS_KEY: key to connect to nessus web client
+# NGINX_USERNAME: username for logging into kibana interface through nginx
+# NGINX_PASSWORD: password for logging into kibana interface through nginx
 
 # ALEX: this needs to be the responsibility of terra/whatever is calling this script
 ######### DISABLE SELINUX ################
@@ -126,7 +128,7 @@ sudo mv kibana.conf /etc/nginx/conf.d
 
 # Create auth file for http authentication
 sudo yum install -y httpd-tools
-sudo htpasswd -c /etc/nginx/htpasswd.users stackmonitor # ALEX: prompts for password
+echo -e "$NGINX_PASSWORD" | sudo htpasswd -i -c /etc/nginx/htpasswd.users $NGINX_USERNAME
 
 sudo setenforce 0
 
@@ -226,7 +228,7 @@ sudo pip install "elasticsearch>=5.0.0"
 sudo pip install twilio==6.0.0
 
 # Create elasalert index in elasticsearch
-echo -e "localhost\n9200\nf\n\n\n\n\n\n" | elastalert-create-index
+elastalert-create-index --host localhost --port 9200 --no-auth --no-ssl --index elastalert_status --url-prefix "" --old-index ""
 
 # Copy config files to elastalert directory
 cd ~
