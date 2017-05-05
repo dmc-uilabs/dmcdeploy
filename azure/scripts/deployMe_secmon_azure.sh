@@ -27,13 +27,12 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 # + naming convention in S3 bucket for metricbeat and filebeat: (metric|file)beat.servername.yml
 #
 # Env variables
-# NESSUS_KEY: key to connect to nessus web client
+# NESSUS_KEY: key to connect to nessus web client # ALEX: this needs to be set by terra/whatever is calling this script
 
 # ALEX: this needs to be the responsibility of terra/whatever is calling this script
 ######### DISABLE SELINUX ################
 #sudo sed -i 's/SELINUX=enforcing.*/SELINUX=disabled/' /etc/sysconfig/selinux
 #sudo shutdown -r now
-# Set nessus key
 ##########################################
 
 
@@ -246,8 +245,9 @@ supervisord
 ######### INSTALL NESSUS #################
 curl -s -L https://github.com/ericchiang/pup/releases/download/v0.4.0/pup_v0.4.0_linux_amd64.zip | funzip | sudo tee /usr/local/bin/pup >/dev/null; sudo chmod 755 /usr/local/bin/pup
 TOKEN=`curl -s https://www.tenable.com/products/nessus/agent-download | pup 'div#timecheck text{}'`
-curl -L -s "http://downloads.nessus.org/nessus3dl.php?file=Nessus-6.10.2-es7.x86_64.rpm&licence_accept=yes&t=$TOKEN" -o /tmp/nessus.rpm
+curl -L -s "http://downloads.nessus.org/nessus3dl.php?file=Nessus-6.10.5-es7.x86_64.rpm&licence_accept=yes&t=$TOKEN" -o /tmp/nessus.rpm
 sudo rpm -i /tmp/nessus.rpm
+#sudo /opt/nessus/sbin/nessus-service nessusagent start
 sudo /opt/nessus/sbin/nessuscli managed link --key=$NESSUS_KEY --group="group1" --port=443 --host=cloud.tenable.com --port=443
 #sudo systemctl enable nessusd
 #sudo systemctl start nessusd
