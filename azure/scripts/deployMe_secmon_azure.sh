@@ -37,7 +37,7 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 
 ######## GRAB CONFIG FILES ###############
-# Grab files from S3 bucket
+# Grab files listed above from S3 bucket
 # Change (metric|file)beat.servername.yml to (metric|file)beat.yml
 mv metricbeat.secmon.yml metricbeat.yml
 mv filebeat.secmon.yml filebeat.yml
@@ -58,9 +58,9 @@ sudo service elasticsearch start
 mkdir /tmp/logstash
 cp logstash-ca.conf /tmp/logstash
 cd /tmp/logstash
-echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n" | openssl req -newkey rsa:2048 -days 3650 -x509 -nodes -out root.crt # HERE
-echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n\n.\n" | openssl req -newkey rsa:2048 -nodes -out logstash-forwarder.csr -keyout logstash-forwarder.key #HERE
-#echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n\n.\n" | openssl req -newkey rsa:2048 -nodes -out logstash-server.csr -keyout logstash-server.key #HERE
+echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n" | openssl req -newkey rsa:2048 -days 3650 -x509 -nodes -out root.crt
+echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n\n.\n" | openssl req -newkey rsa:2048 -nodes -out logstash-forwarder.csr -keyout logstash-forwarder.key
+#echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n\n.\n" | openssl req -newkey rsa:2048 -nodes -out logstash-server.csr -keyout logstash-server.key
 echo 000a > serialfile
 touch certindex
 
@@ -82,7 +82,7 @@ cd ..
 rm -r logstash
 cd ~
 
-# ALEX: copy certs, key to S3 to be distributed to other machines
+# ALEX: copy /etc/pki/ca-trust/source/anchors/root.crt to s3
 ##########################################
 
 
@@ -165,16 +165,16 @@ sudo service metricbeat start
 
 
 ######## INSTALL PACKETBEAT ##############
-sudo yum install libpcap
-curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-5.4.0-x86_64.rpm
-sudo rpm -vi packetbeat-5.4.0-x86_64.rpm
-
-sudo mv packetbeat.yml /etc/packetbeat/packetbeat.yml
-sudo chmod 644 /etc/packetbeat/packetbeat.yml
-sudo chown root /etc/packetbeat/packetbeat.yml
-sudo chgrp root /etc/packetbeat/packetbeat.yml
-
-sudo service packetbeat start
+# sudo yum install libpcap
+# curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-5.4.0-x86_64.rpm
+# sudo rpm -vi packetbeat-5.4.0-x86_64.rpm
+# 
+# sudo mv packetbeat.yml /etc/packetbeat/packetbeat.yml
+# sudo chmod 644 /etc/packetbeat/packetbeat.yml
+# sudo chown root /etc/packetbeat/packetbeat.yml
+# sudo chgrp root /etc/packetbeat/packetbeat.yml
+# 
+# sudo service packetbeat start
 ##########################################
 
 
@@ -245,16 +245,6 @@ supervisord
 ######### INSTALL NESSUS #################
 curl -s -L https://github.com/ericchiang/pup/releases/download/v0.4.0/pup_v0.4.0_linux_amd64.zip | funzip | sudo tee /usr/local/bin/pup >/dev/null; sudo chmod 755 /usr/local/bin/pup
 TOKEN=`curl -s https://www.tenable.com/products/nessus/agent-download | pup 'div#timecheck text{}'`
-# curl -L -s "http://downloads.nessus.org/nessus3dl.php?file=NessusAgent-6.10.5-es7.x86_64.rpm&licence_accept=yes&t=$TOKEN" -o /tmp/nessus.rpm
-# sudo rpm -i /tmp/nessus.rpm
-# #sudo /opt/nessus/sbin/nessus-service nessusagent start
-# sudo /opt/nessus/sbin/nessuscli managed link --key=$NESSUS_KEY --group="group1" --port=443 --host=cloud.tenable.com --port=443
-# #sudo systemctl enable nessusd
-# #sudo systemctl start nessusd
-# 
-# #sudo /sbin/service nessusagent start
-# sudo service nessusd start
-
 curl -L -s "http://downloads.nessus.org/nessus3dl.php?file=NessusAgent-6.10.5-es7.x86_64.rpm&licence_accept=yes&t=$TOKEN" -o /tmp/nessus.rpm
 sudo rpm -i /tmp/nessus.rpm
 sudo /opt/nessus_agent/sbin/nessuscli agent link --key=$NESSUS_KEY --group="group1" --port=443 --host=cloud.tenable.com
