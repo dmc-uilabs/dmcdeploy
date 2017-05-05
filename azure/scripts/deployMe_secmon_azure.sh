@@ -4,14 +4,14 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 
 #### EXPECTED ENV VARIABLES AND FILES* ####
 # * Files expected to be in home path
+# # ALEX: configs assume semon is at 10.0.14.6
 # LOGSTASH CONFIG FILES:
 #     - 02-filebeat-input.conf
 #     - 10-suricata-filter.conf
 #     - 10-syslog-filter.conf
 #     - 30-elasticsearch-output.conf
-# LOGSTASH SSL CERT FILES (same files that need to be shared with each filebeat client; need consistent local ip addr):
-#     - logstash-forwarder.crt
-#     - logstash-forwarder.key
+# LOGSTASH CERT GENERATION FILES:
+#     - logstash-ca.conf
 # NGINX CONFIG FILE FOR KIBANA:
 #     - kibana.conf
 # FILEBEAT CONFIG FILE (specific for each server):
@@ -24,10 +24,25 @@ exec 1> >(logger -s -t $(basename $0)) 2>&1
 #     - supervisord.conf
 # SURICATA CONFIG FILES:
 #     - suricata.yaml
-# + naming convention for metricbeat and filebeat: (metric|file)beat.servername.yml
+# + naming convention in S3 bucket for metricbeat and filebeat: (metric|file)beat.servername.yml
+#
+# Env variables
+# NESSUS_KEY: key to connect to nessus web client
+
+# ALEX: this needs to be the responsibility of terra/whatever is calling this script
+######### DISABLE SELINUX ################
+#sudo sed -i 's/SELINUX=enforcing.*/SELINUX=disabled/' /etc/sysconfig/selinux
+#sudo shutdown -r now
+# Set nessus key
+##########################################
 
 
 ######## GRAB CONFIG FILES ###############
+# Grab files from S3 bucket
+# Change (metric|file)beat.servername.yml to (metric|file)beat.yml
+mv metricbeat.secmon.yml metricbeat.yml
+mv filebeat.secmon.yml filebeat.yml
+#mv packetbeat.secmon.yml packetbeat.yml
 ##########################################
 
 
@@ -44,17 +59,20 @@ sudo service elasticsearch start
 mkdir /tmp/logstash
 cp logstash-ca.conf /tmp/logstash
 cd /tmp/logstash
-openssl req -newkey rsa:2048 -days 3650 -x509 -nodes -out root.crt
-openssl req -newkey rsa:2048 -nodes -out logstash-forwarder.csr -keyout logstash-forwarder.key
+echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n" | openssl req -newkey rsa:2048 -days 3650 -x509 -nodes -out root.crt # HERE
+echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n\n.\n" | openssl req -newkey rsa:2048 -nodes -out logstash-forwarder.csr -keyout logstash-forwarder.key #HERE
+#echo -e "US\nIllinois\nChicago\nUILABS\nDMC\nLogstash\n.\n\n.\n" | openssl req -newkey rsa:2048 -nodes -out logstash-server.csr -keyout logstash-server.key #HERE
 echo 000a > serialfile
 touch certindex
 
-STACKMON_IP=$(ifconfig eth0 | grep "inet " | cut -d ' ' -f 10)
+#STACKMON_IP=$(ifconfig eth0 | grep "inet " | cut -d ' ' -f 10)
 
-sed -i 's/subjectAltName.*/subjectAltName = IP:'$STACKMON_IP'/' logstash-ca.conf
 openssl ca -batch -config logstash-ca.conf -notext -in logstash-forwarder.csr -out logstash-forwarder.crt
+#openssl ca -batch -config logstash-ca.conf -notext -in logstash-server.csr -out logstash-server.crt
 sudo mv logstash-forwarder.crt /etc/pki/tls/certs
 sudo mv logstash-forwarder.key /etc/pki/tls/private
+#sudo mv logstash-server.crt /etc/pki/tls/certs
+#sudo mv logstash-server.key /etc/pki/tls/private
 
 sudo yum install -y ca-certificates
 sudo update-ca-trust force-enable
@@ -63,8 +81,9 @@ sudo update-ca-trust extract
 
 cd ..
 rm -r logstash
+cd ~
 
-# Permissions?
+# ALEX: copy certs, key to S3 to be distributed to other machines
 ##########################################
 
 
@@ -78,15 +97,10 @@ sudo sed -i 's/LS_OPTS=.*/LS_OPTS=\"--path.settings ${LS_SETTINGS_DIR} --log.lev
 sudo /usr/share/logstash/bin/system-install
 
 # Copy configuration to logstash config folder
-sudo mv 02-filebeat-input.conf /etc/logstash/conf.d # ALEX: mv or scp from s3 bucket (do that in terra or here)?
+sudo mv 02-filebeat-input.conf /etc/logstash/conf.d
 sudo mv 10-syslog-filter.conf /etc/logstash/conf.d
 sudo mv 10-suricata-filter.conf /etc/logstash/conf.d
 sudo mv 30-elasticsearch-output.conf /etc/logstash/conf.d
-
-# Copy ssl certs to system certs directory
-# ALEX: responsibility of this machine to create certs and put in bucket for other machines
-sudo mv logstash-forwarder.crt /etc/pki/tls/certs
-sudo mv logstash-forwarder.key /etc/pki/tls/private
 
 # Start logstash
 sudo service logstash start
@@ -115,8 +129,7 @@ sudo mv kibana.conf /etc/nginx/conf.d
 sudo yum install -y httpd-tools
 sudo htpasswd -c /etc/nginx/htpasswd.users stackmonitor # ALEX: prompts for password
 
-# Set SELinux to permissive in order for nginx to be able to open kibana.conf
-sudo setenforce 0 # ALEX: is this okay?
+sudo setenforce 0
 
 sudo service nginx start
 ##########################################
@@ -129,7 +142,7 @@ curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.3.2-
 sudo rpm -vi filebeat-5.3.2-x86_64.rpm
 
 # Copy config for filebeat and change permissions for filebeat constraints
-sudo mv filebeat.yml /etc/filebeat/ # ALEX: local address needs to be consistent (currently 10.0.14.6); needed for logstash-forwarder cert as well
+sudo mv filebeat.yml /etc/filebeat/
 sudo chmod 644 /etc/filebeat/filebeat.yml
 sudo chown root /etc/filebeat/filebeat.yml
 sudo chgrp root /etc/filebeat/filebeat.yml
@@ -149,6 +162,20 @@ sudo chown root /etc/metricbeat/metricbeat.yml
 sudo chgrp root /etc/metricbeat/metricbeat.yml
 
 sudo service metricbeat start
+##########################################
+
+
+######## INSTALL PACKETBEAT ##############
+sudo yum install libpcap
+curl -L -O https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-5.4.0-x86_64.rpm
+sudo rpm -vi packetbeat-5.4.0-x86_64.rpm
+
+sudo mv packetbeat.yml /etc/packetbeat/packetbeat.yml
+sudo chmod 644 /etc/packetbeat/packetbeat.yml
+sudo chown root /etc/packetbeat/packetbeat.yml
+sudo chgrp root /etc/packetbeat/packetbeat.yml
+
+sudo service packetbeat start
 ##########################################
 
 
@@ -192,9 +219,9 @@ git clone https://github.com/Yelp/elastalert.git
 sudo mv elastalert /etc
 cd /etc/elastalert
 sudo -H pip install -U pip setuptools
-sudo yum group install 'Development Tools'
+sudo yum group install -y 'Development Tools'
 sudo yum install -y python-devel
-sudo python setup.py install # ALEX: prompts
+sudo python setup.py install
 sudo pip install -r requirements-dev.txt
 sudo pip install "elasticsearch>=5.0.0"
 sudo pip install twilio==6.0.0
@@ -217,7 +244,15 @@ supervisord
 
 
 ######### INSTALL NESSUS #################
-##########################################
+curl -s -L https://github.com/ericchiang/pup/releases/download/v0.4.0/pup_v0.4.0_linux_amd64.zip | funzip | sudo tee /usr/local/bin/pup >/dev/null; sudo chmod 755 /usr/local/bin/pup
+TOKEN=`curl -s https://www.tenable.com/products/nessus/agent-download | pup 'div#timecheck text{}'`
+curl -L -s "http://downloads.nessus.org/nessus3dl.php?file=Nessus-6.10.2-es7.x86_64.rpm&licence_accept=yes&t=$TOKEN" -o /tmp/nessus.rpm
+sudo rpm -i /tmp/nessus.rpm
+sudo /opt/nessus/sbin/nessuscli managed link --key=$NESSUS_KEY --group="group1" --port=443 --host=cloud.tenable.com --port=443
+#sudo systemctl enable nessusd
+#sudo systemctl start nessusd
 
-# Cert creation, packetbeat
+#sudo /sbin/service nessusagent start
+sudo service nessusd start
+##########################################
 
